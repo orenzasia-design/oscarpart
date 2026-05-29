@@ -1,0 +1,17 @@
+03:46:55 [[31merror[39m]: Error: Cannot find module '/app/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node'
+Require stack:
+- /app/node_modules/bcrypt/bcrypt.js
+- /app/src/services/auth.service.ts
+- /app/src/controllers/auth.controller.ts
+- /app/src/routes/auth.routes.ts
+- /app/src/index.ts
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+    at Function.Module._load (node:internal/modules/cjs/loader:1038:27)
+    at Module.require (node:internal/modules/cjs/loader:1289:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/app/node_modules/bcrypt/bcrypt.js:6:16)
+    at Module._compile (node:internal/modules/cjs/loader:1521:14)
+    at Module._compile (/app/node_modules/source-map-support/source-map-support.js:568:25)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at require.extensions..jsx.require.extensions..js (/tmp/ts-node-dev-hook-8562707866249666.js:114:20)
+    at Object.nodeDevHook [as .js] (/app/node_modules/ts-node-dev/lib/hook.js:63:13) {"error":{"code":"MODULE_NOT_FOUND","requireStack":["/app/node_modules/bcrypt/bcrypt.js","/app/src/services/auth.service.ts","/app/src/controllers/auth.controller.ts","/app/src/routes/auth.routes.ts","/app/src/index.ts"]},"exception":true,"date":"Fri May 29 2026 03:46:55 GMT+0000 (Coordinated Universal Time)","process":{"pid":36,"uid":0,"gid":0,"cwd":"/app","execPath":"/usr/local/bin/node","version":"v20.20.2","argv":["/usr/local/bin/node","src/index.ts"],"memoryUsage":{"rss":119033856,"heapTotal":67870720,"heapUsed":23993344,"external":3401957,"arrayBuffers":76082}},"os":{"loadavg":[2.08,0.8,0.37],"uptime":53626.24},"trace":[{"column":15,"file":"node:internal/modules/cjs/loader","function":"Module._resolveFilename","line":1207,"method":"_resolveFilename","native":false},{"column":27,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":1038,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1289,"method":"require","native":false},{"column":18,"file":"node:internal/modules/helpers","function":"require","line":182,"method":null,"native":false},{"column":16,"file":"/app/node_modules/bcrypt/bcrypt.js","function":null,"line":6,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1521,"method":"_compile","native":false},{"column":25,"file":"/app/node_modules/source-map-support/source-map-support.js","function":"Module._compile","line":568,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Module._extensions..js","line":1623,"method":".js","native":false},{"column":20,"file":"/tmp/ts-node-dev-hook-8562707866249666.js","function":"require.extensions..jsx.require.extensions..js","line":114,"method":".js","native":false},{"column":13,"file":"/app/node_modules/ts-node-dev/lib/hook.js","function":"Object.nodeDevHook [as .js]","line":63,"method":"js]","native":false}]}

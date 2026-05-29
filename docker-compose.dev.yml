@@ -1,0 +1,125 @@
+version: '3.9'
+
+# ============================================================
+# OSCARPART â€” Docker Compose DEVELOPMENT
+# Hot reload aktif, port expose untuk debugging
+# Usage: docker compose -f docker-compose.dev.yml up
+# ============================================================
+
+services:
+  # â”€â”€ PostgreSQL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  postgres:
+    image: postgres:16-alpine
+    container_name: oscarpart_postgres_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       oscarpart
+      POSTGRES_USER:     oscarpart_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-devpassword123}
+      PGDATA:            /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./database/indexes.sql:/docker-entrypoint-initdb.d/02_indexes.sql:ro
+      - ./database/seeds/001_initial_data.sql:/docker-entrypoint-initdb.d/03_seed.sql:ro
+      - ./database/seeds/002_sample_parts.sql:/docker-entrypoint-initdb.d/04_parts.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test:     ["CMD-SHELL", "pg_isready -U oscarpart_user -d oscarpart"]
+      interval: 5s
+      timeout:  3s
+      retries:  10
+    networks:
+      - oscarpart_dev
+
+  # â”€â”€ Redis â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  redis:
+    image: redis:7-alpine
+    container_name: oscarpart_redis_dev
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD:-devredis123} --maxmemory 128mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test:     ["CMD", "redis-cli", "--pass", "${REDIS_PASSWORD:-devredis123}", "ping"]
+      interval: 5s
+      timeout:  3s
+      retries:  5
+    networks:
+      - oscarpart_dev
+
+  # â”€â”€ Backend (ts-node-dev hot reload) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  backend:
+    image: node:20-alpine
+    container_name: oscarpart_backend_dev
+    working_dir: /app
+    command: sh -c "npm install --ignore-scripts && npm run dev"
+    restart: unless-stopped
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis:    { condition: service_healthy }
+    environment:
+      NODE_ENV:           development
+      PORT:               4000
+      DB_HOST:            postgres
+      DB_PORT:            5432
+      DB_NAME:            oscarpart
+      DB_USER:            oscarpart_user
+      DB_PASSWORD:        ${DB_PASSWORD:-devpassword123}
+      REDIS_HOST:         redis
+      REDIS_PORT:         6379
+      REDIS_PASSWORD:     ${REDIS_PASSWORD:-devredis123}
+      JWT_ACCESS_SECRET:  ${JWT_ACCESS_SECRET:-dev_access_secret_change_in_production_32chars}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-dev_refresh_secret_change_in_production_32chars}
+      JWT_ACCESS_EXPIRY:  15m
+      JWT_REFRESH_EXPIRY: 30d
+      FRONTEND_URL:       http://localhost:3000
+      CORS_ORIGIN:        http://localhost:3000
+      BCRYPT_ROUNDS:      10
+      LOG_LEVEL:          debug
+      WHATSAPP_NUMBER:    6288802032033
+      EMAIL_PROVIDER:     ${EMAIL_PROVIDER:-smtp}
+      SMTP_HOST:          ${SMTP_HOST:-}
+      SMTP_PORT:          ${SMTP_PORT:-587}
+      SMTP_USER:          ${SMTP_USER:-}
+      SMTP_PASSWORD:      ${SMTP_PASSWORD:-}
+      EMAIL_FROM_NAME:    OSCARPART Dev
+      EMAIL_FROM_ADDRESS: ${EMAIL_FROM_ADDRESS:-noreply@oscarpart.id}
+      EMAIL_ADMIN:        ${EMAIL_ADMIN:-admin@oscarpart.id}
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - oscarpart_dev
+
+  # â”€â”€ Frontend (Next.js dev server) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  frontend:
+    image: node:20-alpine
+    container_name: oscarpart_frontend_dev
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL:       http://localhost:4000/api/v1
+      NEXT_PUBLIC_COMPANY_NAME:  OSCARPART
+      NODE_ENV:                  development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - oscarpart_dev
+
+volumes:
+  postgres_dev_data:
+
+networks:
+  oscarpart_dev:
+    driver: bridge
