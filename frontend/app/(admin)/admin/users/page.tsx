@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { adminApi } from '@/lib/api-client';
-import { formatDateTime, STATUS_BADGE, STATUS_LABELS } from '../../../../lib/formatters';
+import { formatDateTime, STATUS_BADGE, STATUS_LABELS } from '@/lib/formatters';
 import { AdminShell } from '../AdminShell';
 import toast from 'react-hot-toast';
 import { Search, Filter, CheckCircle, XCircle, UserX, ChevronLeft, ChevronRight } from 'lucide-react';
