@@ -23,6 +23,10 @@ import {
 } from './routes/all-routes';
 
 const app  = express();
+console.log('🔍 Env check:', {
+  JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET ? 'EXISTS' : 'UNDEFINED',
+  NODE_ENV: process.env.NODE_ENV
+});
 const PORT = parseInt(process.env.PORT || '4000');
 const API  = process.env.API_PREFIX || '/api/v1';
 
