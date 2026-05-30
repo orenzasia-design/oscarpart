@@ -1,12 +1,14 @@
 'use client';
-export const dynamic = 'force-dynamic';
+
+import { Suspense } from 'react';
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../../../lib/auth-context';
 import toast from 'react-hot-toast';
 
-export default function LoginPage() {
+// Komponen dalam yang menggunakan useSearchParams()
+function LoginContent() {
   const [email, setEmail]     = useState('');
   const [password, setPass]   = useState('');
   const [loading, setLoading] = useState(false);
@@ -75,7 +77,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPass(e.target.value)}
                 className="input"
-                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                placeholder="••••••••"
                 required
               />
             </div>
@@ -91,5 +93,14 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+// Ekspor default dengan Suspense boundary
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Memuat halaman login...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
