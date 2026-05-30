@@ -2,35 +2,35 @@ import { Pool, PoolConfig } from 'pg';
 import logger from './logger';
 
 const poolConfig: PoolConfig = {
-  host:     process.env.DB_HOST     || 'localhost',
-  port:     parseInt(process.env.DB_PORT || '5432'),
-  database: process.env.DB_NAME     || 'oscarpart',
-  user:     process.env.DB_USER     || 'oscarpart_user',
-  password: process.env.DB_PASSWORD,
+  connectionString: process.env.DATABASE_URL || undefined,
+  host:     process.env.DATABASE_URL ? undefined : (process.env.DB_HOST || 'localhost'),
+  port:     process.env.DATABASE_URL ? undefined : parseInt(process.env.DB_PORT || '5432'),
+  database: process.env.DATABASE_URL ? undefined : (process.env.DB_NAME || 'oscarpart'),
+  user:     process.env.DATABASE_URL ? undefined : (process.env.DB_USER || 'oscarpart_user'),
+  password: process.env.DATABASE_URL ? undefined : process.env.DB_PASSWORD,
   min:      parseInt(process.env.DB_POOL_MIN || '2'),
   max:      parseInt(process.env.DB_POOL_MAX || '10'),
   idleTimeoutMillis:    30000,
-  connectionTimeoutMillis: 5000,
+  connectionTimeoutMillis: 10000,
   ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 };
 
 export const db = new Pool(poolConfig);
 
-// Verify connection on startup
 db.on('connect', () => {
   logger.info('New PostgreSQL client connected');
 });
 
 db.on('error', (err: Error) => {
   logger.error('PostgreSQL pool error:', err);
-  process.exit(1);
+  // Removed process.exit(1) — pool errors should not kill the server
 });
 
 export async function testDatabaseConnection(): Promise<void> {
   try {
     const client = await db.connect();
     const result = await client.query('SELECT NOW() AS time, version() AS pg_version');
-    logger.info(`Database connected: PostgreSQL ${result.rows[0].pg_version.split(' ')[1]} at ${result.rows[0].time}`);
+    logger.info(`Database connected: PostgreSQL at ${result.rows[0].time}`);
     client.release();
   } catch (err) {
     logger.error('Failed to connect to database:', err);
@@ -38,7 +38,6 @@ export async function testDatabaseConnection(): Promise<void> {
   }
 }
 
-// Typed query helper with error context
 export async function query<T = Record<string, unknown>>(
   text: string,
   params?: (string | number | boolean | null | undefined)[]
@@ -57,7 +56,6 @@ export async function query<T = Record<string, unknown>>(
   }
 }
 
-// Transaction helper
 export async function withTransaction<T>(
   fn: (client: import('pg').PoolClient) => Promise<T>
 ): Promise<T> {
