@@ -54,6 +54,16 @@ app.get('/health', async (_req, res) => {
   }
 });
 
+// Debug endpoint untuk cek environment variables
+app.get('/debug-env', (_req, res) => {
+  res.json({
+    JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET ? 'SET' : 'MISSING',
+    JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET ? 'SET' : 'MISSING',
+    NODE_ENV: process.env.NODE_ENV,
+    PORT: process.env.PORT,
+  });
+});
+
 // Routes
 app.use(`${API}/auth`,      authRoutes);
 app.use(`${API}/admin`,     adminRoutes);
