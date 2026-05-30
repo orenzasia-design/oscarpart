@@ -64,8 +64,8 @@ export interface JwtPayload {
 // ============================================================
 
 const BCRYPT_ROUNDS    = parseInt(process.env.BCRYPT_ROUNDS || '12');
-const ACCESS_SECRET    = process.env.JWT_ACCESS_SECRET!;
-const REFRESH_SECRET   = process.env.JWT_REFRESH_SECRET!;
+const getAccessSecret  = () => process.env.JWT_getAccessSecret()!;
+const getRefreshSecret = () => process.env.JWT_getRefreshSecret()!;
 const ACCESS_EXPIRY    = process.env.JWT_ACCESS_EXPIRY  || '15m';
 const REFRESH_EXPIRY   = process.env.JWT_REFRESH_EXPIRY || '30d';
 const REFRESH_EXPIRY_MS = 30 * 24 * 60 * 60 * 1000; // 30 days in ms
@@ -110,7 +110,7 @@ export function generateAccessToken(user: User): string {
     role:   user.role,
     status: user.status,
   };
-  return jwt.sign(payload, ACCESS_SECRET, {
+  return jwt.sign(payload, getAccessSecret(), {
     expiresIn: ACCESS_EXPIRY,
     issuer:    'oscarpart-api',
     audience:  'oscarpart-client',
@@ -118,7 +118,7 @@ export function generateAccessToken(user: User): string {
 }
 
 export function verifyAccessToken(token: string): JwtPayload {
-  return jwt.verify(token, ACCESS_SECRET, {
+  return jwt.verify(token, getAccessSecret(), {
     issuer:   'oscarpart-api',
     audience: 'oscarpart-client',
   }) as JwtPayload;

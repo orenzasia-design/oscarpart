@@ -1,7 +1,7 @@
 {
   "name": "oscarpart-backend",
   "version": "1.0.0",
-  "description": "OSCARPART Enterprise Platform \u2014 Backend API",
+  "description": "OSCARPART Enterprise Platform — Backend API",
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
@@ -16,6 +16,7 @@
     "@types/cookie-parser": "^1.4.10",
     "@types/multer": "^2.1.0",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
