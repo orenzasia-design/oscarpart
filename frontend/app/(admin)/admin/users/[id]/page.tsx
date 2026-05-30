@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { adminApi } from '@/lib/api-client';
@@ -28,8 +28,10 @@ interface UserDetail {
   rfq_count?: number;
 }
 
-export default function AdminUserDetailPage({ params }: { params: { id: string } }) {
+export default function AdminUserDetailPage\(props: \{ params: Promise<\{ id: string \}> \}\) {
   const router = useRouter();
+  const params = use(props.params);
+  const id = id;
   const [user, setUser] = useState<UserDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [rejectReason, setRejectReason] = useState('');
@@ -37,11 +39,11 @@ export default function AdminUserDetailPage({ params }: { params: { id: string }
   const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
-    adminApi.getUser(params.id)
+    adminApi.getUser(id)
       .then(res => setUser(res.data.data))
       .catch(() => toast.error('Gagal memuat data user.'))
       .finally(() => setLoading(false));
-  }, [params.id]);
+  }, [id]);
 
   const handleApprove = async () => {
     if (!user) return;
