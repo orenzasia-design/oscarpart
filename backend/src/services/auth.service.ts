@@ -64,8 +64,13 @@ export interface JwtPayload {
 // ============================================================
 
 const BCRYPT_ROUNDS    = parseInt(process.env.BCRYPT_ROUNDS || '12');
-const getAccessSecret  = () => process.env.JWT_ACCESS_SECRET!;
-const getRefreshSecret = () => process.env.JWT_REFRESH_SECRET!;
+// 🔧 TEMPORARY HARDCODE - Hapus setelah environment variable beres
+const HARDCODED_ACCESS_SECRET  = 'tempHardcodeAccessSecret123!@#';
+const HARDCODED_REFRESH_SECRET = 'tempHardcodeRefreshSecret456$%^';
+const getAccessSecret  = () => HARDCODED_ACCESS_SECRET;
+const getRefreshSecret = () => HARDCODED_REFRESH_SECRET;
+// ============================================================
+
 const ACCESS_EXPIRY    = process.env.JWT_ACCESS_EXPIRY  || '15m';
 const REFRESH_EXPIRY   = process.env.JWT_REFRESH_EXPIRY || '30d';
 const REFRESH_EXPIRY_MS = 30 * 24 * 60 * 60 * 1000; // 30 days in ms
