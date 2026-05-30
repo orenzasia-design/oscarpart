@@ -1,10 +1,10 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { adminApi } from '@/lib/api-client';
 import { formatIDR, formatDateTime, STATUS_BADGE, STATUS_LABELS } from '../../../../lib/formatters';
-import { AdminShell } from '../dashboard/page';
+import { AdminShell } from '../AdminShell';
 import toast from 'react-hot-toast';
 import { Search, Download, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 

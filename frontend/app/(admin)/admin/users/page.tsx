@@ -1,11 +1,11 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { adminApi } from '@/lib/api-client';
 import { formatDateTime, STATUS_BADGE, STATUS_LABELS } from '../../../../lib/formatters';
-import { AdminShell } from '../dashboard/page';
+import { AdminShell } from '../AdminShell';
 import toast from 'react-hot-toast';
 import { Search, Filter, CheckCircle, XCircle, UserX, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -167,7 +167,7 @@ export default function AdminUsersPage() {
                   <td className="table-cell">
                     <Link href={`/admin/users/${user.id}`} className="hover:text-brand-600">
                       <p className="font-semibold text-gray-800">{user.company_name || '-'}</p>
-                      <p className="text-xs text-gray-500">{user.full_name} • {user.position || '-'}</p>
+                      <p className="text-xs text-gray-500">{user.full_name} � {user.position || '-'}</p>
                       <p className="text-xs text-gray-400">{user.email}</p>
                     </Link>
                   </td>
@@ -184,7 +184,7 @@ export default function AdminUsersPage() {
                   <td className="table-cell">
                     <p className="text-xs">{formatDateTime(user.created_at)}</p>
                     {user.approved_at && (
-                      <p className="text-xs text-green-600">✓ {formatDateTime(user.approved_at)}</p>
+                      <p className="text-xs text-green-600">? {formatDateTime(user.approved_at)}</p>
                     )}
                   </td>
                   <td className="table-cell">

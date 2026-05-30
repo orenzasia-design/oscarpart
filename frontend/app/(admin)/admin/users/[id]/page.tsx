@@ -167,17 +167,6 @@ function LogoutButton() {
   );
 }
 
-export function AdminShell({ children, title }: { children: React.ReactNode; title: string }) {
-  const NAV_ITEMS = [
-    { href: '/admin/dashboard',  label: 'Dashboard',   icon: 'Ã°Å¸â€œÅ ' },
-    { href: '/admin/users',      label: 'User & Approval', icon: 'Ã°Å¸â€˜Â¥' },
-    { href: '/admin/leads',      label: 'Lead CRM',    icon: 'Ã°Å¸Å½Â¯' },
-    { href: '/admin/customers',   label: 'Customer',    icon: 'Ã°Å¸ÂÂ¢' },
-    { href: '/admin/rfq',        label: 'RFQ',         icon: 'Ã°Å¸â€œâ€¹' },
-    { href: '/admin/parts',      label: 'Database Part', icon: 'Ã°Å¸â€Â§' },
-    { href: '/admin/analytics',  label: 'Analitik',    icon: 'Ã°Å¸â€œË†' },
-    { href: '/admin/settings',   label: 'Pengaturan',  icon: 'Ã¢Å¡â„¢Ã¯Â¸Â' },
-  ];
 
   return (
     <div className="flex h-screen bg-surface overflow-hidden">

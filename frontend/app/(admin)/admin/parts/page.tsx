@@ -1,10 +1,10 @@
-ï»¿'use client';
+'use client';
 
 import { useEffect, useState, useCallback, useRef } from 'react';
 import * as XLSX from 'xlsx';
 import { adminApi } from '@/lib/api-client';
 import { formatIDR, formatNumber } from '../../../../lib/formatters';
-import { AdminShell } from '../dashboard/page';
+import { AdminShell } from '../AdminShell';
 import toast from 'react-hot-toast';
 import { Search, Upload, Plus, ChevronLeft, ChevronRight, Package } from 'lucide-react';
 
@@ -131,11 +131,11 @@ export default function AdminPartsPage() {
               <p className="font-semibold text-sm">{importResult.imported} part berhasil diimport.</p>
               {importResult.errors.length > 0 && (
                 <ul className="mt-2 text-xs text-yellow-700 space-y-0.5 max-h-24 overflow-y-auto">
-                  {importResult.errors.map((e, i) => <li key={i}>â€¢ {e}</li>)}
+                  {importResult.errors.map((e, i) => <li key={i}>• {e}</li>)}
                 </ul>
               )}
             </div>
-            <button onClick={() => setImportResult(null)} className="text-gray-400 hover:text-gray-600 text-lg leading-none ml-4">Ã—</button>
+            <button onClick={() => setImportResult(null)} className="text-gray-400 hover:text-gray-600 text-lg leading-none ml-4">×</button>
           </div>
         </div>
       )}
