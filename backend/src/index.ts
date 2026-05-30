@@ -78,7 +78,11 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 async function bootstrap(): Promise<void> {
   logger.info('🚀 Starting OSCARPART API...');
   await testDatabaseConnection();
-  await createRedisClient();
+  try {
+    await createRedisClient();
+  } catch (err) {
+    logger.warn('Redis not available, continuing without cache:', err);
+  }
   app.listen(PORT, () => {
     logger.info(`✅ OSCARPART API running on :${PORT} [${process.env.NODE_ENV}]`);
     logger.info(`   Endpoints: ${API}/auth | ${API}/parts | ${API}/rfq | ${API}/admin/*`);
