@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { adminApi, api } from '../../../../../lib/api-client';
 import { formatIDR, formatDateTime, STATUS_BADGE, STATUS_LABELS } from '../../../../../lib/formatters';
-import { AdminShell } from '../../dashboard/page';
+import { AdminShell } from '../../AdminShell';
 import toast from 'react-hot-toast';
 import { ArrowLeft, Download, MessageCircle, CheckCircle, AlertCircle, Package } from 'lucide-react';
 
