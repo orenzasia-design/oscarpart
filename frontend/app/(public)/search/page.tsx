@@ -1,10 +1,10 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search, Package, AlertCircle, Lock, CheckCircle, XCircle, ShoppingCart, ArrowLeft } from 'lucide-react';
-import { partsApi, rfqApi } from '../../../lib/api-client';
+import { partsApi, rfqApi } from '@/lib/api-client';
 import { useAuth } from '../../../lib/auth-context';
 import toast from 'react-hot-toast';
 import { formatIDR } from '../../../lib/formatters';

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
@@ -10,7 +10,7 @@ import {
   Search, Upload, Download, Plus, ArrowRight, ArrowLeft,
   Send, MessageCircle, CheckCircle, FileSpreadsheet, X
 } from 'lucide-react';
-import { rfqApi, partsApi } from '../../../lib/api-client';
+import { rfqApi, partsApi } from '@/lib/api-client';
 import { useAuth } from '../../../lib/auth-context';
 import { formatIDR } from '../../../lib/formatters';
 import { StepIndicator, Spinner, Banner } from '../../../components/ui/index';

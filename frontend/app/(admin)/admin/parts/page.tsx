@@ -1,8 +1,8 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState, useCallback, useRef } from 'react';
 import * as XLSX from 'xlsx';
-import { adminApi } from '../../../../lib/api-client';
+import { adminApi } from '@/lib/api-client';
 import { formatIDR, formatNumber } from '../../../../lib/formatters';
 import { AdminShell } from '../dashboard/page';
 import toast from 'react-hot-toast';

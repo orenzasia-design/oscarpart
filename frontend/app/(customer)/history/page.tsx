@@ -1,8 +1,8 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { rfqApi } from '../../../lib/api-client';
+import { rfqApi } from '@/lib/api-client';
 import { formatIDR, formatDateTime, STATUS_BADGE, STATUS_LABELS } from '../../../lib/formatters';
 import { useAuth } from '../../../lib/auth-context';
 import { Pagination } from '../../../components/ui/index';

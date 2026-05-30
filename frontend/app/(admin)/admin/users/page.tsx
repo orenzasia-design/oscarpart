@@ -1,9 +1,9 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { adminApi } from '../../../../lib/api-client';
+import { adminApi } from '@/lib/api-client';
 import { formatDateTime, STATUS_BADGE, STATUS_LABELS } from '../../../../lib/formatters';
 import { AdminShell } from '../dashboard/page';
 import toast from 'react-hot-toast';

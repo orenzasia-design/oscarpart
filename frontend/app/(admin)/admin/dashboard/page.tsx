@@ -1,8 +1,8 @@
-'use client';
+﻿'use client';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../../../lib/auth-context';
 import Link from 'next/link';
-import { adminApi } from '../../../../lib/api-client';
+import { adminApi } from '@/lib/api-client';
 import { formatIDR, formatDateTime, STATUS_BADGE, STATUS_LABELS } from '../../../../lib/formatters';
 import { Users, FileText, TrendingUp, Clock, AlertTriangle, Search, Activity, LayoutDashboard, Target, Building2, Wrench, BarChart2, Settings, LogOut, ArrowRight } from 'lucide-react';
 
