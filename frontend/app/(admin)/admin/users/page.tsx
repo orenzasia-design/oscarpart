@@ -167,7 +167,7 @@ export default function AdminUsersPage() {
                   <td className="table-cell">
                     <Link href={`/admin/users/${user.id}`} className="hover:text-brand-600">
                       <p className="font-semibold text-gray-800">{user.company_name || '-'}</p>
-                      <p className="text-xs text-gray-500">{user.full_name} • {user.position || '-'}</p>
+                      <p className="text-xs text-gray-500">{user.full_name} ï¿½ {user.position || '-'}</p>
                       <p className="text-xs text-gray-400">{user.email}</p>
                     </Link>
                   </td>
