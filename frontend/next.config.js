@@ -36,5 +36,9 @@ const nextConfig = {
       },
     ];
   },
+  // MATIKAN aturan Suspense untuk useSearchParams (SEMENTARA)
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 module.exports = nextConfig;
