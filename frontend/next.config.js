@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   reactStrictMode: true,
   env: {
     NEXT_PUBLIC_API_URL:      process.env.NEXT_PUBLIC_API_URL      || 'http://localhost:4000/api/v1',
@@ -35,10 +36,6 @@ const nextConfig = {
         ],
       },
     ];
-  },
-  // MATIKAN aturan Suspense untuk useSearchParams (SEMENTARA)
-  experimental: {
-    missingSuspenseWithCSRBailout: false,
   },
 };
 module.exports = nextConfig;
