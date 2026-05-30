@@ -171,7 +171,7 @@ export const rfqApi = {
 export const adminApi = {
   // Users
   users:            (params?: Record<string,unknown>) => api.get('/admin/users', { params }),
-  pendingCount:     ()                                => api.get('/admin/users/pending-count'),
+  getUser: (id: string) => axios.get(`/admin/users/${id}`),
   approveUser:      (id: string)                      => api.patch(`/admin/users/${id}/approve`),
   rejectUser:       (id: string, reason: string)      => api.patch(`/admin/users/${id}/reject`, { reason }),
   suspendUser:      (id: string)                      => api.patch(`/admin/users/${id}/suspend`),
