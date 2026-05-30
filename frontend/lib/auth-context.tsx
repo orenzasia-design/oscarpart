@@ -1,7 +1,7 @@
-'use client';
+﻿'use client';
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { authApi, setAccessToken } from '../lib/api-client';
+import { authApi, setAccessToken } from '@/lib/api-client';
 
 // ── Cookie helpers for Next.js middleware route protection ──
 function setAuthCookies(role: string, status: string): void {

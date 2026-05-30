@@ -821,3 +821,11 @@
 20:18:02 [[33mwarn[39m]: Slow query detected {"duration":2004,"text":"INSERT INTO parts (\n       part_number, description, unit_type, brand_name,\n       stock_quantity, unit_price, warehouse_location, status\n     )\n     VALUES ($1, $2, $3, $4, $5, $6, $7, COALESCE($8::p"}
 20:18:02 [[33mwarn[39m]: Slow query detected {"duration":2006,"text":"INSERT INTO parts (\n       part_number, description, unit_type, brand_name,\n       stock_quantity, unit_price, warehouse_location, status\n     )\n     VALUES ($1, $2, $3, $4, $5, $6, $7, COALESCE($8::p"}
 20:18:02 [[33mwarn[39m]: Slow query detected {"duration":2010,"text":"INSERT INTO parts (\n       part_number, description, unit_type, brand_name,\n       stock_quantity, unit_price, warehouse_location, status\n     )\n     VALUES ($1, $2, $3, $4, $5, $6, $7, COALESCE($8::p"}
+21:39:23 [[31merror[39m]: Email send failed {"to":"admin@oscarpart.id","subject":"[OSCARPART] RFQ Baru: RFQ-20260529-0006 — PT. TAMIANG","err":{"code":"EAUTH","command":"API"}}
+21:46:52 [[31merror[39m]: Email send failed {"to":"admin@oscarpart.id","subject":"[OSCARPART] RFQ Baru: RFQ-20260529-0007 — PT. TAMIANG","err":{"code":"EAUTH","command":"API"}}
+21:49:14 [[32minfo[39m]: New PostgreSQL client connected
+21:49:17 [[33mwarn[39m]: Slow query detected {"duration":3039,"text":"INSERT INTO audit_log (user_id, action, entity_type, ip_address, user_agent, metadata)\n           VALUES ($1, $2, $3, $4, $5, $6)"}
+21:49:20 [[32minfo[39m]: New PostgreSQL client connected
+21:49:20 [[32minfo[39m]: New PostgreSQL client connected
+21:49:20 [[32minfo[39m]: New PostgreSQL client connected
+21:51:04 [[32minfo[39m]: New PostgreSQL client connected

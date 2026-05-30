@@ -31,7 +31,7 @@ interface UserDetail {
 export default function AdminUserDetailPage(props: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const params = use(props.params);
-  const id = id;
+  const { id } = params;
   const [user, setUser] = useState<UserDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [rejectReason, setRejectReason] = useState('');
