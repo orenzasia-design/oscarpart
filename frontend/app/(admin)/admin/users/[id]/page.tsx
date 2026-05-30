@@ -28,7 +28,7 @@ interface UserDetail {
   rfq_count?: number;
 }
 
-export default function AdminUserDetailPage\(props: \{ params: Promise<\{ id: string \}> \}\) {
+export default function AdminUserDetailPage(props: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const params = use(props.params);
   const id = id;
