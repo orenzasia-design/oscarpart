@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { Suspense, useEffect, useState, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { adminApi } from '@/lib/api-client';
@@ -28,7 +28,8 @@ interface User {
   rfq_count?:      number;
 }
 
-export default function AdminUsersPage() {
+// Konten utama yang menggunakan useSearchParams()
+function AdminUsersContent() {
   const searchParams = useSearchParams();
   const router       = useRouter();
 
@@ -167,26 +168,26 @@ export default function AdminUsersPage() {
                   <td className="table-cell">
                     <Link href={`/admin/users/${user.id}`} className="hover:text-brand-600">
                       <p className="font-semibold text-gray-800">{user.company_name || '-'}</p>
-                      <p className="text-xs text-gray-500">{user.full_name} � {user.position || '-'}</p>
+                      <p className="text-xs text-gray-500">{user.full_name}   {user.position || '-'}</p>
                       <p className="text-xs text-gray-400">{user.email}</p>
                     </Link>
-                  </td>
+                   </td>
                   <td className="table-cell">
                     <p className="text-xs">{user.industry || '-'}</p>
                     <p className="text-xs text-gray-400">{user.project_location || '-'}</p>
-                  </td>
+                   </td>
                   <td className="table-cell">
                     <span className={STATUS_BADGE[user.status] || 'badge-gray'}>
                       {STATUS_LABELS[user.status] || user.status}
                     </span>
                     <p className="text-xs text-gray-400 mt-1">{user.role}</p>
-                  </td>
+                   </td>
                   <td className="table-cell">
                     <p className="text-xs">{formatDateTime(user.created_at)}</p>
                     {user.approved_at && (
-                      <p className="text-xs text-green-600">? {formatDateTime(user.approved_at)}</p>
+                      <p className="text-xs text-green-600">✓ {formatDateTime(user.approved_at)}</p>
                     )}
-                  </td>
+                   </td>
                   <td className="table-cell">
                     <div className="flex items-center justify-center gap-2">
                       {user.status === 'pending' && (
@@ -217,11 +218,11 @@ export default function AdminUsersPage() {
                       )}
                       <Link href={`/admin/users/${user.id}`} className="text-xs text-brand-600 hover:underline">Detail</Link>
                     </div>
-                  </td>
+                   </td>
                 </tr>
               ))}
             </tbody>
-          </table>
+           </table>
         </div>
 
         {/* Pagination */}
@@ -281,5 +282,14 @@ export default function AdminUsersPage() {
         </div>
       )}
     </AdminShell>
+  );
+}
+
+// Ekspor default dengan Suspense boundary
+export default function AdminUsersPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-gray-500">Memuat halaman...</div>}>
+      <AdminUsersContent />
+    </Suspense>
   );
 }
