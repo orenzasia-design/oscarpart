@@ -47,8 +47,8 @@ app.use(auditMiddleware);
 app.post('/admin/truncate-parts', async (_req, res) => {
   try {
     const { db } = await import('./config/database');
-    await db.query('TRUNCATE parts RESTART IDENTITY;');
-    res.json({ success: true, message: 'Semua data parts telah dihapus.' });
+    await db.query('TRUNCATE parts CASCADE;');
+    res.json({ success: true, message: 'Semua data parts (dan relasi) telah dihapus.' });
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message });
   }
