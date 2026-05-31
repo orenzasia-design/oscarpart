@@ -189,9 +189,9 @@ export default function HomePage() {
           <div>
             <h4 className="font-semibold mb-3 text-sm">Kontak</h4>
             <ul className="space-y-2 text-sm opacity-70">
-              <li className="flex items-center gap-2"><Phone size={14} /> +62 XXX-XXXX-XXXX</li>
-              <li className="flex items-center gap-2"><Mail size={14} /> info@oscarpart.id</li>
-              <li className="flex items-center gap-2"><MapPin size={14} /> Balikpapan, Kalimantan Timur</li>
+              <li className="flex items-center gap-2"><Phone size={14} /> +62 888-020-32033</li>
+              <li className="flex items-center gap-2"><Mail size={14} /> orenzasia@gmail.com</li>
+              <li className="flex items-center gap-2"><MapPin size={14} /> Jakarta Selatan,DKI Jakarta</li>
             </ul>
           </div>
         </div>
