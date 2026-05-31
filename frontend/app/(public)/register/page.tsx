@@ -63,10 +63,28 @@ export default function RegisterPage() {
         <div className="card max-w-md w-full text-center py-10">
           <CheckCircle size={48} className="text-green-500 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-gray-800 mb-2">Pendaftaran Berhasil!</h2>
-          <p className="text-sm text-gray-500 leading-relaxed">
-            Akun Anda sedang dalam proses review oleh tim OSCARPART. Anda akan mendapat notifikasi email setelah disetujui.
+          <p className="text-sm text-gray-500 leading-relaxed mb-4">
+            Data perusahaan Anda telah kami terima. Tim OSCARPART akan mereview dan menyetujui akun Anda dalam <strong className="text-gray-700">1x24 jam kerja</strong>.
           </p>
-          <Link href="/" className="btn-primary mt-6 inline-block">Kembali ke Beranda</Link>
+          <div className="bg-brand-50 border border-brand-100 rounded-xl p-4 text-left mb-6">
+            <p className="text-xs font-semibold text-brand-700 mb-2">Yang akan terjadi selanjutnya:</p>
+            <ul className="text-xs text-brand-600 space-y-1">
+              <li>✓ Tim kami review data perusahaan Anda</li>
+              <li>✓ Akun diaktifkan dalam 1x24 jam kerja</li>
+              <li>✓ Anda bisa login dan akses harga & stok lengkap</li>
+            </ul>
+          </div>
+          <p className="text-xs text-gray-400 mb-4">Butuh akses lebih cepat? Hubungi kami langsung:</p>
+          
+            href="https://wa.me/6288802032033?text=Halo%20OSCARPART%2C%20saya%20baru%20mendaftar%20dan%20ingin%20konfirmasi%20akun%20saya."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition-colors mb-3"
+          >
+            💬 Konfirmasi via WhatsApp
+          </a>
+          <br />
+          <Link href="/" className="text-sm text-brand-600 hover:underline">Kembali ke Beranda</Link>
         </div>
       </div>
     );
