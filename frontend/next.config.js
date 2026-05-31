@@ -3,19 +3,15 @@ const nextConfig = {
   output: 'standalone',
   reactStrictMode: true,
   env: {
-    NEXT_PUBLIC_API_URL:      process.env.NEXT_PUBLIC_API_URL      || 'http://localhost:4000/api/v1',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://oscarpart-production.up.railway.app/api/v1',
     NEXT_PUBLIC_COMPANY_NAME: process.env.NEXT_PUBLIC_COMPANY_NAME || 'OSCARPART',
   },
   images: {
     domains: ['files.oscarpart.id', 'localhost'],
   },
+  // Hapus rewrites karena frontend dan backend terpisah di Railway
   async rewrites() {
-    return [
-      {
-        source: '/api/v1/:path*',
-        destination: 'http://oscarpart_backend_dev:4000/api/v1/:path*',
-      },
-    ];
+    return [];
   },
   async headers() {
     return [
