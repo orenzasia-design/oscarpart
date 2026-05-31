@@ -56,6 +56,7 @@ export { rfqRouter };
 // ============================================================
 import { Router as LeadRouter } from 'express';
 import { list, getOne as getOneLead, update, stats } from '../controllers/leads.controller';
+import { authenticate, requireRole } from '../middleware/auth.middleware';
 
 const leadsRouter = LeadRouter();
 leadsRouter.use(authenticate, requireRole('admin'));
@@ -72,6 +73,7 @@ export { leadsRouter };
 // ============================================================
 import { Router as AnalyticsRouter } from 'express';
 import analyticsCtrl from '../controllers/analytics.controller';
+import { authenticate, requireRole } from '../middleware/auth.middleware';
 
 const analyticsRouter = AnalyticsRouter();
 analyticsRouter.use(authenticate, requireRole('admin'));
@@ -94,6 +96,7 @@ export { analyticsRouter };
 import { Router as PdfRouter } from 'express';
 import { generateRfqPdf } from '../services/pdf.service';
 import logger from '../config/logger';
+import { authenticate, requireRole } from '../middleware/auth.middleware';
 
 const pdfRouter = PdfRouter();
 pdfRouter.use(authenticate, requireRole('admin'));
@@ -120,6 +123,7 @@ export { pdfRouter };
 // ============================================================
 import { Router as SettingsRouter } from 'express';
 import { query as dbQuery } from '../config/database';
+import { authenticate, requireRole } from '../middleware/auth.middleware';
 
 const settingsRouter = SettingsRouter();
 settingsRouter.use(authenticate, requireRole('superadmin'));
@@ -148,6 +152,8 @@ export { settingsRouter };
 // Patch RFQ status (admin)
 // ============================================================
 import { Router as StatusRouter } from 'express';
+import { authenticate, requireRole } from '../middleware/auth.middleware';
+
 const rfqStatusRouter = StatusRouter();
 rfqStatusRouter.use(authenticate, requireRole('admin'));
 rfqStatusRouter.patch('/:id/status', async (req, res) => {
