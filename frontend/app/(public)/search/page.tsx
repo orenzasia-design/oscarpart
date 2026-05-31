@@ -285,10 +285,21 @@ function SearchContent() {
 
         {/* Empty state — no search yet */}
         {!loading && !results && !q && (
-          <div className="text-center py-20 text-gray-400">
-            <Search size={48} className="mx-auto mb-4 opacity-30" />
-            <p className="text-lg font-medium">Masukkan part number untuk mulai pencarian</p>
-            <p className="text-sm mt-1">Contoh: 1R-0750, 6I-2501, HMK15V, 707-99-45210</p>
+          <div className="text-center py-16">
+            <Search size={48} className="mx-auto mb-4 text-brand-200" />
+            <p className="text-xl font-bold text-gray-700 mb-2">Cari Part Number Anda</p>
+            <p className="text-sm text-gray-400 mb-8">Contoh: 1R-0750, 6I-2501, HMK15V, 707-99-45210</p>
+            {!user && (
+              <div className="max-w-sm mx-auto bg-brand-50 border border-brand-100 rounded-2xl p-6">
+                <Lock size={24} className="text-brand-400 mx-auto mb-3" />
+                <p className="font-semibold text-brand-700 mb-1">Login untuk lihat harga & stok</p>
+                <p className="text-xs text-brand-400 mb-4">Database 100.000+ part number tersedia untuk customer terdaftar</p>
+                <div className="flex gap-2 justify-center">
+                  <Link href="/login" className="btn-primary text-sm px-5 py-2">Login</Link>
+                  <Link href="/register" className="text-sm border border-brand-300 text-brand-600 font-semibold px-5 py-2 rounded-lg hover:bg-brand-50">Daftar Gratis</Link>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
