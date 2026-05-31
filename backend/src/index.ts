@@ -29,12 +29,31 @@ const API  = process.env.API_PREFIX || '/api/v1';
 app.set('trust proxy', 1);
 
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
+// CORS configuration - hardcoded untuk frontend
+const allowedOrigins = ['https://truthful-spontaneity-production.up.railway.app', 'http://localhost:3000'];
 app.use(cors({
-  origin: '*',  // izinkan semua origin (hanya untuk sementara)
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps, curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   credentials: true,
-  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization','X-Session-Id'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Session-Id'],
 }));
+
+// Tambahkan juga middleware manual untuk preflight
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'https://truthful-spontaneity-production.up.railway.app');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Session-Id');
+  res.sendStatus(200);
+});
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
