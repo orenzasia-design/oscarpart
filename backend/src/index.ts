@@ -34,10 +34,10 @@ app.set('trust proxy', 1);
 
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 app.use(cors({
-  origin:         process.env.CORS_ORIGIN || 'http://localhost:3000',
-  credentials:    true,
-  methods:        ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization','X-Session-Id'],
+  origin: 'https://truthful-spontaneity-production.up.railway.app',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Session-Id'],
 }));
 
 app.use(express.json({ limit: '10mb' }));
