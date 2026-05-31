@@ -23,10 +23,6 @@ import {
 } from './routes/all-routes';
 
 const app  = express();
-console.log('🔍 Env check:', {
-  JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET ? 'EXISTS' : 'UNDEFINED',
-  NODE_ENV: process.env.NODE_ENV
-});
 const PORT = parseInt(process.env.PORT || '4000');
 const API  = process.env.API_PREFIX || '/api/v1';
 
@@ -34,10 +30,10 @@ app.set('trust proxy', 1);
 
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 app.use(cors({
-  origin: 'https://truthful-spontaneity-production.up.railway.app',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Session-Id'],
+  origin:         process.env.CORS_ORIGIN || 'http://localhost:3000',
+  credentials:    true,
+  methods:        ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization','X-Session-Id'],
 }));
 
 app.use(express.json({ limit: '10mb' }));
@@ -46,6 +42,18 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(compression());
 app.use(globalRateLimit);
 app.use(auditMiddleware);
+
+// ========== TEMPORARY ENDPOINT – HAPUS SETELAH DIGUNAKAN ==========
+app.post('/admin/truncate-parts', async (_req, res) => {
+  try {
+    const { db } = await import('./config/database');
+    await db.query('TRUNCATE parts RESTART IDENTITY;');
+    res.json({ success: true, message: 'Semua data parts telah dihapus.' });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+// =================================================================
 
 // Health check
 app.get('/health', async (_req, res) => {
@@ -60,12 +68,11 @@ app.get('/health', async (_req, res) => {
 
 // Debug endpoint untuk cek environment variables
 app.get('/debug-env', (_req, res) => {
-  const allKeys = Object.keys(process.env).filter(k => k.includes('JWT') || k.includes('SECRET') || k === 'NODE_ENV');
   res.json({
-    found_keys: allKeys,
     JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET ? 'SET' : 'MISSING',
     JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET ? 'SET' : 'MISSING',
     NODE_ENV: process.env.NODE_ENV,
+    PORT: process.env.PORT,
   });
 });
 
