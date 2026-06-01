@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
         </AuthProvider>
         {/* Floating WhatsApp Button */}
-        
+                <a
           href="https://wa.me/6288802032033"
           target="_blank"
           rel="noopener noreferrer"
