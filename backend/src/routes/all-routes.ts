@@ -4,50 +4,18 @@
 import { Router } from 'express';
 import { authenticate, optionalAuth, requireRole } from '../middleware/auth.middleware';
 import { uploadRateLimit } from '../middleware/rate-limit.middleware';
-import {
-  createDraft, updateItems, uploadFile, uploadMiddleware,
-  submit, getOne, downloadTemplate, myRfqs, adminList,
-} from '../controllers/rfq.controller';
+import { getUserRfqs, getAllRfqs, getRfqById } from '../controllers/rfq.controller';
 
 const rfqRouter = Router();
 
-// Public — download blank template
-rfqRouter.get('/template', downloadTemplate);
-
-// Optional auth — create draft (works for logged-in and anonymous)
-rfqRouter.post('/draft', optionalAuth, createDraft);
-
-// Upload XLSX/CSV — approved+ or anonymous (anonymous gets stock but no prices)
-rfqRouter.post(
-  '/upload',
-  optionalAuth,
-  uploadRateLimit,
-  (req, res, next) => {
-    uploadMiddleware(req, res, (err) => {
-      if (err) {
-        res.status(422).json({ success: false, error: 'FILE_ERROR', message: err.message });
-        return;
-      }
-      next();
-    });
-  },
-  uploadFile
-);
-
-// Update items in draft
-rfqRouter.post('/:id/items', optionalAuth, updateItems);
-
-// Submit RFQ
-rfqRouter.post('/:id/submit', optionalAuth, submit);
-
 // Customer: their own RFQs
-rfqRouter.get('/my', authenticate, requireRole('approved'), myRfqs);
+rfqRouter.get('/my', authenticate, requireRole('approved'), getUserRfqs);
 
 // Get single RFQ (admin or owner)
-rfqRouter.get('/:id', optionalAuth, getOne);
+rfqRouter.get('/:id', authenticate, getRfqById);
 
 // Admin: list all
-rfqRouter.get('/', authenticate, requireRole('admin'), adminList);
+rfqRouter.get('/', authenticate, requireRole('admin'), getAllRfqs);
 
 export { rfqRouter };
 
@@ -56,7 +24,6 @@ export { rfqRouter };
 // ============================================================
 import { Router as LeadRouter } from 'express';
 import { list, getOne as getOneLead, update, stats } from '../controllers/leads.controller';
-import { authenticate, requireRole } from '../middleware/auth.middleware';
 
 const leadsRouter = LeadRouter();
 leadsRouter.use(authenticate, requireRole('admin'));
@@ -73,7 +40,6 @@ export { leadsRouter };
 // ============================================================
 import { Router as AnalyticsRouter } from 'express';
 import analyticsCtrl from '../controllers/analytics.controller';
-import { authenticate, requireRole } from '../middleware/auth.middleware';
 
 const analyticsRouter = AnalyticsRouter();
 analyticsRouter.use(authenticate, requireRole('admin'));
@@ -96,7 +62,6 @@ export { analyticsRouter };
 import { Router as PdfRouter } from 'express';
 import { generateRfqPdf } from '../services/pdf.service';
 import logger from '../config/logger';
-import { authenticate, requireRole } from '../middleware/auth.middleware';
 
 const pdfRouter = PdfRouter();
 pdfRouter.use(authenticate, requireRole('admin'));
@@ -123,7 +88,6 @@ export { pdfRouter };
 // ============================================================
 import { Router as SettingsRouter } from 'express';
 import { query as dbQuery } from '../config/database';
-import { authenticate, requireRole } from '../middleware/auth.middleware';
 
 const settingsRouter = SettingsRouter();
 settingsRouter.use(authenticate, requireRole('superadmin'));
@@ -152,7 +116,6 @@ export { settingsRouter };
 // Patch RFQ status (admin)
 // ============================================================
 import { Router as StatusRouter } from 'express';
-import { authenticate, requireRole } from '../middleware/auth.middleware';
 
 const rfqStatusRouter = StatusRouter();
 rfqStatusRouter.use(authenticate, requireRole('admin'));
