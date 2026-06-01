@@ -177,9 +177,10 @@ export async function notifyAdminNewRegistration(user: {
   industry: string | null;
   created_at: string;
 }): Promise<void> {
-  const adminEmail = process.env.EMAIL_ADMIN || 'admin@oscarpart.id';
-  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+  const adminEmail  = process.env.EMAIL_ADMIN   || 'admin@oscarpart.id';
+  const frontendUrl = process.env.FRONTEND_URL  || 'http://localhost:3000';
 
+  // --- Email ke admin ---
   const html = wrapEmail('Pendaftaran Akun Baru', `
     <p>Ada pendaftaran akun baru yang memerlukan approval:</p>
     <div class="info-box">
@@ -198,6 +199,43 @@ export async function notifyAdminNewRegistration(user: {
     subject: `[OSCARPART] Pendaftaran Baru: ${user.company_name || user.full_name}`,
     html,
   });
+
+  // --- WhatsApp ke admin via Fonnte ---
+  try {
+    const waMessage =
+      `🔔 *REGISTRASI BARU - OSCARPART*\n\n` +
+      `👤 *Nama:* ${user.full_name}\n` +
+      `📧 *Email:* ${user.email}\n` +
+      `🏢 *Perusahaan:* ${user.company_name || '-'}\n` +
+      `💼 *Jabatan:* ${user.position || '-'}\n` +
+      `🏭 *Industri:* ${user.industry || '-'}\n` +
+      `🕐 *Waktu Daftar:* ${new Date(user.created_at).toLocaleString('id-ID')}\n\n` +
+      `Silakan review di: ${frontendUrl}/admin/users/${user.id}`;
+
+    const fonnteToken  = process.env.FONNTE_TOKEN  || 'nFpeYZTLcB2yrCd7sghK';
+    const fonnteTarget = process.env.FONNTE_ADMIN_NUMBER || '6288802032033';
+
+    const response = await fetch('https://api.fonnte.com/send', {
+      method: 'POST',
+      headers: {
+        'Authorization': fonnteToken,
+        'Content-Type':  'application/json',
+      },
+      body: JSON.stringify({
+        target:  fonnteTarget,
+        message: waMessage,
+      }),
+    });
+
+    const result = await response.json() as { status: boolean; reason?: string };
+    if (!result.status) {
+      logger.warn('Fonnte WA notification failed:', result.reason);
+    } else {
+      logger.info('Fonnte WA notification sent to admin');
+    }
+  } catch (err) {
+    logger.error('Fonnte WA notification error:', err);
+  }
 }
 
 // ============================================================
