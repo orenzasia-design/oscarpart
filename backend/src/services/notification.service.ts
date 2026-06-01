@@ -128,7 +128,6 @@ async function sendEmail(options: {
   const fromName    = process.env.EMAIL_FROM_NAME    || 'OSCARPART';
   const fromAddress = process.env.EMAIL_FROM_ADDRESS || 'noreply@oscarpart.id';
 
-  // Log to DB first
   const notifResult = await query<{ id: string }>(
     `INSERT INTO notifications
        (type, recipient_email, recipient_user_id, subject, body, status)
@@ -180,7 +179,7 @@ export async function notifyAdminNewRegistration(user: {
   const adminEmail  = process.env.EMAIL_ADMIN   || 'admin@oscarpart.id';
   const frontendUrl = process.env.FRONTEND_URL  || 'http://localhost:3000';
 
-  // --- Email ke admin ---
+  // --- Email ke admin (tidak blokir WA jika gagal) ---
   const html = wrapEmail('Pendaftaran Akun Baru', `
     <p>Ada pendaftaran akun baru yang memerlukan approval:</p>
     <div class="info-box">
@@ -194,11 +193,11 @@ export async function notifyAdminNewRegistration(user: {
     <a href="${frontendUrl}/admin/users/${user.id}" class="btn">Review Pendaftaran</a>
   `);
 
-  await sendEmail({
+  sendEmail({
     to:      adminEmail,
     subject: `[OSCARPART] Pendaftaran Baru: ${user.company_name || user.full_name}`,
     html,
-  });
+  }).catch((err: Error) => logger.error('Admin registration email failed:', err));
 
   // --- WhatsApp ke admin via Fonnte ---
   try {
