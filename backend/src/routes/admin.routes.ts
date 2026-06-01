@@ -15,7 +15,7 @@ import {
   suspendUser,
 } from '../controllers/admin-users.controller';
 import { body, param } from 'express-validator';
-import rfqController from '../controllers/rfq.controller';
+import { getAllRfqs, getRfqById } from '../controllers/rfq.controller';
 const router = Router();
 
 // All admin routes require authentication + minimum 'admin' role
@@ -67,6 +67,6 @@ router.patch(
   suspendUser
 );
 // ── RFQ Management ───────────────────────────────────────────
-router.get('/rfq', rfqController.adminList);
-router.get('/rfq/:id', rfqController.getOne);
+router.get('/rfq', getAllRfqs);
+router.get('/rfq/:id', getRfqById);
 export default router;
