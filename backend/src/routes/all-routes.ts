@@ -1,20 +1,4 @@
 // ============================================================
-// rfq.routes.ts
-// ============================================================
-import { Router } from 'express';
-import { authenticate, requireRole } from '../middleware/auth.middleware';
-import { getUserRfqs, getAllRfqs, getRfqById } from '../controllers/rfq.controller';
-
-const rfqRouter = Router();
-
-rfqRouter.use(authenticate);
-rfqRouter.get('/my', requireRole('approved'), getUserRfqs);
-rfqRouter.get('/admin/all', requireRole('admin'), getAllRfqs);
-rfqRouter.get('/:id', getRfqById);
-
-export { rfqRouter };
-
-// ============================================================
 // leads.routes.ts
 // ============================================================
 import { Router as LeadRouter } from 'express';
@@ -23,7 +7,6 @@ import { authenticate as authLead, requireRole as requireLead } from '../middlew
 
 const leadsRouter = LeadRouter();
 leadsRouter.use(authLead, requireLead('admin'));
-
 leadsRouter.get('/',        list);
 leadsRouter.get('/stats',   stats);
 leadsRouter.get('/:id',     getOneLead);
@@ -40,7 +23,6 @@ import { authenticate as authAnalytics, requireRole as requireAnalytics } from '
 
 const analyticsRouter = AnalyticsRouter();
 analyticsRouter.use(authAnalytics, requireAnalytics('admin'));
-
 analyticsRouter.get('/kpis',            analyticsCtrl.kpis);
 analyticsRouter.get('/search-trends',   analyticsCtrl.searchTrends);
 analyticsRouter.get('/parts-not-found', analyticsCtrl.partsNotFound);
@@ -63,7 +45,6 @@ import { authenticate as authPdf, requireRole as requirePdf } from '../middlewar
 
 const pdfRouter = PdfRouter();
 pdfRouter.use(authPdf, requirePdf('admin'));
-
 pdfRouter.get('/rfq/:rfqId', async (req, res) => {
   try {
     const buffer = await generateRfqPdf(req.params.rfqId);
@@ -90,18 +71,16 @@ import { authenticate as authSettings, requireRole as requireSettings } from '..
 
 const settingsRouter = SettingsRouter();
 settingsRouter.use(authSettings, requireSettings('superadmin'));
-
 settingsRouter.get('/', async (_req, res) => {
   const result = await dbQuery('SELECT key, value, value_type, description FROM settings ORDER BY key');
   res.json({ success: true, data: result.rows });
 });
-
 settingsRouter.patch('/:key', async (req, res) => {
   try {
     const { value } = req.body;
     await dbQuery(
       `UPDATE settings SET value = $1, updated_by = $2, updated_at = NOW() WHERE key = $3`,
-      [value, req.user!.sub, req.params.key]
+      [value, (req as any).user!.sub, req.params.key]
     );
     res.json({ success: true });
   } catch (err) {
@@ -119,7 +98,6 @@ import { authenticate as authStatus, requireRole as requireStatus } from '../mid
 
 const rfqStatusRouter = StatusRouter();
 rfqStatusRouter.use(authStatus, requireStatus('admin'));
-
 rfqStatusRouter.patch('/:id/status', async (req, res) => {
   const { status } = req.body;
   const valid = ['submitted','processing','quoted','closed','cancelled'];
