@@ -9,7 +9,7 @@ export const getUserRfqs = async (req: Request, res: Response): Promise<void> =>
     const userId = (req as any).user?.sub as string | undefined;
     if (!userId) { res.status(401).json({ success: false, error: 'UNAUTHORIZED' }); return; }
     const result = await query(
-      `SELECT id, session_number, created_at, status, notes FROM rfq_sessions WHERE user_id = $1 ORDER BY created_at DESC`,
+      `SELECT id, rfq_number, created_at, status, notes FROM rfq_sessions WHERE user_id = $1 ORDER BY created_at DESC`,
       [userId] as any[]
     );
     res.json({ success: true, data: result.rows });
@@ -26,7 +26,7 @@ export const getAllRfqs = async (req: Request, res: Response): Promise<void> => 
       res.status(403).json({ success: false, error: 'FORBIDDEN' }); return;
     }
     const result = await query(
-      `SELECT s.id, s.session_number, s.created_at, s.status, s.notes, u.email, u.full_name, u.company_name FROM rfq_sessions s LEFT JOIN users u ON s.user_id = u.id ORDER BY s.created_at DESC`
+      `SELECT s.id, s.rfq_number, s.created_at, s.status, s.notes, u.email, u.full_name, u.company_name FROM rfq_sessions s LEFT JOIN users u ON s.user_id = u.id ORDER BY s.created_at DESC`
     );
     res.json({ success: true, data: result.rows });
   } catch (error) {
@@ -70,10 +70,10 @@ export const createRFQ = async (req: Request, res: Response): Promise<void> => {
     if (!items || !Array.isArray(items) || items.length === 0) {
       res.status(400).json({ success: false, error: 'ITEMS_REQUIRED' }); return;
     }
-    const sessionNumber = `RFQ-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const rfqNumber = `RFQ-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const sessionResult = await query(
-      `INSERT INTO rfq_sessions (session_number, user_id, notes, status, created_at, updated_at) VALUES ($1, $2, $3, 'submitted', NOW(), NOW()) RETURNING id, session_number, created_at`,
-      [sessionNumber, userId, notes ?? ''] as any[]
+      `INSERT INTO rfq_sessions (rfq_number, user_id, notes, status, created_at, updated_at) VALUES ($1, $2, $3, 'submitted', NOW(), NOW()) RETURNING id, rfq_number, created_at`,
+      [rfqNumber, userId, notes ?? ''] as any[]
     );
     const session = sessionResult.rows[0] as any;
     for (const item of items) {
@@ -97,10 +97,10 @@ export const createRFQ = async (req: Request, res: Response): Promise<void> => {
         await sendRFQConfirmationEmail(
           String(user.email ?? ''),
           String(user.full_name ?? 'Customer'),
-          String(session.session_number ?? ''),
+          String(session.rfq_number ?? ''),
           partList
         );
-        logger.info(`Email sent for RFQ ${session.session_number}`);
+        logger.info(`Email sent for RFQ ${session.rfq_number}`);
       } catch (emailErr) {
         logger.error(`Email failed: ${emailErr}`);
       }
@@ -109,7 +109,7 @@ export const createRFQ = async (req: Request, res: Response): Promise<void> => {
       success: true,
       data: {
         sessionId: session.id,
-        sessionNumber: session.session_number,
+        rfqNumber: session.rfq_number,
         createdAt: session.created_at,
       },
     });
