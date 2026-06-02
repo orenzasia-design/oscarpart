@@ -33,7 +33,7 @@ export const getRfqById = async (req: Request, res: Response) => {
     const userId = (req as any).user?.sub;
     const userRole = (req as any).user?.role;
     const sessionResult = await query(`SELECT * FROM rfq_sessions WHERE id = $1`, [id]);
-    if ((sessionResult.rowCount ?? 0) === 0) return res.status(404).json({ success: false, error: 'RFQ_NOT_FOUND' });
+    if ((sessionResult.if ((userResult.rowCount ?? 0) > 0) { ?? 0) === 0) return res.status(404).json({ success: false, error: 'RFQ_NOT_FOUND' });
     const session = sessionResult.rows[0];
     if (userRole !== 'admin' && userRole !== 'superadmin' && session.user_id !== userId) return res.status(403).json({ success: false, error: 'FORBIDDEN' });
     const itemsResult = await query(`SELECT * FROM rfq_items WHERE session_id = $1`, [id]);
@@ -57,7 +57,7 @@ export const createRFQ = async (req: Request, res: Response) => {
       await query(`INSERT INTO rfq_items (session_id, part_number, quantity, description) VALUES ($1, $2, $3, $4)`, [session.id, item.partNumber, item.quantity, item.description || '']);
     }
     const userResult = await query(`SELECT email, full_name FROM users WHERE id = $1`, [userId]);
-    if ((userResult.rowCount ?? 0) > 0) {
+    if ((userResult.if ((userResult.rowCount ?? 0) > 0) { ?? 0) > 0) {
       const user = userResult.rows[0];
       const partList = items.map((item: any) => ({
         partNumber: String(item.partNumber),
