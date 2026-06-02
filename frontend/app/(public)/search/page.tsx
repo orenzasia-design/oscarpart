@@ -225,16 +225,24 @@ function SearchContent() {
                         {/* Stock & Price — tiered by role */}
                         <div className="flex items-center gap-4 mt-2">
                           {part.stock_quantity !== undefined ? (
-                            <span className={`text-xs font-medium ${part.stock_quantity > 0 ? 'text-green-700' : 'text-red-600'}`}>
-                              {part.stock_quantity > 0
-                                ? `✓ Stok: ${part.stock_quantity} ${part.unit_type || ''}`
-                                : '✗ Stok habis'}
-                            </span>
-                          ) : (
-                            <span className="text-xs text-gray-400 flex items-center gap-1">
-                              <Lock size={11} /> Login untuk lihat stok
-                            </span>
-                          )}
+  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+    part.stock_quantity > 0
+      ? 'bg-green-100 text-green-700'
+      : part.unit_price !== null
+      ? 'bg-yellow-100 text-yellow-700'
+      : 'bg-red-100 text-red-700'
+  }`}>
+    {part.stock_quantity > 0
+      ? '● Ready'
+      : part.unit_price !== null
+      ? '● Indent'
+      : '● POA'}
+  </span>
+) : (
+  <span className="text-xs text-gray-400 flex items-center gap-1">
+    <Lock size={11} /> Login untuk lihat stok
+  </span>
+)}
 
                           {part.unit_price !== undefined ? (
                             <span className="text-sm font-bold text-gray-800 price-field">
