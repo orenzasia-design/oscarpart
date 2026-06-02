@@ -72,7 +72,7 @@ export const createRFQ = async (req: Request, res: Response): Promise<void> => {
     for (const item of items) {
       await query(
         `INSERT INTO rfq_items (session_id, part_number, quantity, description) VALUES ($1, $2, $3, $4)`,
-        [session.id, String(item.partNumber ?? ''), Number(item.quantity ?? 1), String(item.description ?? '')]
+        [String(session.id), String(item.partNumber ?? ''), Number(item.quantity ?? 1), String(item.description ?? '')]
       );
     }
     const userResult = await query(`SELECT email, full_name FROM users WHERE id = $1`, [userId]);
