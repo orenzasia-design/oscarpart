@@ -1,0 +1,21 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/(admin)/admin/analytics/page": "/admin/analytics",
+  "/(admin)/admin/leads/page": "/admin/leads",
+  "/(admin)/admin/customers/page": "/admin/customers",
+  "/(admin)/admin/settings/page": "/admin/settings",
+  "/(admin)/admin/parts/page": "/admin/parts",
+  "/(admin)/admin/rfq/[id]/page": "/admin/rfq/[id]",
+  "/(admin)/admin/rfq/page": "/admin/rfq",
+  "/(public)/register/page": "/register",
+  "/(admin)/admin/users/[id]/page": "/admin/users/[id]",
+  "/(public)/login/page": "/login",
+  "/(public)/page": "/",
+  "/(public)/rfq/page": "/rfq",
+  "/(public)/search/page": "/search",
+  "/(admin)/admin/users/page": "/admin/users",
+  "/(admin)/admin/dashboard/page": "/admin/dashboard",
+  "/(customer)/my-dashboard/page": "/my-dashboard",
+  "/(customer)/history/page": "/history",
+  "/(public)/widget/page": "/widget"
+}

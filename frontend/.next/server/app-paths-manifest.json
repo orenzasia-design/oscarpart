@@ -1,0 +1,21 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(admin)/admin/analytics/page": "app/(admin)/admin/analytics/page.js",
+  "/(admin)/admin/leads/page": "app/(admin)/admin/leads/page.js",
+  "/(admin)/admin/customers/page": "app/(admin)/admin/customers/page.js",
+  "/(admin)/admin/settings/page": "app/(admin)/admin/settings/page.js",
+  "/(admin)/admin/parts/page": "app/(admin)/admin/parts/page.js",
+  "/(admin)/admin/rfq/[id]/page": "app/(admin)/admin/rfq/[id]/page.js",
+  "/(admin)/admin/rfq/page": "app/(admin)/admin/rfq/page.js",
+  "/(public)/register/page": "app/(public)/register/page.js",
+  "/(admin)/admin/users/[id]/page": "app/(admin)/admin/users/[id]/page.js",
+  "/(public)/login/page": "app/(public)/login/page.js",
+  "/(public)/page": "app/(public)/page.js",
+  "/(public)/rfq/page": "app/(public)/rfq/page.js",
+  "/(public)/search/page": "app/(public)/search/page.js",
+  "/(admin)/admin/users/page": "app/(admin)/admin/users/page.js",
+  "/(admin)/admin/dashboard/page": "app/(admin)/admin/dashboard/page.js",
+  "/(customer)/my-dashboard/page": "app/(customer)/my-dashboard/page.js",
+  "/(customer)/history/page": "app/(customer)/history/page.js",
+  "/(public)/widget/page": "app/(public)/widget/page.js"
+}
