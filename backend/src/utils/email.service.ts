@@ -1,18 +1,17 @@
 import nodemailer from 'nodemailer';
-import type { Transporter } from 'nodemailer';
 
-// Konfigurasi transporter Gmail
-const transporter: Transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false, // true untuk port 465, false untuk port 587
+// Ganti dengan email dan app password Anda
+const EMAIL_USER = 'oscarpart.notif@gmail.com';  // GANTI
+const EMAIL_PASS = 'abcd efgh ijkl mnop';        // GANTI (tanpa spasi)
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
   auth: {
-    user: 'oscarpart.notif@gmail.com',     // GANTI DENGAN EMAIL ANDA
-    pass: 'abcd efgh ijkl mnop',            // GANTI DENGAN APP PASSWORD (tanpa spasi)
+    user: EMAIL_USER,
+    pass: EMAIL_PASS,
   },
 });
 
-// Fungsi untuk mengirim email konfirmasi RFQ
 export async function sendRFQConfirmationEmail(
   customerEmail: string,
   customerName: string,
@@ -20,7 +19,6 @@ export async function sendRFQConfirmationEmail(
   partList: Array<{ partNumber: string; description: string; quantity: number }>
 ): Promise<boolean> {
   try {
-    // Buat daftar part dalam HTML
     const partRows = partList.map(part => `
       <tr>
         <td style="border:1px solid #ddd; padding:8px">${part.partNumber}</td>
@@ -35,28 +33,21 @@ export async function sendRFQConfirmationEmail(
       <p>Berikut detail part yang Anda minta:</p>
       <table style="border-collapse:collapse; width:100%">
         <thead>
-          <tr><th style="border:1px solid #ddd; padding:8px">Part Number</th>
-            <th style="border:1px solid #ddd; padding:8px">Deskripsi</th>
-            <th style="border:1px solid #ddd; padding:8px">Qty</th>
-          </tr>
+          <tr><th style="border:1px solid #ddd; padding:8px">Part Number</th><th style="border:1px solid #ddd; padding:8px">Deskripsi</th><th style="border:1px solid #ddd; padding:8px">Qty</th></tr>
         </thead>
-        <tbody>
-          ${partRows}
-        </tbody>
-      </table>
+        <tbody>${partRows}</tbody>
+       </table>
       <p>Tim kami akan segera memproses dan menghubungi Anda kembali.</p>
-      <p>Terima kasih telah mempercayai OscarPart.</p>
       <hr>
       <small>Email ini dikirim otomatis, mohon tidak membalas.</small>
     `;
 
     const info = await transporter.sendMail({
-      from: `"OscarPart" <${transporter.options.auth?.user}>`,
+      from: `"OscarPart" <${EMAIL_USER}>`,
       to: customerEmail,
       subject: `Konfirmasi RFQ #${rfqNumber}`,
       html: htmlContent,
     });
-
     console.log('Email sent:', info.messageId);
     return true;
   } catch (error) {
