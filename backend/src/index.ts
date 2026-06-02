@@ -13,8 +13,8 @@ import { auditMiddleware } from './middleware/audit.middleware';
 import authRoutes from './routes/auth.routes';
 import adminRoutes from './routes/admin.routes';
 import partsRoutes from './routes/parts.routes';
+import { rfqRouter } from './routes/rfq.routes'; // ✅ import dari file terpisah
 import {
-  rfqRouter,
   leadsRouter,
   analyticsRouter,
   pdfRouter,
@@ -31,10 +31,9 @@ app.set('trust proxy', 1);
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 
 // ========== PERBAIKAN CORS ==========
-// Tambahkan frontend Vercel ke daftar allowed origins
 const allowedOrigins = [
   'https://truthful-spontaneity-production.up.railway.app',
-  'https://oscarpart.vercel.app',        // ✅ tambahan untuk frontend live
+  'https://oscarpart.vercel.app',
   'http://localhost:3000'
 ];
 
@@ -53,7 +52,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Session-Id'],
 }));
 
-// Preflight handler untuk semua route
 app.options('*', (req, res) => {
   const origin = req.headers.origin;
   if (origin && allowedOrigins.includes(origin)) {
@@ -85,7 +83,6 @@ app.post('/admin/truncate-parts', async (_req, res) => {
 });
 // =================================================================
 
-// Health check
 app.get('/health', async (_req, res) => {
   try {
     const { db } = await import('./config/database');
@@ -96,7 +93,6 @@ app.get('/health', async (_req, res) => {
   }
 });
 
-// Debug endpoint untuk cek environment variables
 app.get('/debug-env', (_req, res) => {
   res.json({
     JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET ? 'SET' : 'MISSING',
@@ -110,12 +106,13 @@ app.get('/debug-env', (_req, res) => {
 app.use(`${API}/auth`, authRoutes);
 app.use(`${API}/admin`, adminRoutes);
 app.use(`${API}/parts`, partsRoutes);
-app.use(`${API}/rfq`, rfqRouter);
+app.use(`${API}/rfq`, rfqRouter);              // ✅ menggunakan rfqRouter dari file terpisah
 app.use(`${API}/admin/leads`, leadsRouter);
 app.use(`${API}/admin/analytics`, analyticsRouter);
 app.use(`${API}/admin/pdf`, pdfRouter);
 app.use(`${API}/admin/settings`, settingsRouter);
-app.use(`${API}/rfq`, rfqStatusRouter);
+// rfqStatusRouter sudah di-handle oleh rfqRouter? Tidak, itu endpoint berbeda untuk update status. Biarkan tetap.
+app.use(`${API}/rfq/status`, rfqStatusRouter); // ubah path agar tidak bentrok
 
 // 404 handler
 app.use((_req, res) => res.status(404).json({ success: false, error: 'NOT_FOUND' }));
