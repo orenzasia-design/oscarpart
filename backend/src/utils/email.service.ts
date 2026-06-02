@@ -1,11 +1,14 @@
 import nodemailer from 'nodemailer';
+import type { Transporter } from 'nodemailer';
 
 // Konfigurasi transporter Gmail
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
+const transporter: Transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false, // true untuk port 465, false untuk port 587
   auth: {
-    user: 'orenzasia@gmail.com',     // GANTI DENGAN EMAIL ANDA
-    pass: 'obdxnveyoscodywj',            // GANTI DENGAN APP PASSWORD (tanpa spasi)
+    user: 'oscarpart.notif@gmail.com',     // GANTI DENGAN EMAIL ANDA
+    pass: 'abcd efgh ijkl mnop',            // GANTI DENGAN APP PASSWORD (tanpa spasi)
   },
 });
 
@@ -48,7 +51,7 @@ export async function sendRFQConfirmationEmail(
     `;
 
     const info = await transporter.sendMail({
-      from: `"OscarPart" <${transporter.options.auth.user}>`,
+      from: `"OscarPart" <${transporter.options.auth?.user}>`,
       to: customerEmail,
       subject: `Konfirmasi RFQ #${rfqNumber}`,
       html: htmlContent,

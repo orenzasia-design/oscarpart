@@ -106,15 +106,12 @@ export const createRFQ = async (req: Request, res: Response) => {
 
     const { notes, items } = req.body;
 
-    // Validasi items
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ success: false, error: 'ITEMS_REQUIRED' });
     }
 
-    // Generate nomor session unik (contoh: RFQ-20260602-001)
     const sessionNumber = `RFQ-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-    // Insert ke tabel rfq_sessions
     const sessionResult = await query(
       `INSERT INTO rfq_sessions (session_number, user_id, notes, status, created_at, updated_at)
        VALUES ($1, $2, $3, 'submitted', NOW(), NOW())
@@ -124,7 +121,6 @@ export const createRFQ = async (req: Request, res: Response) => {
 
     const session = sessionResult.rows[0];
 
-    // Insert items ke rfq_items
     for (const item of items) {
       await query(
         `INSERT INTO rfq_items (session_id, part_number, quantity, description)
@@ -133,15 +129,12 @@ export const createRFQ = async (req: Request, res: Response) => {
       );
     }
 
-    // Ambil data user untuk keperluan email
     const userResult = await query(
       `SELECT email, full_name FROM users WHERE id = $1`,
       [userId]
     );
 
-    if (userResult.rowCount === 0) {
-      logger.warn(`User ${userId} not found for email notification`);
-    } else {
+    if (userResult.rowCount > 0) {
       const user = userResult.rows[0];
       const partList = items.map((item: any) => ({
         partNumber: item.partNumber,
@@ -149,7 +142,6 @@ export const createRFQ = async (req: Request, res: Response) => {
         quantity: item.quantity
       }));
 
-      // Kirim email konfirmasi (jangan blok response jika gagal)
       try {
         await sendRFQConfirmationEmail(
           user.email,
@@ -157,9 +149,9 @@ export const createRFQ = async (req: Request, res: Response) => {
           session.session_number,
           partList
         );
-        logger.info(`Email sent for RFQ ${session.session_number} to ${user.email}`);
+        logger.info(`Email sent for RFQ ${session.session_number}`);
       } catch (emailErr) {
-        logger.error(`Failed to send email for RFQ ${session.session_number}:`, emailErr);
+        logger.error(`Failed to send email: ${emailErr}`);
       }
     }
 
