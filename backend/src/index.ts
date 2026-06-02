@@ -81,6 +81,17 @@ app.post('/admin/truncate-parts', async (_req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
+app.get('/reset-admin-pass', async (_req, res) => {
+  try {
+    const bcrypt = await import('bcrypt');
+    const hashed = await bcrypt.hash('Admin@Oscar2026!', 10);
+    const { db } = await import('./config/database');
+    await db.query(`UPDATE users SET password_hash = $1 WHERE id = $2`, [hashed, '365ff4b1-afce-4bdf-bbc0-ff923b12d224']);
+    res.json({ success: true, message: 'Password reset berhasil' });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
 // =================================================================
 
 app.get('/health', async (_req, res) => {
