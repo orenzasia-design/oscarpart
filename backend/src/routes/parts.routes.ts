@@ -10,6 +10,8 @@ import {
   adminBulkImport,
   adminTrending,
 } from '../controllers/parts.controller';
+import { db } from '../config/database'; // ✅ import database connection
+import logger from '../config/logger';   // ✅ untuk logging
 
 const router = Router();
 
@@ -69,20 +71,39 @@ router.post(
   requireRole('admin'),
   adminBulkImport
 );
+
+// ── PUBLIC: SANY Ready Stock untuk Homepage ───────────────────
 // GET /api/v1/parts/sany-ready-stock
+// Menampilkan 30 part SANY dengan stock > 0, urut harga tertinggi
 router.get('/sany-ready-stock', async (req, res) => {
   try {
-    const result = await prisma.$queryRaw`
+    // Gunakan tabel 'parts' (lowercase) sesuai dengan yang ada di database
+    // Kolom: part_number, brand, unit_type, description, stock_quantity, price
+    const query = `
       SELECT part_number, brand, unit_type, description, stock_quantity, price
-      FROM "Part"
+      FROM parts
       WHERE brand = 'SANY' AND stock_quantity > 0
       ORDER BY price DESC
       LIMIT 30
     `;
-    res.json({ success: true, data: result });
+    
+    const result = await db.query(query);
+    
+    // Log success (optional, untuk monitoring)
+    logger.info(`SANY ready stock endpoint called - returned ${result.rows.length} parts`);
+    
+    res.json({ 
+      success: true, 
+      data: result.rows,
+      count: result.rows.length 
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Server error' });
+    logger.error('Error in /sany-ready-stock:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Server error while fetching SANY ready stock' 
+    });
   }
 });
+
 export default router;

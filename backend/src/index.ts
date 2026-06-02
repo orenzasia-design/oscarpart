@@ -10,7 +10,7 @@ import logger from './config/logger';
 import { globalRateLimit } from './middleware/rate-limit.middleware';
 import { auditMiddleware } from './middleware/audit.middleware';
 
-import authRoutes  from './routes/auth.routes';
+import authRoutes from './routes/auth.routes';
 import adminRoutes from './routes/admin.routes';
 import partsRoutes from './routes/parts.routes';
 import {
@@ -22,20 +22,28 @@ import {
   rfqStatusRouter,
 } from './routes/all-routes';
 
-const app  = express();
+const app = express();
 const PORT = parseInt(process.env.PORT || '4000');
-const API  = process.env.API_PREFIX || '/api/v1';
+const API = process.env.API_PREFIX || '/api/v1';
 
 app.set('trust proxy', 1);
 
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
-// CORS configuration - hardcoded untuk frontend
-const allowedOrigins = ['https://truthful-spontaneity-production.up.railway.app', 'http://localhost:3000'];
+
+// ========== PERBAIKAN CORS ==========
+// Tambahkan frontend Vercel ke daftar allowed origins
+const allowedOrigins = [
+  'https://truthful-spontaneity-production.up.railway.app',
+  'https://oscarpart.vercel.app',        // ✅ tambahan untuk frontend live
+  'http://localhost:3000'
+];
+
 app.use(cors({
   origin: function (origin, callback) {
     // allow requests with no origin (like mobile apps, curl)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
+      logger.warn(`CORS blocked origin: ${origin}`);
       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
       return callback(new Error(msg), false);
     }
@@ -46,14 +54,18 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Session-Id'],
 }));
 
-// Tambahkan juga middleware manual untuk preflight
+// Preflight handler untuk semua route
 app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', 'https://truthful-spontaneity-production.up.railway.app');
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Session-Id');
   res.sendStatus(200);
 });
+// ====================================
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -96,17 +108,20 @@ app.get('/debug-env', (_req, res) => {
 });
 
 // Routes
-app.use(`${API}/auth`,      authRoutes);
-app.use(`${API}/admin`,     adminRoutes);
-app.use(`${API}/parts`,     partsRoutes);
-app.use(`${API}/rfq`,       rfqRouter);
-app.use(`${API}/admin/leads`,     leadsRouter);
+app.use(`${API}/auth`, authRoutes);
+app.use(`${API}/admin`, adminRoutes);
+app.use(`${API}/parts`, partsRoutes);
+app.use(`${API}/rfq`, rfqRouter);
+app.use(`${API}/admin/leads`, leadsRouter);
 app.use(`${API}/admin/analytics`, analyticsRouter);
-app.use(`${API}/admin/pdf`,       pdfRouter);
-app.use(`${API}/admin/settings`,  settingsRouter);
-app.use(`${API}/rfq`,            rfqStatusRouter);
+app.use(`${API}/admin/pdf`, pdfRouter);
+app.use(`${API}/admin/settings`, settingsRouter);
+app.use(`${API}/rfq`, rfqStatusRouter);
 
+// 404 handler
 app.use((_req, res) => res.status(404).json({ success: false, error: 'NOT_FOUND' }));
+
+// Error handler
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   logger.error('Unhandled error:', err);
   res.status(500).json({
@@ -139,4 +154,3 @@ process.on('SIGTERM', async () => {
 bootstrap().catch((err) => { logger.error('Bootstrap failed:', err); process.exit(1); });
 
 export default app;
-// cache bust 31/05/2026  2:07:09,06 
