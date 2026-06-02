@@ -10,15 +10,15 @@ export default function RegisterPage() {
   const router = useRouter();
 
   const [form, setForm] = useState({
-    full_name:      '',
-    email:          '',
-    password:       '',
+    full_name:        '',
+    email:            '',
+    password:         '',
     confirm_password: '',
-    company_name:   '',
-    contact_person: '',
-    position:       '',
-    mobile_number:  '',
-    industry:       '',
+    company_name:     '',
+    contact_person:   '',
+    position:         '',
+    mobile_number:    '',
+    industry:         '',
     project_location: '',
   });
   const [loading,  setLoading]  = useState(false);
@@ -68,7 +68,6 @@ export default function RegisterPage() {
     }
   };
 
-  // ── Success screen ────────────────────────────────────────
   if (success) {
     return (
       <div className="min-h-screen bg-surface flex items-center justify-center px-4">
@@ -83,7 +82,7 @@ export default function RegisterPage() {
             Akun Anda sedang dalam proses review oleh tim OSCARPART.
             Anda akan dihubungi setelah akun diverifikasi.
           </p>
-          <a
+          
             href="https://wa.me/6288802032033"
             target="_blank"
             rel="noopener noreferrer"
@@ -99,7 +98,6 @@ export default function RegisterPage() {
     );
   }
 
-  // ── Registration form ─────────────────────────────────────
   return (
     <div className="min-h-screen bg-surface py-10 px-4">
       <div className="max-w-2xl mx-auto">
@@ -119,7 +117,6 @@ export default function RegisterPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Akun */}
             <div>
               <h2 className="section-title">Data Akun</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
@@ -151,7 +148,6 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Perusahaan */}
             <div>
               <h2 className="section-title">Data Perusahaan</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
