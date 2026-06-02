@@ -239,8 +239,8 @@ function SearchContent() {
       : '● POA'}
   </span>
 ) : (
-  <span className="text-xs text-gray-400 flex items-center gap-1">
-    <Lock size={11} /> Login untuk lihat stok
+  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
+    ● Tersedia
   </span>
 )}
 
