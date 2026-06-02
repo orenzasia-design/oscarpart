@@ -120,7 +120,52 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
+{/* ── SANY READY STOCK ── */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <span className="text-xs font-semibold text-brand-600 uppercase tracking-widest">Distributor Eksklusif</span>
+              <h2 className="text-2xl font-bold text-gray-800 mt-1">SANY Ready Stock</h2>
+            </div>
+            <Link href="/search?q=SANY" className="text-sm text-brand-600 font-semibold hover:underline flex items-center gap-1">
+              Lihat Semua <ChevronRight size={14} />
+            </Link>
+          </div>
+          <p className="text-sm text-gray-500 mb-8">Parts SANY original tersedia di gudang kami — komponen assy langka yang jarang dimiliki supplier lain.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { pn: '160101100046A', desc: 'Engine Assembly', unit: 'SYZ440', price: 543195150, stock: 2 },
+              { pn: '131401020839A', desc: 'Intermediate Axle', unit: 'SYZ440', price: 122011200, stock: 1 },
+              { pn: '60004582', desc: 'Rolling Bearing', unit: 'SRT95C', price: 96264750, stock: 2 },
+              { pn: '60004583', desc: 'Rolling Bearing', unit: 'SRT95C', price: 95292113, stock: 3 },
+              { pn: '61023945', desc: 'Water-cooling Radiator', unit: 'SRT95C', price: 67629525, stock: 1 },
+              { pn: '152605000377A', desc: 'Centralized Lubrication System', unit: 'SKT105S', price: 51798150, stock: 2 },
+              { pn: '14333849', desc: 'Front Suspension Cylinder', unit: 'SKT80S', price: 50359313, stock: 22 },
+              { pn: '60189516', desc: 'Brake Valve Group', unit: 'SRT95C', price: 47215238, stock: 8 },
+              { pn: '160801020125A', desc: 'Radiator', unit: 'SKT105S', price: 45917925, stock: 3 },
+            ].map((part) => (
+              <div key={part.pn} className="border border-gray-100 rounded-xl p-4 hover:shadow-md hover:border-brand-200 transition-all cursor-pointer"
+                onClick={() => router.push(`/search?q=${part.pn}`)}>
+                <div className="flex items-start justify-between gap-2 mb-3">
+                  <div>
+                    <span className="font-bold text-brand-600 font-mono text-sm">{part.pn}</span>
+                    <p className="text-sm text-gray-700 mt-0.5">{part.desc}</p>
+                    <span className="text-xs text-gray-400">{part.unit}</span>
+                  </div>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700 flex-shrink-0">● Ready</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold text-gray-800">
+                    Rp {part.price.toLocaleString('id-ID')}
+                  </span>
+                  <span className="text-xs text-gray-400">Stok: {part.stock}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       {/* ── HOW IT WORKS ── */}
       <section className="py-16 px-4 bg-surface">
         <div className="max-w-4xl mx-auto">
