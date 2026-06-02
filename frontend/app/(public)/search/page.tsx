@@ -239,8 +239,8 @@ function SearchContent() {
       : '● POA'}
   </span>
 ) : (
-  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
-    ● Tersedia
+  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700">
+    ● Indent
   </span>
 )}
 
