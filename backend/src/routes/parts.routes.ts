@@ -75,6 +75,43 @@ router.post(
 // ── PUBLIC: SANY Ready Stock untuk Homepage ───────────────────
 // GET /api/v1/parts/sany-ready-stock
 // Menampilkan 30 part SANY dengan stock > 0, urut harga tertinggi
+// DEBUG: cek struktur tabel parts
+router.get('/debug-table', async (req, res) => {
+  try {
+    // Cek apakah tabel parts ada
+    const tableCheck = await db.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_name = 'parts'
+      );
+    `);
+    const tableExists = tableCheck.rows[0].exists;
+    
+    if (!tableExists) {
+      return res.json({ success: false, message: 'Tabel parts tidak ditemukan' });
+    }
+    
+    // Ambil daftar kolom
+    const columns = await db.query(`
+      SELECT column_name, data_type 
+      FROM information_schema.columns 
+      WHERE table_name = 'parts'
+      ORDER BY ordinal_position;
+    `);
+    
+    // Ambil 1 sample data
+    const sample = await db.query(`SELECT * FROM parts LIMIT 1`);
+    
+    res.json({
+      success: true,
+      tableExists,
+      columns: columns.rows,
+      sampleData: sample.rows[0] || null
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
 router.get('/sany-ready-stock', async (req, res) => {
   try {
     // Gunakan tabel 'parts' (lowercase) sesuai dengan yang ada di database
