@@ -69,5 +69,20 @@ router.post(
   requireRole('admin'),
   adminBulkImport
 );
-
+// GET /api/v1/parts/sany-ready-stock
+router.get('/sany-ready-stock', async (req, res) => {
+  try {
+    const result = await prisma.$queryRaw`
+      SELECT part_number, brand, unit_type, description, stock_quantity, price
+      FROM "Part"
+      WHERE brand = 'SANY' AND stock_quantity > 0
+      ORDER BY price DESC
+      LIMIT 30
+    `;
+    res.json({ success: true, data: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
 export default router;
