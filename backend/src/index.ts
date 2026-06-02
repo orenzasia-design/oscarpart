@@ -30,7 +30,12 @@ app.set('trust proxy', 1);
 
 app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 // CORS configuration - hardcoded untuk frontend
-const allowedOrigins = ['https://truthful-spontaneity-production.up.railway.app', 'http://localhost:3000'];
+const allowedOrigins = [
+  'https://oscarpart.vercel.app',
+  'https://oscarpart-9e6uny4w8-orenzasia-designs-projects.vercel.app',
+  'http://localhost:3000',
+  process.env.FRONTEND_URL || '',
+].filter(Boolean);
 app.use(cors({
   origin: function (origin, callback) {
     // allow requests with no origin (like mobile apps, curl)
@@ -48,7 +53,7 @@ app.use(cors({
 
 // Tambahkan juga middleware manual untuk preflight
 app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', 'https://truthful-spontaneity-production.up.railway.app');
+  res.header('Access-Control-Allow-Origin', req.headers.origin || 'https://oscarpart.vercel.app');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Session-Id');
