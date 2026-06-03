@@ -53,6 +53,21 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
+      {/* Navbar */}
+      <nav className="bg-white shadow-sm border-b border-gray-200">
+        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+          <span className="font-bold text-blue-600 text-lg">OscarPart</span>
+          <div className="flex gap-3">
+            <Link href="/login" className="text-sm text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md hover:bg-gray-100 transition">
+              Login
+            </Link>
+            <Link href="/register" className="text-sm bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+              Daftar
+            </Link>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section (opsional, biarkan seperti aslinya jika sudah ada) */}
       <section className="bg-blue-600 text-white py-20">
         <div className="container mx-auto px-4 text-center">
