@@ -64,52 +64,57 @@ export const getRfqById = async (req: Request, res: Response): Promise<void> => 
 
 export const createRFQ = async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = (req as any).user?.sub as string | undefined;
-    if (!userId) { res.status(401).json({ success: false, error: 'UNAUTHORIZED' }); return; }
-    const { notes, items } = req.body;
+    const { customer_name, customer_email, customer_phone, notes, items } = req.body;
+
+    // Validasi input
+    if (!customer_name || !customer_email || !customer_phone) {
+      res.status(400).json({ success: false, error: 'CUSTOMER_INFO_REQUIRED' }); return;
+    }
     if (!items || !Array.isArray(items) || items.length === 0) {
       res.status(400).json({ success: false, error: 'ITEMS_REQUIRED' }); return;
     }
+
     const rfqNumber = `RFQ-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
     const sessionResult = await query(
-      `INSERT INTO rfq_sessions (rfq_number, user_id, notes, status, created_at, updated_at) VALUES ($1, $2, $3, 'submitted', NOW(), NOW()) RETURNING id, rfq_number, created_at`,
-      [rfqNumber, userId, notes ?? ''] as any[]
+      `INSERT INTO rfq_sessions (rfq_number, user_id, notes, status, created_at, updated_at)
+       VALUES ($1, NULL, $2, 'submitted', NOW(), NOW())
+       RETURNING id, rfq_number, created_at`,
+      [rfqNumber, notes ?? ''] as any[]
     );
     const session = sessionResult.rows[0] as any;
+
     for (const item of items) {
       await query(
-        `INSERT INTO rfq_items (rfq_session_id, part_number, qty_requested, description, sort_order) VALUES ($1, $2, $3, $4, $5)`,
-        [session.id, String(item.partNumber ?? ''), Number(item.quantity ?? 1), String(item.description ?? ''), 0] as any[]
+        `INSERT INTO rfq_items (rfq_session_id, part_number, qty_requested, description, sort_order)
+         VALUES ($1, $2, $3, $4, $5)`,
+        [session.id, String(item.part_number ?? ''), Number(item.qty_requested ?? 1), String(item.description ?? ''), 0] as any[]
       );
     }
-    const userResult = await query(
-      `SELECT email, full_name FROM users WHERE id = $1`,
-      [userId] as any[]
-    );
-    if (userResult.rows.length > 0) {
-      const user = userResult.rows[0] as any;
+
+    // Kirim email konfirmasi
+    try {
       const partList = (items as any[]).map((item: any) => ({
-        partNumber: String(item.partNumber ?? ''),
+        partNumber: String(item.part_number ?? ''),
         description: String(item.description ?? '-'),
-        quantity: Number(item.quantity ?? 1),
+        quantity: Number(item.qty_requested ?? 1),
       }));
-      try {
-        await sendRFQConfirmationEmail(
-          String(user.email ?? ''),
-          String(user.full_name ?? 'Customer'),
-          String(session.rfq_number ?? ''),
-          partList
-        );
-        logger.info(`Email sent for RFQ ${session.rfq_number}`);
-      } catch (emailErr) {
-        logger.error(`Email failed: ${emailErr}`);
-      }
+      await sendRFQConfirmationEmail(
+        String(customer_email),
+        String(customer_name),
+        String(session.rfq_number),
+        partList
+      );
+      logger.info(`Email sent for RFQ ${session.rfq_number}`);
+    } catch (emailErr) {
+      logger.error(`Email failed: ${emailErr}`);
     }
+
     res.status(201).json({
       success: true,
       data: {
         sessionId: session.id,
-        rfqNumber: session.rfq_number,
+        rfq_number: session.rfq_number,
         createdAt: session.created_at,
       },
     });
