@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer';
 
 // Ganti dengan email dan app password Anda
-const EMAIL_USER = 'oscarpart.notif@gmail.com';  // GANTI
-const EMAIL_PASS = 'abcd efgh ijkl mnop';        // GANTI (tanpa spasi)
+const EMAIL_USER = 'orenzasia@gmail.com';
+const EMAIL_PASS = 'obdxnveyoscodywj';
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
