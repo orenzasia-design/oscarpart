@@ -38,8 +38,8 @@ export async function sendRFQConfirmationEmail(
 
     const { error } = await resend.emails.send({
       from: 'OscarPart <onboarding@resend.dev>',
-      to: customerEmail,
-      subject: `Konfirmasi RFQ #${rfqNumber}`,
+      to: 'orenzasia@gmail.com',
+      subject: `[RFQ MASUK] #${rfqNumber} dari ${customerName} (${customerEmail})`,
       html: htmlContent,
     });
 
