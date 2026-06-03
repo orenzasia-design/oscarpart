@@ -52,7 +52,7 @@ export const getRfqById = async (req: Request, res: Response): Promise<void> => 
       res.status(403).json({ success: false, error: 'FORBIDDEN' }); return;
     }
     const itemsResult = await query(
-      `SELECT * FROM rfq_items WHERE session_id = $1`,
+      `SELECT * FROM rfq_items WHERE rfq_session_id = $1`,
       [id] as any[]
     );
     res.json({ success: true, data: { session, items: itemsResult.rows } });
@@ -78,7 +78,7 @@ export const createRFQ = async (req: Request, res: Response): Promise<void> => {
     const session = sessionResult.rows[0] as any;
     for (const item of items) {
       await query(
-        `INSERT INTO rfq_items (session_id, part_number, quantity, description) VALUES ($1, $2, $3, $4)`,
+        `INSERT INTO rfq_items (rfq_session_id, part_number, quantity, description) VALUES ($1, $2, $3, $4)`,
         [session.id, String(item.partNumber ?? ''), Number(item.quantity ?? 1), String(item.description ?? '')] as any[]
       );
     }
