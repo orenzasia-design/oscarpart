@@ -71,7 +71,7 @@ const getAccessSecret  = () => HARDCODED_ACCESS_SECRET;
 const getRefreshSecret = () => HARDCODED_REFRESH_SECRET;
 // ============================================================
 
-const ACCESS_EXPIRY    = process.env.JWT_ACCESS_EXPIRY  || '15m';
+const ACCESS_EXPIRY    = process.env.JWT_ACCESS_EXPIRY  || '24h';
 const REFRESH_EXPIRY   = process.env.JWT_REFRESH_EXPIRY || '30d';
 const REFRESH_EXPIRY_MS = 30 * 24 * 60 * 60 * 1000; // 30 days in ms
 
