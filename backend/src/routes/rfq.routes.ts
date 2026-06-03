@@ -5,7 +5,7 @@ import { getUserRfqs, getAllRfqs, getRfqById, createRFQ } from '../controllers/r
 const rfqRouter = Router();
 
 // POST create RFQ (customer yang login & role approved)
-rfqRouter.post('/', authenticate, requireRole('approved'), createRFQ);
+rfqRouter.post('/', createRFQ);
 
 // GET my RFQs
 rfqRouter.get('/my', authenticate, requireRole('approved'), getUserRfqs);
