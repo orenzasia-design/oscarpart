@@ -5,11 +5,16 @@ const EMAIL_USER = 'orenzasia@gmail.com';
 const EMAIL_PASS = 'obdxnveyoscodywj';
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  requireTLS: true,
   auth: {
     user: EMAIL_USER,
     pass: EMAIL_PASS,
   },
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
 });
 
 export async function sendRFQConfirmationEmail(
