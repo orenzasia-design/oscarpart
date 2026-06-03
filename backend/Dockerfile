@@ -9,7 +9,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci --only=production=false
+RUN npm install
 
 COPY tsconfig.json ./
 COPY src/ ./src/
@@ -32,7 +32,7 @@ RUN addgroup -g 1001 -S nodejs && \
 
 # Only production dependencies
 COPY package*.json ./
-RUN npm ci --only=production && npm cache clean --force
+RUN npm install --only=production && npm cache clean --force
 
 # Copy compiled output
 COPY --from=builder /app/dist ./dist
