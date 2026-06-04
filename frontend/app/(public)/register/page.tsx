@@ -18,6 +18,8 @@ export default function RegisterPage() {
     contact_person:   '',
     position:         '',
     mobile_number:    '',
+    whatsapp_number:  '',
+    business_type:    'mining',
     industry:         '',
     project_location: '',
   });
@@ -43,7 +45,7 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      await authApi.register({
+     await authApi.register({
         full_name:        form.full_name,
         email:            form.email,
         password:         form.password,
@@ -51,6 +53,8 @@ export default function RegisterPage() {
         contact_person:   form.contact_person,
         position:         form.position,
         mobile_number:    form.mobile_number,
+        whatsapp_number:  form.mobile_number,
+        business_type:    form.business_type,
         industry:         form.industry,
         project_location: form.project_location,
       });
@@ -131,8 +135,14 @@ export default function RegisterPage() {
                     className="input" placeholder="email@perusahaan.com" required />
                 </div>
                 <div>
-                  <label className="label">Nomor HP / WhatsApp *</label>
+                  <div>
+                  <label className="label">Nomor HP *</label>
                   <input type="tel" value={form.mobile_number} onChange={set('mobile_number')}
+                    className="input" placeholder="628123456789" required />
+                </div>
+                <div>
+                  <label className="label">Nomor WhatsApp *</label>
+                  <input type="tel" value={form.whatsapp_number} onChange={set('whatsapp_number')}
                     className="input" placeholder="628123456789" required />
                 </div>
                 <div>
