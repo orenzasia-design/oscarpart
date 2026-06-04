@@ -37,8 +37,11 @@ export default function AdminRfqPage() {
     setLoading(true);
     try {
       const res = await adminApi.rfqs({ page, limit, search: search || undefined, status: statusFilter || undefined });
-      setRfqs(res.data.data.rfqs);
-      setTotal(res.data.data.pagination.total);
+const rawData = res.data.data;
+const rfqList = Array.isArray(rawData) ? rawData : (rawData.rfqs || []);
+const totalCount = Array.isArray(rawData) ? rawData.length : (rawData.pagination?.total || 0);
+setRfqs(rfqList);
+setTotal(totalCount);
     } catch {
       toast.error('Gagal memuat data RFQ.');
     } finally {
