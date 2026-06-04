@@ -16,7 +16,6 @@ export async function register(req: Request, res: Response): Promise<void> {
   try {
     const { user, message } = await registerUser(req.body);
 
-    // Notify admin of new registration (fire-and-forget)
     notifyAdminNewRegistration({
       id:           user.id,
       full_name:    user.full_name,
@@ -74,8 +73,8 @@ export async function login(req: Request, res: Response): Promise<void> {
     // Set refresh token as HTTP-only cookie
     res.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
-      secure:   process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure:   true,
+      sameSite: 'none',
       maxAge:   30 * 24 * 60 * 60 * 1000, // 30 days
       path:     '/api/v1/auth',
     });
@@ -131,7 +130,6 @@ export async function login(req: Request, res: Response): Promise<void> {
 
 export async function refresh(req: Request, res: Response): Promise<void> {
   try {
-    // Refresh token from HTTP-only cookie OR request body (for mobile clients)
     const refreshToken =
       req.cookies?.refreshToken ||
       req.body?.refreshToken;
@@ -153,8 +151,8 @@ export async function refresh(req: Request, res: Response): Promise<void> {
     // Rotate cookie
     res.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
-      secure:   process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure:   true,
+      sameSite: 'none',
       maxAge:   30 * 24 * 60 * 60 * 1000,
       path:     '/api/v1/auth',
     });
@@ -212,7 +210,6 @@ export async function logout(req: Request, res: Response): Promise<void> {
     });
   } catch (err) {
     logger.error('Logout error:', err);
-    // Always succeed on logout — clear cookie regardless
     res.clearCookie('refreshToken', { path: '/api/v1/auth' });
     res.status(200).json({ success: true, message: 'Logout berhasil.' });
   }
