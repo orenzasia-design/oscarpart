@@ -32,6 +32,7 @@ app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false 
 // ========== PERBAIKAN CORS ==========
 const allowedOrigins = [
   'https://truthful-spontaneity-production.up.railway.app',
+  'https://oscarpart-production.up.railway.app',
   'https://oscarpart.vercel.app',
   'http://localhost:3000'
 ];
