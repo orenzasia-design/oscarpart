@@ -67,8 +67,8 @@ const BCRYPT_ROUNDS    = parseInt(process.env.BCRYPT_ROUNDS || '12');
 // 🔧 TEMPORARY HARDCODE - Hapus setelah environment variable beres
 const HARDCODED_ACCESS_SECRET  = 'tempHardcodeAccessSecret123!@#';
 const HARDCODED_REFRESH_SECRET = 'tempHardcodeRefreshSecret456$%^';
-const getAccessSecret  = () => HARDCODED_ACCESS_SECRET;
-const getRefreshSecret = () => HARDCODED_REFRESH_SECRET;
+const getAccessSecret  = () => process.env.JWT_SECRET || HARDCODED_ACCESS_SECRET;
+const getRefreshSecret = () => process.env.JWT_SECRET || HARDCODED_REFRESH_SECRET;
 // ============================================================
 
 const ACCESS_EXPIRY    = process.env.JWT_ACCESS_EXPIRY  || '24h';
