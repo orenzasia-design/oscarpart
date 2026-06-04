@@ -18,7 +18,7 @@ function LoginContent() {
 
   if (user) {
     if (user.role === 'admin' || user.role === 'superadmin') router.replace('/admin/dashboard');
-    else router.replace('/my-dashboard');
+   else router.replace('/rfq');
     return null;
   }
 
@@ -27,7 +27,7 @@ function LoginContent() {
     setLoading(true);
     try {
       await login(email, password);
-      const next = params.get('next') || '/my-dashboard';
+      const next = params.get('next') || '/rfq';
       router.push(next);
     } catch (err: unknown) {
       const code = (err as { response?: { data?: { error?: string } } })?.response?.data?.error;
