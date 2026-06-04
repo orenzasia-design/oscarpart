@@ -2,7 +2,15 @@
 import { Request, Response } from 'express';
 import { query } from '../config/database';
 import logger from '../config/logger';
-import { sendRFQConfirmationEmail } from '../utils/email.service';
+import { sendRFQConfirmationEmail } from '../utils/email.service';  // Fonnte WhatsApp notification async function sendWhatsAppNotification(rfqNumber: string, customerName: string, customerPhone: string, itemCount: number): Promise<void> {   const token = process.env.FONNTE_TOKEN;   const adminNumber = process.env.FONNTE_ADMIN_NUMBER;   if (!token || !adminNumber) {     logger.warn('Fonnte credentials not set, skipping WhatsApp notification');     return;   }   const message = `🔔 *RFQ BARU MASUK*
+
+*Nomor RFQ:* ${rfqNumber}
+*Customer:* ${customerName}
+*No. HP:* ${customerPhone}
+*Jumlah Item:* ${itemCount} item
+
+Segera cek admin panel:
+https://oscarpart.vercel.app/admin/rfq`;   const formData = new URLSearchParams();   formData.append('target', adminNumber);   formData.append('message', message);   formData.append('countryCode', '62');   const response = await fetch('https://api.fonnte.com/send', {     method: 'POST',     headers: { 'Authorization': token },     body: formData,   });   const result = await response.json() as any;   logger.info(`WhatsApp notification sent: ${JSON.stringify(result)}`); }
 
 export const getUserRfqs = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -110,7 +118,7 @@ export const createRFQ = async (req: Request, res: Response): Promise<void> => {
       logger.error(`Email failed: ${emailErr}`);
     }
 
-    res.status(201).json({
+    // Kirim WhatsApp ke admin     try {       await sendWhatsAppNotification(         String(session.rfq_number),         String(customer_name),         String(customer_phone),         (items as any[]).length       );       logger.info(`WhatsApp sent for RFQ ${session.rfq_number}`);     } catch (waErr) {       logger.error(`WhatsApp failed: ${waErr}`);     }      res.status(201).json({       success: true,       data: {         sessionId: session.id,         rfq_number: session.rfq_number,         createdAt: session.created_at,       },     });
       success: true,
       data: {
         sessionId: session.id,
