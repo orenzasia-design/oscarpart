@@ -2,13 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { authApi } from '@/lib/api-client';
-import toast from 'react-hot-toast';
 
 export default function RegisterPage() {
-  const router = useRouter();
-
   const [form, setForm] = useState({
     full_name:        '',
     email:            '',
@@ -33,7 +29,6 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
-
     if (form.password !== form.confirm_password) {
       setErrorMsg('Password dan konfirmasi password tidak cocok.');
       return;
@@ -42,7 +37,6 @@ export default function RegisterPage() {
       setErrorMsg('Password minimal 8 karakter.');
       return;
     }
-
     setLoading(true);
     try {
       await authApi.register({
@@ -53,15 +47,14 @@ export default function RegisterPage() {
         contact_person:   form.contact_person,
         position:         form.position,
         mobile_number:    form.mobile_number,
-        whatsapp_number:  form.whatsapp_number,
+        whatsapp_number:  form.mobile_number,
         business_type:    form.business_type,
         industry:         form.industry,
         project_location: form.project_location,
       });
       setSuccess(true);
     } catch (err: unknown) {
-      const code = (err as { response?: { data?: { error?: string; message?: string } } })
-        ?.response?.data;
+      const code = (err as { response?: { data?: { error?: string; message?: string } } })?.response?.data;
       const msgs: Record<string, string> = {
         EMAIL_EXISTS:     'Email sudah terdaftar. Silakan login atau gunakan email lain.',
         VALIDATION_ERROR: 'Data tidak valid. Periksa kembali isian Anda.',
@@ -176,7 +169,7 @@ export default function RegisterPage() {
                     <option value="">-- Pilih Industri --</option>
                     <option value="Pertambangan Batubara">Pertambangan Batubara</option>
                     <option value="Pertambangan Mineral">Pertambangan Mineral</option>
-                    <option value="Minyak & Gas">Minyak &amp; Gas</option>
+                    <option value="Minyak &amp; Gas">Minyak &amp; Gas</option>
                     <option value="Konstruksi">Konstruksi</option>
                     <option value="Perkebunan">Perkebunan</option>
                     <option value="Kontraktor Tambang">Kontraktor Tambang</option>
