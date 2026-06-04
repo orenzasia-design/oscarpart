@@ -178,7 +178,7 @@ export const adminApi = {
   updateUserRole:   (id: string, role: string)        => api.patch(`/admin/users/${id}/role`, { role }),
 
   // RFQ
-  rfqs:             (params?: Record<string,unknown>) => api.get('/admin/rfq', { params }),
+  rfqs:             (params?: Record<string,unknown>) => api.get('/rfq/admin/all', { params }),
   updateRfqStatus:  (rfqId: string, status: string)   => api.patch(`/rfq/${rfqId}/status`, { status }),
   downloadPdf:      (rfqId: string)                   => api.get(`/admin/pdf/rfq/${rfqId}`, { responseType: 'arraybuffer' }),
 
