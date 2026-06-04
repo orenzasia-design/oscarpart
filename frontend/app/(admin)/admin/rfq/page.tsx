@@ -14,11 +14,13 @@ interface Rfq {
   status:        string;
   company_name:  string | null;
   contact_person:string | null;
+  full_name:     string | null;
   email:         string | null;
   whatsapp:      string | null;
   project_name:  string | null;
   grand_total:   number | null;
-  item_count:    number;
+  item_count:    number | null;
+  notes:         string | null;
   created_at:    string;
   submitted_at:  string | null;
 }
@@ -131,13 +133,13 @@ setTotal(totalCount);
                   </td>
                   <td className="table-cell">
                     <p className="font-medium text-gray-800">{rfq.company_name || '-'}</p>
-                    <p className="text-xs text-gray-400">{rfq.contact_person}</p>
+                    <p className="text-xs text-gray-400">{rfq.contact_person || rfq.full_name || '-'}</p>
                   </td>
                   <td className="table-cell">
                     <p className="text-xs text-gray-600 max-w-32 truncate">{rfq.project_name || '-'}</p>
                   </td>
                   <td className="table-cell text-center">
-                    <span className="badge badge-blue">{rfq.item_count}</span>
+                    <span className="badge badge-blue">{rfq.item_count ?? '-'}</span>
                   </td>
                   <td className="table-cell text-right">
                     <span className="font-semibold text-gray-800 text-sm">{formatIDR(rfq.grand_total)}</span>
