@@ -207,4 +207,14 @@ export const adminApi = {
   updateSetting:    (key: string, value: string)    => api.patch(`/admin/settings/${key}`, { value }),
 };
 
+
+// Units (Loyalty Engine - Layer 1)
+export const unitsApi = {
+  models:  ()                        => api.get('/units/models'),
+  myUnits: ()                        => api.get('/units/my'),
+  create:  (data: unknown)           => api.post('/units', data),
+  update:  (id: string, data: unknown) => api.patch(`/units/${id}`, data),
+  delete:  (id: string)              => api.delete(`/units/${id}`),
+};
+
 export default api;
