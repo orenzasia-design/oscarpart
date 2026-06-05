@@ -142,9 +142,7 @@ export const createLoggedInRFQ = async (req: Request, res: Response): Promise<vo
     if (!userResult.rows.length) { res.status(404).json({ success: false, error: 'USER_NOT_FOUND' }); return; }
     const user = userResult.rows[0] as any;
     const { notes, items } = req.body;
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      res.status(400).json({ success: false, error: 'ITEMS_REQUIRED' }); return;
-    }
+    // items is optional on draft creation — can be added later via /rfq/:id/items
     const rfqNumber = `RFQ-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const sessionResult = await query(
       `INSERT INTO rfq_sessions (rfq_number, user_id, notes, status, created_at, updated_at)
@@ -153,16 +151,18 @@ export const createLoggedInRFQ = async (req: Request, res: Response): Promise<vo
       [rfqNumber, userId, notes ?? ''] as any[]
     );
     const session = sessionResult.rows[0] as any;
-    for (const item of items) {
-      await query(
-        `INSERT INTO rfq_items (rfq_session_id, part_number, qty_requested, description, sort_order)
-         VALUES ($1, $2, $3, $4, $5)`,
-        [session.id, String(item.part_number ?? ''), Number(item.qty_requested ?? 1), String(item.description ?? ''), 0] as any[]
-      );
+    if (Array.isArray(items) && items.length > 0) {
+      for (const item of items) {
+        await query(
+          `INSERT INTO rfq_items (rfq_session_id, part_number, qty_requested, description, sort_order)
+           VALUES ($1, $2, $3, $4, $5)`,
+          [session.id, String(item.part_number ?? ''), Number(item.qty_requested ?? 1), String(item.description ?? ''), 0] as any[]
+        );
+      }
     }
     res.status(201).json({
       success: true,
-      data: { sessionId: session.id, rfq_number: session.rfq_number, createdAt: session.created_at },
+      data: { id: session.id, rfq_number: session.rfq_number, createdAt: session.created_at },
     });
   } catch (error) {
     logger.error('Error in createLoggedInRFQ:', error);
