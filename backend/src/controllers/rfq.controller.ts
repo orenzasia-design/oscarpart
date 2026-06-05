@@ -47,7 +47,14 @@ export const getAllRfqs = async (req: Request, res: Response): Promise<void> => 
       res.status(403).json({ success: false, error: 'FORBIDDEN' }); return;
     }
     const result = await query(
-      `SELECT s.id, s.rfq_number, s.created_at, s.status, s.notes, u.email, u.full_name, u.company_name FROM rfq_sessions s LEFT JOIN users u ON s.user_id = u.id ORDER BY s.created_at DESC`
+      `SELECT s.id, s.rfq_number, s.created_at, s.status, s.notes,
+              s.contact_person, s.project_name,
+              s.subtotal, s.tax_amount, s.grand_total,
+              (SELECT COUNT(*) FROM rfq_items i WHERE i.rfq_session_id = s.id) AS item_count,
+              u.email, u.full_name, u.company_name
+       FROM rfq_sessions s
+       LEFT JOIN users u ON s.user_id = u.id
+       ORDER BY s.created_at DESC`
     );
     res.json({ success: true, data: result.rows });
   } catch (error) {
