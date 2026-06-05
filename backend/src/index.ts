@@ -13,6 +13,7 @@ import authRoutes from './routes/auth.routes';
 import adminRoutes from './routes/admin.routes';
 import partsRoutes from './routes/parts.routes';
 import { rfqRouter } from './routes/rfq.routes'; // ✅ import dari file terpisah
+import { unitsRouter } from './routes/units.routes'; // ✅ Loyalty Engine - Unit HM Tracker
 import {
   leadsRouter,
   analyticsRouter,
@@ -120,6 +121,7 @@ app.use(`${API}/auth`, authRoutes);
 app.use(`${API}/admin`, adminRoutes);
 app.use(`${API}/parts`, partsRoutes);
 app.use(`${API}/rfq`, rfqRouter);              // ✅ menggunakan rfqRouter dari file terpisah
+app.use(`${API}/units`, unitsRouter);           // ✅ Loyalty Engine - Unit & HM Tracker
 app.use(`${API}/admin/leads`, leadsRouter);
 app.use(`${API}/admin/analytics`, analyticsRouter);
 app.use(`${API}/admin/pdf`, pdfRouter);
