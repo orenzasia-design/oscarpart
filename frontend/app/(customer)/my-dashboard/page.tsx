@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { rfqApi, partsApi } from '@/lib/api-client';
 import { useAuth } from '../../../lib/auth-context';
 import { formatIDR, formatDate, STATUS_BADGE, STATUS_LABELS } from '../../../lib/formatters';
-import { Search, FileText, Clock, LogOut, ChevronRight, AlertCircle, Package } from 'lucide-react';
+import { Search, FileText, Clock, LogOut, ChevronRight, AlertCircle, Package, Gauge } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface RecentRfq {
@@ -136,6 +136,13 @@ export default function CustomerDashboard() {
               desc: 'Lihat semua pengajuan',
               href: '/history',
               bg: 'bg-purple-50',
+            },
+            {
+              icon: <Gauge size={22} className="text-orange-600" />,
+              title: 'Unit Saya',
+              desc: 'Pantau HM & jadwal PM',
+              href: '/units',
+              bg: 'bg-orange-50',
             },
           ].map((a) => (
             <Link key={a.title} href={a.href} className="card hover:shadow-lg transition-all group flex items-center gap-4">
