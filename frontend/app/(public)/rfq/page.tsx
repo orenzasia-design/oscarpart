@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -75,6 +75,27 @@ export default function RfqPage() {
 
   // Pre-fill from user profile if logged in
   // Already handled by defaultValues above
+
+  // Load prefill dari search page jika ada
+  useEffect(() => {
+    const prefill = sessionStorage.getItem('rfq_prefill');
+    if (prefill) {
+      try {
+        const parsed = JSON.parse(prefill);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setItems(parsed.map((p: any) => ({
+            part_number: p.part_number,
+            description: p.description || '',
+            brand: p.brand || '',
+            unit_type: p.unit_type || '',
+            qty_requested: p.qty_requested || 1,
+          })));
+          toast.success(`${parsed.length} part dimuat dari halaman pencarian`);
+        }
+      } catch { /* ignore */ }
+      sessionStorage.removeItem('rfq_prefill');
+    }
+  }, []);
 
   // ── Ensure draft exists ──────────────────────────────────
 

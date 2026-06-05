@@ -83,16 +83,17 @@ function SearchContent() {
     });
   };
 
-  const goToRfq = async () => {
+  const goToRfq = () => {
     if (cart.length === 0) return;
-    try {
-      const draftRes = await rfqApi.createDraft();
-      const rfqId    = draftRes.data.data.id;
-      await rfqApi.updateItems(rfqId, cart.map((c) => ({ part_number: c.part_number, description: c.description, brand: c.brand, unit_type: c.unit_type, qty_requested: c.qty })));
-      router.push(`/rfq/${rfqId}`);
-    } catch {
-      toast.error('Gagal membuat RFQ. Coba lagi.');
-    }
+    // Simpan cart ke sessionStorage agar bisa diambil di halaman /rfq
+    sessionStorage.setItem('rfq_prefill', JSON.stringify(cart.map((c) => ({
+      part_number: c.part_number,
+      description: c.description,
+      brand: c.brand,
+      unit_type: c.unit_type,
+      qty_requested: c.qty,
+    }))));
+    router.push('/rfq');
   };
 
   return (
