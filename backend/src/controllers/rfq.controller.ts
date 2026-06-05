@@ -178,13 +178,33 @@ export const updateDraftItems = async (req: Request, res: Response): Promise<voi
       res.status(400).json({ success: false, error: 'ITEMS_REQUIRED' }); return;
     }
     await query(`DELETE FROM rfq_items WHERE rfq_session_id = $1`, [id] as any[]);
-    for (const item of items) {
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      const pn = String(item.part_number ?? '');
+      // Lookup price from parts table if not provided
+      let unitPrice = item.unit_price_at_time ?? null;
+      if (!unitPrice) {
+        const partRow = await query(`SELECT unit_price FROM parts WHERE part_number = $1 LIMIT 1`, [pn] as any[]);
+        if (partRow.rows.length) unitPrice = partRow.rows[0].unit_price ?? null;
+      }
+      const qty = Number(item.qty_requested ?? 1);
+      const lineTotal = unitPrice ? unitPrice * qty : null;
       await query(
-        `INSERT INTO rfq_items (rfq_session_id, part_number, qty_requested, description, sort_order)
-         VALUES ($1, $2, $3, $4, $5)`,
-        [id, String(item.part_number ?? ''), Number(item.qty_requested ?? 1), String(item.description ?? ''), 0] as any[]
+        `INSERT INTO rfq_items (rfq_session_id, part_number, qty_requested, description, unit_price_at_time, line_total, sort_order)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [id, pn, qty, String(item.description ?? ''), unitPrice, lineTotal, i] as any[]
       );
     }
+    // Update session subtotal/tax/grand_total
+    await query(
+      `UPDATE rfq_sessions SET
+        subtotal   = (SELECT COALESCE(SUM(line_total), 0) FROM rfq_items WHERE rfq_session_id = $1),
+        tax_amount = (SELECT COALESCE(SUM(line_total), 0) FROM rfq_items WHERE rfq_session_id = $1) * 0.11,
+        grand_total= (SELECT COALESCE(SUM(line_total), 0) FROM rfq_items WHERE rfq_session_id = $1) * 1.11,
+        updated_at = NOW()
+       WHERE id = $1`,
+      [id] as any[]
+    );
     res.json({ success: true, message: 'Items updated' });
   } catch (error) {
     logger.error('Error in updateDraftItems:', error);
