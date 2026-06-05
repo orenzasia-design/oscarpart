@@ -28,8 +28,8 @@ export default function CustomerDashboard() {
   const [loading, setLoading]       = useState(true);
 
   useEffect(() => {
-    if (!user) { router.replace('/login'); return; }
-    if (!isApproved && !isPending) return;
+    if (!loading && !user) { router.replace('/login?expired=true'); return; }
+    if (!user || (!isApproved && !isPending)) return;
 
     rfqApi.myRfqs(1)
       .then((res) => setRecentRfqs((res.data.data.rfqs || []).slice(0, 5)))
@@ -42,7 +42,11 @@ export default function CustomerDashboard() {
     if (searchQ.trim().length >= 2) router.push(`/search?q=${encodeURIComponent(searchQ.trim())}`);
   };
 
-  if (!user) return null;
+  if (loading || !user) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-gray-400">Memuat...</p>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-surface">

@@ -1,4 +1,4 @@
-// File: C:\Users\Ali Syofyan\Documents\oscarpart-complete-final by CL V2\oscarpart\frontend\app\(customer)\layout.tsx
+// File: /home/claude/oscarpart/frontend/app/(customer)/layout.tsx
 import * as entry from '../../../../app/(customer)/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
