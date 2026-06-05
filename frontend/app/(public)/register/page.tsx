@@ -79,7 +79,7 @@ export default function RegisterPage() {
             Akun Anda sedang dalam proses review oleh tim OSCARPART.
             Anda akan dihubungi setelah akun diverifikasi.
           </p>
-          
+          <a
             href="https://wa.me/6288802032033"
             target="_blank"
             rel="noopener noreferrer"
