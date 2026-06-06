@@ -18,6 +18,7 @@ import pmBundlesRouter from './routes/pm-bundles.routes'; // ✅ Bundle PM SANY
 import { runPmBundlesMigration } from './scripts/run-pm-bundles-migration';
 import { seedSkt105sData } from './scripts/seed-skt105s';
 import { seedSkt80sData } from './scripts/seed-skt80s';
+import monthlyReportRouter from './routes/monthly-report.routes'; // ✅ Laporan Bulanan
 import { updatePartNumbersFinal } from './scripts/update-part-numbers-final'; // ✅ Update PN SKT90S/SKT105S/SYZ440C
 import {
   leadsRouter,
@@ -128,6 +129,7 @@ app.use(`${API}/parts`, partsRoutes);
 app.use(`${API}/rfq`, rfqRouter);              // ✅ menggunakan rfqRouter dari file terpisah
 app.use(`${API}/units`, unitsRouter);           // ✅ Loyalty Engine - Unit & HM Tracker
 app.use(`${API}/pm-bundles`, pmBundlesRouter);           // ✅ Bundle PM SANY
+app.use(`${API}/monthly-report`, monthlyReportRouter); // ✅ Laporan Bulanan
 app.use(`${API}/admin/leads`, leadsRouter);
 app.use(`${API}/admin/analytics`, analyticsRouter);
 app.use(`${API}/admin/pdf`, pdfRouter);
