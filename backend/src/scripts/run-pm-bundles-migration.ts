@@ -226,6 +226,115 @@ export async function runPmBundlesMigration(): Promise<void> {
           );
         }
       }
+      // SKT105S — Data dari SANY OMM (Operation and Maintenance Manual, Versi 12.2021)
+      if (model === 'SKT105S' && interval === 250) {
+        const items = [
+          [1,'OIL',    'Engine Oil',                         'Drain and refill', null, 1, 'lot', '15W-40 CH-4 or equivalent'],
+          [2,'FILTER', 'Engine Oil Filter Element',          'Replace',          null, 1, 'pcs', null],
+          [3,'FILTER', 'Fuel Fine Filter Element',           'Replace',          null, 1, 'pcs', null],
+          [4,'FILTER', 'Fuel Rough Filter',                  'Replace',          null, 1, 'pcs', null],
+          [5,'FILTER', 'Fuel-Water Separator Filter',        'Replace',          null, 1, 'pcs', null],
+          [6,'FILTER', 'Oil-Gas Separator Filter Element',   'Replace',          null, 1, 'pcs', null],
+          [7,'CHECK',  'Engine Belt',                        'Examine',          null, 1, 'lot', null],
+          [8,'CHECK',  'Fan Belt',                           'Examine',          null, 1, 'lot', null],
+          [9,'CHECK',  'Wheel Rim Nuts',                     'Examine',          null, 1, 'lot', null],
+          [10,'CHECK', 'Vehicle Brake Clearance',            'Examine',          null, 1, 'lot', null],
+          [11,'CHECK', 'Transmission Shaft Bolt Torque',     'Adjust',           null, 1, 'lot', null],
+          [12,'OIL',   'Transmission Oil',                   'Examine',          null, 1, 'lot', null],
+          [13,'OIL',   'Drive Axle Oil',                     'Examine/Change',   null, 1, 'lot', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SKT105S' && interval === 500) {
+        const items = [
+          [1,'OIL',    'Engine Oil',                         'Drain and refill', null, 1, 'lot', '15W-40 CH-4 or equivalent'],
+          [2,'FILTER', 'Engine Oil Filter Element',          'Replace',          null, 1, 'pcs', null],
+          [3,'FILTER', 'Fuel Fine Filter Element',           'Replace',          null, 1, 'pcs', null],
+          [4,'FILTER', 'Fuel Rough Filter',                  'Replace',          null, 1, 'pcs', null],
+          [5,'FILTER', 'Fuel-Water Separator Filter',        'Replace',          null, 1, 'pcs', null],
+          [6,'FILTER', 'Oil-Gas Separator Filter Element',   'Replace',          null, 1, 'pcs', null],
+          [7,'FILTER', 'Air Filter Element',                 'Replace',          null, 1, 'pcs', null],
+          [8,'CHECK',  'Vehicle Brake Clearance',            'Examine',          null, 1, 'lot', null],
+          [9,'FILTER', 'Steering System Pressure Oil Filter','Replace',          null, 1, 'pcs', null],
+          [10,'FILTER','Elevating Tank Breather Valve Filter','Replace',         null, 1, 'pcs', null],
+          [11,'FILTER','Elevating Tank Oil Return Filter',   'Replace',          null, 1, 'pcs', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SKT105S' && interval === 1000) {
+        const items = [
+          [1,'OIL',    'Engine Oil',                         'Drain and refill', null, 1, 'lot', '15W-40 CH-4 or equivalent'],
+          [2,'FILTER', 'Engine Oil Filter Element',          'Replace',          null, 1, 'pcs', null],
+          [3,'FILTER', 'Fuel Fine Filter Element',           'Replace',          null, 1, 'pcs', null],
+          [4,'FILTER', 'Fuel Rough Filter',                  'Replace',          null, 1, 'pcs', null],
+          [5,'FILTER', 'Fuel-Water Separator Filter',        'Replace',          null, 1, 'pcs', null],
+          [6,'FILTER', 'Oil-Gas Separator Filter Element',   'Replace',          null, 1, 'pcs', null],
+          [7,'FILTER', 'Air Filter Element',                 'Replace',          null, 1, 'pcs', null],
+          [8,'FILTER', 'Steering System Pressure Oil Filter','Replace',          null, 1, 'pcs', null],
+          [9,'FILTER', 'Elevating Tank Breather Valve Filter','Replace',         null, 1, 'pcs', null],
+          [10,'FILTER','Elevating Tank Oil Return Filter',   'Replace',          null, 1, 'pcs', null],
+          [11,'CHECK', 'Drive System',                       'Examine/Adjust',   null, 1, 'lot', null],
+          [12,'CHECK', 'Suspension System',                  'Examine',          null, 1, 'lot', null],
+          [13,'OIL',   'Transmission Oil',                   'Examine',          null, 1, 'lot', null],
+          [14,'OIL',   'Drive Axle Oil',                     'Examine/Change',   null, 1, 'lot', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SKT105S' && interval === 2000) {
+        const items = [
+          [1,'CHECK', 'Fuel Tank',                           'Clean',            null, 1, 'lot', null],
+          [2,'CHECK', 'Drive Axle',                          'Examine/Clean',    null, 1, 'lot', null],
+          [3,'CHECK', 'Front Shaft Axial Clearance',         'Adjust',           null, 1, 'lot', null],
+          [4,'CHECK', 'Shaft Knuckle Rotation Torque',       'Adjust',           null, 1, 'lot', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SKT105S' && interval === 3000) {
+        const items = [
+          [1,'OIL',   'Hydraulic Oil Full System', 'Change',       null, 1, 'lot', 'Per spec SKT105S OMM'],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SKT105S' && interval === 4000) {
+        const items = [
+          [1,'CHECK', 'Radiator',                 'Clean',            null, 1, 'lot', null],
+          [2,'CHECK', 'Internal Cooling System',  'Examine/Clean',    null, 1, 'lot', null],
+          [3,'CHECK', 'Brake Drums Wear',          'Examine',          null, 1, 'lot', null],
+          [4,'OIL',   'Transmission Oil',          'Change',           null, 1, 'lot', null],
+          [5,'FILTER','Transmission Oil Filter',   'Replace',          null, 1, 'pcs', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
     }
 
     logger.info('✅ pm_bundles migration completed successfully');
