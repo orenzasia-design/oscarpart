@@ -698,6 +698,148 @@ export async function runPmBundlesMigration(): Promise<void> {
         }
       }
 
+
+      // ============================================================
+      // SYZ440C — Adopted dari SYZ326C (same SANY platform, same intervals)
+      // Part number tidak diisi karena berbeda dari SYZ326C
+      // Volume oli disesuaikan dengan kapasitas unit yang lebih besar
+      // Sumber: user konfirmasi interval & prosedur sama dengan SYZ320C family
+      // ============================================================
+      if (model === 'SYZ440C' && interval === 250) {
+        const items: any[] = [
+          [1,'OIL',   'Engine Oil (Minyak Mesin)',          'Drain and refill', null, 30,  'L',   '15W-40 CH-4'],
+          [2,'OIL',   'Oil Bath Air Filter',                'Check and refill', null, 3,   'L',   '15W-40 CH-4'],
+          [3,'FILTER','Fuel Filter Element',                 'Replace',          null, 2,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [4,'FILTER','Water Separator',                     'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [5,'FILTER','Oil Filter Element',                  'Replace',          null, 2,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SYZ440C' && interval === 500) {
+        const items: any[] = [
+          [1,'OIL',   'Engine Oil (Minyak Mesin)',          'Drain and refill', null, 30,  'L',   '15W-40 CH-4'],
+          [2,'OIL',   'Oil Bath Air Filter',                'Check and refill', null, 3,   'L',   '15W-40 CH-4'],
+          [3,'OIL',   'Steering Hydraulic System',          'Check and refill', null, 8,   'L',   'ATF III F'],
+          [4,'OIL',   'Hydraulic Clutch Mechanism',         'Check and refill', null, 1,   'L',   'Brake Fluid DOT 3'],
+          [5,'FILTER','Fuel Filter Element',                 'Replace',          null, 2,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [6,'FILTER','Water Separator',                     'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [7,'FILTER','Oil Filter Element',                  'Replace',          null, 2,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [8,'FILTER','Air Dryer Filter',                    'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SYZ440C' && interval === 1000) {
+        const items: any[] = [
+          [1,'OIL',   'Engine Oil (Minyak Mesin)',                  'Drain and refill', null, 30,  'L',   '15W-40 CH-4'],
+          [2,'OIL',   'Oil Bath Air Filter',                         'Check and refill', null, 3,   'L',   '15W-40 CH-4'],
+          [3,'OIL',   'Transmission Oil (Oli Transmisi)',             'Drain and refill', null, 14,  'L',   'Gear Oil 85W/90 GL5'],
+          [4,'OIL',   'Steering Hydraulic System',                   'Check and refill', null, 8,   'L',   'ATF III F'],
+          [5,'OIL',   'Middle Axle Main Reducer (Gardan Tengah)',     'Drain and refill', null, 18,  'L',   'Gear Oil 85W-140 GL5'],
+          [6,'OIL',   'Middle Axle Hub Reducer',                     'Drain and refill', null, 8.3, 'L',   'Gear Oil 85W-140 GL5'],
+          [7,'OIL',   'Rear Axle Main Reducer (Gardan Belakang)',     'Drain and refill', null, 18,  'L',   'Gear Oil 85W-140 GL5'],
+          [8,'OIL',   'Rear Axle Hub Reducer',                       'Check and refill', null, 8.3, 'L',   'Gear Oil 85W-140 GL5'],
+          [9,'OIL',   'Hydraulic Clutch Mechanism',                  'Check and refill', null, 1,   'L',   'Brake Fluid DOT 3'],
+          [10,'OIL',  'Hydraulic Mechanism Lifting Cab',              'Check and refill', null, 1,   'L',   'ISO VG-46'],
+          [11,'FILTER','Fuel Filter Element',                         'Replace',          null, 2,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [12,'FILTER','Water Separator',                             'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [13,'FILTER','Oil Filter Element',                          'Replace',          null, 2,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [14,'FILTER','Air Dryer Filter',                            'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [15,'FILTER','Air Filter Outer Element',                    'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [16,'FILTER','Air Filter Inner Element',                    'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [17,'FILTER','Fresh Air Filter AC',                         'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [18,'FILTER','Filter Strainer / Suction Strainer',          'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [19,'FILTER','Power Steering Filter Element',               'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SYZ440C' && interval === 2000) {
+        // 2000H = repeat of 1000H items (same pattern as SYZ326C)
+        const items: any[] = [
+          [1,'OIL',   'Engine Oil (Minyak Mesin)',                  'Drain and refill', null, 30,  'L',   '15W-40 CH-4'],
+          [2,'OIL',   'Oil Bath Air Filter',                         'Check and refill', null, 3,   'L',   '15W-40 CH-4'],
+          [3,'OIL',   'Transmission Oil (Oli Transmisi)',             'Drain and refill', null, 14,  'L',   'Gear Oil 85W/90 GL5'],
+          [4,'OIL',   'Steering Hydraulic System',                   'Check and refill', null, 8,   'L',   'ATF III F'],
+          [5,'OIL',   'Middle Axle Main Reducer (Gardan Tengah)',     'Drain and refill', null, 18,  'L',   'Gear Oil 85W-140 GL5'],
+          [6,'OIL',   'Middle Axle Hub Reducer',                     'Drain and refill', null, 8.3, 'L',   'Gear Oil 85W-140 GL5'],
+          [7,'OIL',   'Rear Axle Main Reducer (Gardan Belakang)',     'Drain and refill', null, 18,  'L',   'Gear Oil 85W-140 GL5'],
+          [8,'OIL',   'Rear Axle Hub Reducer',                       'Check and refill', null, 8.3, 'L',   'Gear Oil 85W-140 GL5'],
+          [9,'OIL',   'Hydraulic Clutch Mechanism',                  'Check and refill', null, 1,   'L',   'Brake Fluid DOT 3'],
+          [10,'OIL',  'Hydraulic Mechanism Lifting Cab',              'Check and refill', null, 1,   'L',   'ISO VG-46'],
+          [11,'FILTER','Fuel Filter Element',                         'Replace',          null, 2,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [12,'FILTER','Water Separator',                             'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [13,'FILTER','Oil Filter Element',                          'Replace',          null, 2,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [14,'FILTER','Air Dryer Filter',                            'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [15,'FILTER','Air Filter Outer Element',                    'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [16,'FILTER','Air Filter Inner Element',                    'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [17,'FILTER','Fresh Air Filter AC',                         'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [18,'FILTER','Filter Strainer / Suction Strainer',          'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+          [19,'FILTER','Power Steering Filter Element',               'Replace',          null, 1,   'pcs', 'Part number sesuai SYZ440C parts catalog'],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SYZ440C' && interval === 3000) {
+        const items: any[] = [
+          [1,'OIL',   'Hydraulic Oil Tipper Vessel (Oli Hidraulik Bak)', 'Change and refill', null, 100, 'L', 'ISO VG-46'],
+          [2,'OIL',   'Engine Cooling System (Coolant)',                  'Change and refill', null, 45,  'L', 'Ethylene Glycol / Coolant'],
+          [3,'FILTER','Fuel Filter Element',                              'Replace',           null, 2,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [4,'FILTER','Oil Filter Element',                               'Replace',           null, 2,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [5,'FILTER','Air Filter Outer Element',                         'Replace',           null, 1,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [6,'FILTER','Air Filter Inner Element',                         'Replace',           null, 1,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [7,'FILTER','Power Steering Filter Element',                    'Replace',           null, 1,   'pcs','Part number sesuai SYZ440C parts catalog'],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SYZ440C' && interval === 4000) {
+        // 4000H = 3000H + additional (same pattern as SYZ326C, no specific 4000H in SYZ326C OMM so same as 3000H)
+        const items: any[] = [
+          [1,'OIL',   'Hydraulic Oil Tipper Vessel (Oli Hidraulik Bak)', 'Change and refill', null, 100, 'L', 'ISO VG-46'],
+          [2,'OIL',   'Engine Cooling System (Coolant)',                  'Change and refill', null, 45,  'L', 'Ethylene Glycol / Coolant'],
+          [3,'OIL',   'Transmission Oil (Oli Transmisi)',                 'Drain and refill',  null, 14,  'L', 'Gear Oil 85W/90 GL5'],
+          [4,'OIL',   'Middle Axle Main Reducer (Gardan Tengah)',         'Drain and refill',  null, 18,  'L', 'Gear Oil 85W-140 GL5'],
+          [5,'OIL',   'Rear Axle Main Reducer (Gardan Belakang)',         'Drain and refill',  null, 18,  'L', 'Gear Oil 85W-140 GL5'],
+          [6,'FILTER','Fuel Filter Element',                              'Replace',           null, 2,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [7,'FILTER','Water Separator',                                  'Replace',           null, 1,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [8,'FILTER','Oil Filter Element',                               'Replace',           null, 2,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [9,'FILTER','Air Dryer Filter',                                 'Replace',           null, 1,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [10,'FILTER','Air Filter Outer Element',                        'Replace',           null, 1,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [11,'FILTER','Air Filter Inner Element',                        'Replace',           null, 1,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [12,'FILTER','Fresh Air Filter AC',                             'Replace',           null, 1,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [13,'FILTER','Filter Strainer / Suction Strainer',              'Replace',           null, 1,   'pcs','Part number sesuai SYZ440C parts catalog'],
+          [14,'FILTER','Power Steering Filter Element',                   'Replace',           null, 1,   'pcs','Part number sesuai SYZ440C parts catalog'],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+
     logger.info('✅ pm_bundles migration completed successfully');
   } catch (error) {
     logger.error('pm_bundles migration failed:', error);
