@@ -17,6 +17,7 @@ import { unitsRouter } from './routes/units.routes'; // ✅ Loyalty Engine - Uni
 import pmBundlesRouter from './routes/pm-bundles.routes'; // ✅ Bundle PM SANY
 import { runPmBundlesMigration } from './scripts/run-pm-bundles-migration';
 import { seedSkt105sData } from './scripts/seed-skt105s';
+import { seedSkt80sData } from './scripts/seed-skt80s';
 import {
   leadsRouter,
   analyticsRouter,
@@ -151,6 +152,7 @@ async function bootstrap(): Promise<void> {
   await testDatabaseConnection();
   await runPmBundlesMigration();  // ✅ Run pm_bundles migration
   await seedSkt105sData();           // ✅ Seed SKT105S PM items (idempotent)
+  await seedSkt80sData();            // ✅ Seed SKT80S PM items with part numbers (idempotent)
   try {
     await createRedisClient();
   } catch (err) {
