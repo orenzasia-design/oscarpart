@@ -218,3 +218,18 @@ export const unitsApi = {
 };
 
 export default api;
+
+
+// ─── PM Bundles API ───────────────────────────────────────────────────────────
+export const pmBundlesApi = {
+  getModels: () =>
+    fetch(`${API_BASE}/pm-bundles/models`).then((r) => r.json()),
+  getBundles: (unitModel?: string) => {
+    const url = unitModel
+      ? `${API_BASE}/pm-bundles?unit_model=${unitModel}`
+      : `${API_BASE}/pm-bundles`;
+    return fetch(url).then((r) => r.json());
+  },
+  getBundleDetail: (id: number) =>
+    fetch(`${API_BASE}/pm-bundles/${id}`).then((r) => r.json()),
+};
