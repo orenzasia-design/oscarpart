@@ -16,6 +16,7 @@ import { rfqRouter } from './routes/rfq.routes'; // ✅ import dari file terpisa
 import { unitsRouter } from './routes/units.routes'; // ✅ Loyalty Engine - Unit HM Tracker
 import pmBundlesRouter from './routes/pm-bundles.routes'; // ✅ Bundle PM SANY
 import { runPmBundlesMigration } from './scripts/run-pm-bundles-migration';
+import { seedSkt105sData } from './scripts/seed-skt105s';
 import {
   leadsRouter,
   analyticsRouter,
@@ -149,6 +150,7 @@ async function bootstrap(): Promise<void> {
   logger.info('🚀 Starting OSCARPART API...');
   await testDatabaseConnection();
   await runPmBundlesMigration();  // ✅ Run pm_bundles migration
+  await seedSkt105sData();           // ✅ Seed SKT105S PM items (idempotent)
   try {
     await createRedisClient();
   } catch (err) {
