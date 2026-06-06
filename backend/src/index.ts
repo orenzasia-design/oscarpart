@@ -15,6 +15,7 @@ import partsRoutes from './routes/parts.routes';
 import { rfqRouter } from './routes/rfq.routes'; // ✅ import dari file terpisah
 import { unitsRouter } from './routes/units.routes'; // ✅ Loyalty Engine - Unit HM Tracker
 import pmBundlesRouter from './routes/pm-bundles.routes'; // ✅ Bundle PM SANY
+import { runPmBundlesMigration } from './scripts/run-pm-bundles-migration';
 import {
   leadsRouter,
   analyticsRouter,
@@ -147,6 +148,7 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 async function bootstrap(): Promise<void> {
   logger.info('🚀 Starting OSCARPART API...');
   await testDatabaseConnection();
+  await runPmBundlesMigration();  // ✅ Run pm_bundles migration
   try {
     await createRedisClient();
   } catch (err) {
