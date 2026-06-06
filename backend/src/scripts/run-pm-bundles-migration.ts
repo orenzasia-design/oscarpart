@@ -105,7 +105,9 @@ export async function runPmBundlesMigration(): Promise<void> {
       );
       const bundleId = res.rows[0].id;
 
-      // Seed items only for units with confirmed data
+      // ============================================================
+      // SYZ326C — Data dari Check Sheet Service PT. PBT (lengkap dengan part number)
+      // ============================================================
       if (model === 'SYZ326C' && interval === 250) {
         const items250 = [
           [1,'OIL',    'Engine Oil',          'Drain and refill', null,               30,  'L',   '15W-40 CH-4'],
@@ -180,6 +182,10 @@ export async function runPmBundlesMigration(): Promise<void> {
           );
         }
       }
+
+      // ============================================================
+      // SKT90S — Data dari SANY OMM (tanpa part number)
+      // ============================================================
       if (model === 'SKT90S' && interval === 500) {
         const items = [
           [1,'OIL',    'Engine Oil',              'Drain and refill', null, 1, 'lot', '15W-40 or equivalent'],
@@ -226,7 +232,10 @@ export async function runPmBundlesMigration(): Promise<void> {
           );
         }
       }
-      // SKT105S — Data dari SANY OMM (Operation and Maintenance Manual, Versi 12.2021)
+
+      // ============================================================
+      // SKT105S — Data dari SANY OMM versi 12.2021 (tanpa part number)
+      // ============================================================
       if (model === 'SKT105S' && interval === 250) {
         const items = [
           [1,'OIL',    'Engine Oil',                         'Drain and refill', null, 1, 'lot', '15W-40 CH-4 or equivalent'],
@@ -327,6 +336,150 @@ export async function runPmBundlesMigration(): Promise<void> {
           [3,'CHECK', 'Brake Drums Wear',          'Examine',          null, 1, 'lot', null],
           [4,'OIL',   'Transmission Oil',          'Change',           null, 1, 'lot', null],
           [5,'FILTER','Transmission Oil Filter',   'Replace',          null, 1, 'pcs', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+
+      // ============================================================
+      // SKT80S — Data dari Lembar Cek Layanan GUI-SVC-SS-SKT80S-02 (dengan part number)
+      // ============================================================
+      if (model === 'SKT80S' && interval === 250) {
+        const items = [
+          [1, 'OIL',    'Engine Oil (Minyak Mesin)',                 'Drain and refill', null,             null, 'lot', 'SAE 15W/40 CH-4'],
+          [2, 'OIL',    'Air Cleaner Oil Bath',                      'Drain and refill', null,             3.5,  'L',   'SAE 15W/40 CH-4'],
+          [3, 'FILTER', 'Engine Oil Filter Element',                 'Replace',          '60327523',       2,    'pcs', null],
+          [4, 'FILTER', 'Fuel Rough Filter (Saringan Kasar)',        'Replace',          '160604020017',   1,    'pcs', null],
+          [5, 'FILTER', 'Fuel Fine Filter Cartridge',                'Replace',          '160604020018',   1,    'pcs', null],
+          [6, 'FILTER', 'Oil-Water Separator Filter Element',        'Replace',          '160603020024A',  1,    'pcs', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SKT80S' && interval === 500) {
+        // 500H = sama dengan 250H (interval 250 jam berulang)
+        const items = [
+          [1, 'OIL',    'Engine Oil (Minyak Mesin)',                 'Drain and refill', null,             null, 'lot', 'SAE 15W/40 CH-4'],
+          [2, 'OIL',    'Air Cleaner Oil Bath',                      'Drain and refill', null,             3.5,  'L',   'SAE 15W/40 CH-4'],
+          [3, 'FILTER', 'Engine Oil Filter Element',                 'Replace',          '60327523',       2,    'pcs', null],
+          [4, 'FILTER', 'Fuel Rough Filter (Saringan Kasar)',        'Replace',          '160604020017',   1,    'pcs', null],
+          [5, 'FILTER', 'Fuel Fine Filter Cartridge',                'Replace',          '160604020018',   1,    'pcs', null],
+          [6, 'FILTER', 'Oil-Water Separator Filter Element',        'Replace',          '160603020024A',  1,    'pcs', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SKT80S' && interval === 1000) {
+        const items = [
+          [1,  'OIL',    'Engine Oil (Minyak Mesin)',                'Drain and refill', null,             null, 'lot', 'SAE 15W/40 CH-4'],
+          [2,  'OIL',    'Air Cleaner Oil Bath',                     'Drain and refill', null,             3.5,  'L',   'SAE 15W/40 CH-4'],
+          [3,  'OIL',    'Transmission Oil (ATF)',                   'Drain and refill', null,             null, 'lot', 'ATF'],
+          [4,  'OIL',    'Middle Axle Main Reducer Oil',             'Drain and refill', null,             20,   'L',   'SAE 85W/140'],
+          [5,  'OIL',    'Middle Axle Wheel Edge Reducer Oil',       'Drain and refill', null,             12,   'L',   'SAE 85W/140'],
+          [6,  'OIL',    'Rear Axle Main Reducer Oil',               'Drain and refill', null,             20,   'L',   'SAE 85W/140'],
+          [7,  'OIL',    'Rear Axle Wheel Edge Reducer Oil',         'Clean and refill', null,             12,   'L',   'SAE 85W/140'],
+          [8,  'FILTER', 'Engine Oil Filter Element',                'Replace',          '60327523',       2,    'pcs', null],
+          [9,  'FILTER', 'Fuel Rough Filter (Saringan Kasar)',       'Replace',          '160604020017',   1,    'pcs', null],
+          [10, 'FILTER', 'Fuel Fine Filter Cartridge',               'Replace',          '160604020018',   1,    'pcs', null],
+          [11, 'FILTER', 'Oil-Water Separator Filter Element',       'Replace',          '160603020024A',  1,    'pcs', null],
+          [12, 'FILTER', 'HYD Oil Return Filter',                    'Replace',          '60167851',       1,    'pcs', null],
+          [13, 'FILTER', 'Hydraulic Steering Filter Element',        'Replace',          '60345316',       1,    'pcs', null],
+          [14, 'FILTER', 'AC Fresh Air Filter',                      'Replace',          '141502000017',   1,    'pcs', null],
+          [15, 'FILTER', 'Transmission (TM) Filter',                 'Replace',          '130202000093A023', 1,  'pcs', null],
+          [16, 'FILTER', 'Air Filter Outer Element',                 'Replace',          '160602020020A',  1,    'pcs', null],
+          [17, 'FILTER', 'Air Filter Inner Element',                 'Replace',          '160602030016A',  1,    'pcs', null],
+          [18, 'FILTER', 'Wet Air Cleaner Oil Bath Filter Element',  'Replace',          '160699000013A',  1,    'pcs', null],
+          [19, 'FILTER', 'Magnetic Filter',                          'Replace',          '130202000093A026', 1,  'pcs', null],
+          [20, 'FILTER', 'Hydraulic Tank Breather Filter',           'Replace',          '24001922',       1,    'pcs', null],
+          [21, 'FILTER', 'Air Dryer (Pengering Udara)',              'Replace',          '60060965',       1,    'pcs', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SKT80S' && interval === 2000) {
+        // 2000H = 1000H items + repeat
+        const items = [
+          [1,  'OIL',    'Engine Oil (Minyak Mesin)',                'Drain and refill', null,             null, 'lot', 'SAE 15W/40 CH-4'],
+          [2,  'OIL',    'Transmission Oil (ATF)',                   'Drain and refill', null,             null, 'lot', 'ATF'],
+          [3,  'OIL',    'Middle Axle Main Reducer Oil',             'Drain and refill', null,             20,   'L',   'SAE 85W/140'],
+          [4,  'OIL',    'Middle Axle Wheel Edge Reducer Oil',       'Drain and refill', null,             12,   'L',   'SAE 85W/140'],
+          [5,  'OIL',    'Rear Axle Main Reducer Oil',               'Drain and refill', null,             20,   'L',   'SAE 85W/140'],
+          [6,  'OIL',    'Rear Axle Wheel Edge Reducer Oil',         'Clean and refill', null,             12,   'L',   'SAE 85W/140'],
+          [7,  'FILTER', 'Engine Oil Filter Element',                'Replace',          '60327523',       2,    'pcs', null],
+          [8,  'FILTER', 'Fuel Rough Filter (Saringan Kasar)',       'Replace',          '160604020017',   1,    'pcs', null],
+          [9,  'FILTER', 'Fuel Fine Filter Cartridge',               'Replace',          '160604020018',   1,    'pcs', null],
+          [10, 'FILTER', 'Oil-Water Separator Filter Element',       'Replace',          '160603020024A',  1,    'pcs', null],
+          [11, 'FILTER', 'HYD Oil Return Filter',                    'Replace',          '60167851',       1,    'pcs', null],
+          [12, 'FILTER', 'Hydraulic Steering Filter Element',        'Replace',          '60345316',       1,    'pcs', null],
+          [13, 'FILTER', 'AC Fresh Air Filter',                      'Replace',          '141502000017',   1,    'pcs', null],
+          [14, 'FILTER', 'Transmission (TM) Filter',                 'Replace',          '130202000093A023', 1,  'pcs', null],
+          [15, 'FILTER', 'Air Filter Outer Element',                 'Replace',          '160602020020A',  1,    'pcs', null],
+          [16, 'FILTER', 'Air Filter Inner Element',                 'Replace',          '160602030016A',  1,    'pcs', null],
+          [17, 'FILTER', 'Wet Air Cleaner Oil Bath Filter Element',  'Replace',          '160699000013A',  1,    'pcs', null],
+          [18, 'FILTER', 'Magnetic Filter',                          'Replace',          '130202000093A026', 1,  'pcs', null],
+          [19, 'FILTER', 'Hydraulic Tank Breather Filter',           'Replace',          '24001922',       1,    'pcs', null],
+          [20, 'FILTER', 'Air Dryer (Pengering Udara)',              'Replace',          '60060965',       1,    'pcs', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SKT80S' && interval === 3000) {
+        const items = [
+          [1, 'OIL',    'Hydraulic Oil',                             'Drain and refill', null,             162,  'L',   'Caltex HDZ46'],
+          [2, 'FILTER', 'Engine Oil Filter Element',                 'Replace',          '60327523',       2,    'pcs', null],
+          [3, 'FILTER', 'Fuel Rough Filter',                        'Replace',          '160604020017',   1,    'pcs', null],
+          [4, 'FILTER', 'Fuel Fine Filter Cartridge',                'Replace',          '160604020018',   1,    'pcs', null],
+          [5, 'FILTER', 'HYD Oil Return Filter',                     'Replace',          '60167851',       1,    'pcs', null],
+          [6, 'FILTER', 'Hydraulic Steering Filter Element',         'Replace',          '60345316',       1,    'pcs', null],
+          [7, 'FILTER', 'Air Filter Outer Element',                  'Replace',          '160602020020A',  1,    'pcs', null],
+          [8, 'FILTER', 'Air Filter Inner Element',                  'Replace',          '160602030016A',  1,    'pcs', null],
+          [9, 'FILTER', 'Air Dryer (Pengering Udara)',               'Replace',          '60060965',       1,    'pcs', null],
+        ];
+        for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
+          await db.query(
+            `INSERT INTO pm_bundle_items (bundle_id,item_no,component_category,component_name,action,part_number,qty,unit,spec) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [bundleId,no,cat,name2,act,pn,qty,unit2,spec]
+          );
+        }
+      }
+      if (model === 'SKT80S' && interval === 4000) {
+        const items = [
+          [1, 'OIL',    'Radiator Coolant',                          'Drain and refill', null,             55,   'L',   'L-35 Antifreeze'],
+          [2, 'OIL',    'Hydraulic Oil',                             'Drain and refill', null,             162,  'L',   'Caltex HDZ46'],
+          [3, 'FILTER', 'Engine Oil Filter Element',                 'Replace',          '60327523',       2,    'pcs', null],
+          [4, 'FILTER', 'Fuel Rough Filter',                        'Replace',          '160604020017',   1,    'pcs', null],
+          [5, 'FILTER', 'Fuel Fine Filter Cartridge',                'Replace',          '160604020018',   1,    'pcs', null],
+          [6, 'FILTER', 'Oil-Water Separator Filter Element',        'Replace',          '160603020024A',  1,    'pcs', null],
+          [7, 'FILTER', 'HYD Oil Return Filter',                     'Replace',          '60167851',       1,    'pcs', null],
+          [8, 'FILTER', 'Hydraulic Steering Filter Element',         'Replace',          '60345316',       1,    'pcs', null],
+          [9, 'FILTER', 'AC Fresh Air Filter',                       'Replace',          '141502000017',   1,    'pcs', null],
+          [10,'FILTER', 'Transmission (TM) Filter',                  'Replace',          '130202000093A023', 1,  'pcs', null],
+          [11,'FILTER', 'Air Filter Outer Element',                  'Replace',          '160602020020A',  1,    'pcs', null],
+          [12,'FILTER', 'Air Filter Inner Element',                  'Replace',          '160602030016A',  1,    'pcs', null],
+          [13,'FILTER', 'Wet Air Cleaner Oil Bath Filter Element',   'Replace',          '160699000013A',  1,    'pcs', null],
+          [14,'FILTER', 'Magnetic Filter',                           'Replace',          '130202000093A026', 1,  'pcs', null],
+          [15,'FILTER', 'Hydraulic Tank Breather Filter',            'Replace',          '24001922',       1,    'pcs', null],
+          [16,'FILTER', 'Air Dryer (Pengering Udara)',               'Replace',          '60060965',       1,    'pcs', null],
         ];
         for (const [no,cat,name2,act,pn,qty,unit2,spec] of items) {
           await db.query(
