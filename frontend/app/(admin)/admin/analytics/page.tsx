@@ -94,7 +94,7 @@ export default function AnalyticsPage() {
     setIsExportingAdmin(format);
     try {
       const endpoint = format === 'pdf' ? '/admin/units/export/pdf' : '/admin/units/export/excel';
-      const res = await adminApi.get(endpoint, { responseType: 'blob' });
+      const res = await api.get(endpoint, { responseType: 'blob' });
       const blob = new Blob([res.data], {
         type: format === 'pdf'
           ? 'application/pdf'
