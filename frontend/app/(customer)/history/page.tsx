@@ -10,6 +10,7 @@ import {
   LogOut, FileText, ChevronRight, Package, Clock,
   CheckCircle, AlertCircle, XCircle, Loader2, Plus,
 } from 'lucide-react';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 interface Rfq {
   id:           string;
@@ -84,6 +85,7 @@ export default function HistoryPage() {
             <Link href="/search"       className="text-sm text-white/80 hover:text-white hidden sm:block">Cari Part</Link>
             <Link href="/rfq"          className="text-sm text-white/80 hover:text-white hidden sm:block">Buat RFQ</Link>
             <Link href="/my-dashboard" className="text-sm text-white/80 hover:text-white hidden sm:block">Dashboard</Link>
+            <ThemeToggle className="opacity-70 hover:opacity-100" />
             <button onClick={logout} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors">
               <LogOut size={16} />
             </button>
