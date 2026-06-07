@@ -21,6 +21,7 @@ import { seedSkt80sData } from './scripts/seed-skt80s';
 import monthlyReportRouter from './routes/monthly-report.routes'; // ✅ Laporan Bulanan
 import { updateSrt95cPartNumbers } from './scripts/update-srt95c-pn'; // ✅ SRT95C PN
 import pmReminderAdminRouter from './routes/pm-reminder.routes'; // ✅ Admin PM Reminder
+import { migrateLastPmHm } from './scripts/migrate-last-pm-hm'; // ✅ last_pm_hm columns
 import { createPmReminderLogsTable } from './scripts/create-pm-reminder-logs'; // ✅ PM reminder table
 import { runPmReminders } from './services/pm-reminder.service'; // ✅ PM reminder
 import { updatePartNumbersFinal } from './scripts/update-part-numbers-final'; // ✅ Update PN SKT90S/SKT105S/SYZ440C
@@ -186,6 +187,7 @@ async function bootstrap(): Promise<void> {
   await seedSkt80sData();            // ✅ Seed SKT80S PM items with part numbers (idempotent)
   await updatePartNumbersFinal();
     await updateSrt95cPartNumbers(); // SRT95C Cummins QSK50 + Allison H8610AR
+    await migrateLastPmHm();           // ensure last_pm_hm column exists
     await createPmReminderLogsTable(); // ensure pm_reminder_logs exists
     startPmReminderScheduler(); // daily PM reminder cron    // ✅ Update part numbers SKT90S/SKT105S/SYZ440C dari catalogue
   try {
