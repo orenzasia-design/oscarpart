@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { LogOut, ChevronLeft, AlertTriangle, Clock, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '../../../lib/auth-context';
+import { api } from '../../../lib/api-client';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 interface PmStatus {
@@ -43,15 +44,14 @@ interface ReportData {
 }
 
 // ─── API ─────────────────────────────────────────────────────────────────────
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000/api/v1';
 
 async function fetchReport(month: string): Promise<ReportData | null> {
   try {
     const token = localStorage.getItem('accessToken');
-    const res = await fetch(`${API_BASE}/monthly-report?month=${month}`, {
+    const res = await api.get(`/monthly-report?month=${month}`);
       headers: { Authorization: `Bearer ${token}` },
     });
-    const json = await res.json();
+    const json = res.data;
     return json.data ?? null;
   } catch {
     return null;
@@ -338,3 +338,4 @@ export default function MonthlyReportPage() {
     </div>
   );
 }
+
