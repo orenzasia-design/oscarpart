@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../lib/auth-context';
 import { api } from '../../../lib/api-client';
-import { LogOut, Gauge, AlertTriangle, CheckCircle, XCircle, ChevronRight, BarChart2, Loader2 } from 'lucide-react';
+import { LogOut, Gauge, AlertTriangle, CheckCircle, XCircle, ChevronRight, BarChart2, Loader2, Download } from 'lucide-react';
 import toast from 'react-hot-toast';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -58,6 +58,7 @@ export default function AnalyticsPage() {
   const [summary, setSummary] = useState<Summary | null>(null);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter]   = useState<'all' | 'ok' | 'due_soon' | 'overdue'>('all');
+  const [isExporting, setIsExporting] = useState<'pdf'|'excel'|null>(null);
 
   const fetchAnalytics = useCallback(async () => {
     try {
@@ -89,6 +90,31 @@ export default function AnalyticsPage() {
       'Interval PM': u.interval_hm,
       color: STATUS_CONFIG[u.status].color,
     }));
+
+  const handleExport = async (format: 'pdf' | 'excel') => {
+    setIsExporting(format);
+    try {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
+      const endpoint = format === 'pdf' ? '/units/export/pdf' : '/units/export/excel';
+      const res = await api.get(endpoint, { responseType: 'blob' });
+      const blob = new Blob([res.data], {
+        type: format === 'pdf'
+          ? 'application/pdf'
+          : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = format === 'pdf' ? 'laporan-pm-oscarpart.pdf' : 'laporan-pm-oscarpart.xlsx';
+      a.click();
+      URL.revokeObjectURL(url);
+      toast.success(format === 'pdf' ? 'PDF berhasil diunduh.' : 'Excel berhasil diunduh.');
+    } catch {
+      toast.error('Gagal mengunduh laporan.');
+    } finally {
+      setIsExporting(null);
+    }
+  };
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-surface">
@@ -125,6 +151,24 @@ export default function AnalyticsPage() {
             <BarChart2 size={22} className="text-brand-600" /> Analitik PM Unit
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">Status Preventive Maintenance semua unit Anda</p>
+          <div className="flex gap-2 mt-3">
+            <button
+              onClick={() => handleExport('pdf')}
+              disabled={isExporting !== null || units.length === 0}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {isExporting === 'pdf' ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
+              Export PDF
+            </button>
+            <button
+              onClick={() => handleExport('excel')}
+              disabled={isExporting !== null || units.length === 0}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {isExporting === 'excel' ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
+              Export Excel
+            </button>
+          </div>
         </div>
 
         {/* Summary cards */}
@@ -247,3 +291,4 @@ export default function AnalyticsPage() {
     </div>
   );
 }
+
