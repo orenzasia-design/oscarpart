@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { LogOut, ChevronLeft, Printer, ChevronDown, ChevronUp, CheckSquare, Square, ShoppingCart, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../../lib/auth-context';
+import { api } from '../../../lib/api-client';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 interface PmBundle {
@@ -28,11 +29,10 @@ interface BundleItem {
 }
 
 // ─── API ─────────────────────────────────────────────────────────────────────
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000/api/v1';
 
 async function fetchModels(): Promise<string[]> {
   try {
-    const res = await fetch(`${API_BASE}/pm-bundles/models`);
+    const res = await api.get('/pm-bundles/models');
     const json = await res.json();
     return json.data ?? [];
   } catch { return []; }
@@ -40,7 +40,7 @@ async function fetchModels(): Promise<string[]> {
 
 async function fetchBundles(model: string): Promise<PmBundle[]> {
   try {
-    const res = await fetch(`${API_BASE}/pm-bundles?unit_model=${model}`);
+    const res = await api.get(`/pm-bundles?unit_model=${model}`);
     const json = await res.json();
     return json.data ?? [];
   } catch { return []; }
@@ -48,7 +48,7 @@ async function fetchBundles(model: string): Promise<PmBundle[]> {
 
 async function fetchBundleDetail(id: number): Promise<BundleItem[]> {
   try {
-    const res = await fetch(`${API_BASE}/pm-bundles/${id}`);
+    const res = await api.get(`/pm-bundles/${id}`);
     const json = await res.json();
     return json.data?.items ?? [];
   } catch { return []; }
@@ -128,12 +128,8 @@ export default function OmmPocketGuidePage() {
     setRfqLoading(true);
     setRfqSuccess(null);
     try {
-      const token = localStorage.getItem('accessToken');
-      const res = await fetch(`${API_BASE}/rfq/from-pm-bundle`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ bundle_id: bundle.id }),
-      });
+      const res = await api.post('/rfq/from-pm-bundle', {
+        { bundle_id: bundle.id });
       const json = await res.json();
       if (json.success) setRfqSuccess(json.data);
       else alert('Gagal membuat RFQ: ' + (json.error ?? 'unknown error'));
