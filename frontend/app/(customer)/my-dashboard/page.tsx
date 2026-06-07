@@ -145,6 +145,13 @@ export default function CustomerDashboard() {
               bg: 'bg-orange-50',
             },
             {
+              icon: <BarChart2 size={22} className="text-indigo-600" />,
+              title: 'Analitik PM',
+              desc: 'Chart & status PM unit',
+              href: '/analytics',
+              bg: 'bg-indigo-50',
+            },
+            {
               icon: <BarChart2 size={22} className="text-blue-600" />,
               title: 'Laporan Bulanan',
               desc: 'Status PM semua unit',
