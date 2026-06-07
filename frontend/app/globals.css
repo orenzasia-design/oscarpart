@@ -92,3 +92,78 @@
   a { color: inherit !important; text-decoration: none !important; }
   .print\:cursor-default { cursor: default; }
 }
+
+/* ─── Dark Mode ────────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --bg-page:       #f8fafc;
+    --bg-card:       #ffffff;
+    --bg-sidebar:    #0d1c34;
+    --text-primary:  #1e293b;
+    --text-secondary:#64748b;
+    --border-color:  #e2e8f0;
+    --shimmer-from:  #f1f5f9;
+    --shimmer-to:    #e2e8f0;
+  }
+
+  .dark {
+    --bg-page:       #0f172a;
+    --bg-card:       #1e293b;
+    --bg-sidebar:    #0a1628;
+    --text-primary:  #f1f5f9;
+    --text-secondary:#94a3b8;
+    --border-color:  #334155;
+    --shimmer-from:  #1e293b;
+    --shimmer-to:    #334155;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+@layer components {
+  /* Dark-aware card override */
+  .dark .card {
+    @apply bg-[#1e293b] border-[#334155] text-slate-100;
+  }
+
+  /* Dark-aware input */
+  .dark .input {
+    @apply bg-[#0f172a] border-[#334155] text-slate-100 placeholder-slate-500;
+  }
+
+  /* Dark-aware table */
+  .dark .table-cell {
+    @apply text-slate-300;
+  }
+  .dark .table-header {
+    @apply text-slate-400;
+  }
+
+  /* Dark-aware btn-secondary */
+  .dark .btn-secondary {
+    @apply bg-slate-700 border-slate-600 text-slate-200 hover:bg-slate-600;
+  }
+
+  /* Dark-aware badges */
+  .dark .badge-gray  { @apply bg-slate-700 text-slate-300; }
+  .dark .badge-blue  { @apply bg-blue-900/50 text-blue-300; }
+  .dark .badge-green { @apply bg-green-900/50 text-green-300; }
+  .dark .badge-yellow{ @apply bg-yellow-900/50 text-yellow-300; }
+  .dark .badge-red   { @apply bg-red-900/50 text-red-300; }
+
+  /* Dark-aware section title */
+  .dark .section-title {
+    @apply text-brand-300 border-brand-400;
+  }
+
+  /* Dark shimmer animation */
+  .dark .shimmer {
+    background: linear-gradient(90deg, var(--shimmer-from) 25%, var(--shimmer-to) 50%, var(--shimmer-from) 75%);
+    background-size: 200% 100%;
+  }
+}
