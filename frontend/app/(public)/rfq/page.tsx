@@ -10,6 +10,7 @@ import {
   Search, Upload, Download, Plus, ArrowRight, ArrowLeft,
   Send, MessageCircle, CheckCircle, FileSpreadsheet, X
 } from 'lucide-react';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import { rfqApi, partsApi } from '@/lib/api-client';
 import { useAuth } from '../../../lib/auth-context';
 import { formatIDR } from '../../../lib/formatters';
@@ -330,6 +331,7 @@ export default function RfqPage() {
           <div className="ml-auto flex items-center gap-3">
             {!user && <Link href="/login" className="text-xs bg-white/10 border border-white/20 px-3 py-1.5 rounded-lg">Login</Link>}
             {user && <span className="text-xs text-white/70">{user.full_name}</span>}
+            <ThemeToggle className="opacity-80 hover:opacity-100" />
           </div>
         </div>
       </nav>
