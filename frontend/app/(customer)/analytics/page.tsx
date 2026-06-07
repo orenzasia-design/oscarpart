@@ -94,7 +94,6 @@ export default function AnalyticsPage() {
   const handleExport = async (format: 'pdf' | 'excel') => {
     setIsExporting(format);
     try {
-      const token = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
       const endpoint = format === 'pdf' ? '/units/export/pdf' : '/units/export/excel';
       const res = await api.get(endpoint, { responseType: 'blob' });
       const blob = new Blob([res.data], {
