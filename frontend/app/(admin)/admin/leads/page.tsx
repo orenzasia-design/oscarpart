@@ -41,6 +41,7 @@ export default function LeadsPage() {
   const [search, setSearch] = useState('');
   const [statusF, setStatusF] = useState('');
   const [page, setPage]     = useState(1);
+  const [stats, setStats]       = useState<Record<string, number>>({});
   const [editing, setEditing] = useState<Lead | null>(null);
   const [editNotes, setEditNotes] = useState('');
   const [editStatus, setEditStatus] = useState('');
@@ -50,9 +51,19 @@ export default function LeadsPage() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await adminApi.leads({ page, limit, search: search || undefined, status: statusF || undefined });
-      setLeads(res.data.data.leads || []);
-      setTotal(res.data.data.pagination?.total || 0);
+      const [leadsRes, statsRes] = await Promise.all([
+        adminApi.leads({ page, limit, search: search || undefined, status: statusF || undefined }),
+        adminApi.leadStats(),
+      ]);
+      setLeads(leadsRes.data.data.leads || []);
+      setTotal(leadsRes.data.data.pagination?.total || 0);
+      // Map by_status → simple { new: count, contacted: count, ... }
+      const byStatus = statsRes.data.data?.by_status || {};
+      const mapped: Record<string, number> = {};
+      Object.entries(byStatus).forEach(([k, v]: [string, any]) => {
+        mapped[k] = v?.count || 0;
+      });
+      setStats(mapped);
     } catch {
       toast.error('Gagal memuat data leads.');
     } finally {
@@ -93,7 +104,7 @@ export default function LeadsPage() {
           <button key={key}
             onClick={() => { setStatusF(statusF === key ? '' : key); setPage(1); }}
             className={`card py-3 text-center transition-all cursor-pointer hover:shadow-md ${statusF === key ? 'ring-2 ring-brand-400' : ''}`}>
-            <p className="font-black text-lg text-brand-600">—</p>
+            <p className="font-black text-lg text-brand-600">{stats[key] ?? 0}</p>
             <p className="text-xs text-gray-500 mt-0.5">{label}</p>
           </button>
         ))}
@@ -230,3 +241,4 @@ export default function LeadsPage() {
     </AdminShell>
   );
 }
+
