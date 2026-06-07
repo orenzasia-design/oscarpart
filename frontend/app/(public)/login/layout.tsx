@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title:       'Login',
-  description: 'Login ke akun OSCARPART Anda untuk mengakses harga part, RFQ, dan history transaksi.',
+  title: 'Login - OSCARPART',
+  description: 'Login ke platform OSCARPART untuk akses harga dan fitur RFQ spare part tambang.',
   openGraph: {
-    title:       'Login | OSCARPART',
-    description: 'Login ke akun OSCARPART Anda untuk mengakses harga part, RFQ, dan history transaksi.',
+    title: 'Login - OSCARPART | OSCARPART',
+    description: 'Login ke platform OSCARPART untuk akses harga dan fitur RFQ spare part tambang.',
   },
 };
 
