@@ -7,6 +7,7 @@ import {
   deleteUnit,
   getUnitModels,
   recordPmDone,
+  getUnitAnalytics,
 } from '../controllers/units.controller';
 
 const unitsRouter = Router();
@@ -28,6 +29,9 @@ unitsRouter.patch('/:id', updateUnit);
 
 // PATCH catat PM selesai
 unitsRouter.patch('/:id/pm', recordPmDone);
+
+// GET analytics PM & HM per unit
+unitsRouter.get('/analytics', getUnitAnalytics);
 
 // DELETE hapus unit (soft delete)
 unitsRouter.delete('/:id', deleteUnit);
