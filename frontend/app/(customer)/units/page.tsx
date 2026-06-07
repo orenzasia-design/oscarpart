@@ -149,7 +149,7 @@ export default function UnitsPage() {
     if (isNaN(hm) || hm < 0) { toast.error('HM tidak valid.'); return; }
     setPmSaving(true);
     try {
-      await api.patch(`/units/${pmModal.id}/record-pm`, { last_pm_hm: hm });
+      await api.patch(`/units/${pmModal.id}/pm`, { last_pm_hm: hm });
       toast.success('PM berhasil dicatat!');
       setPmModal(null);
       setPmHmInput('');
