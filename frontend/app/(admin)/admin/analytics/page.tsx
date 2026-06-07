@@ -7,7 +7,7 @@ import { AdminShell } from '../AdminShell';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line
 } from 'recharts';
-import { TrendingUp, Users, FileText, Search, Package, Activity, Gauge, AlertTriangle, XCircle, CheckCircle, BarChart2 } from 'lucide-react';
+import { TrendingUp, Users, FileText, Search, Package, Activity, Gauge, AlertTriangle, XCircle, CheckCircle, BarChart2, Download, Loader2 } from 'lucide-react';
 
 interface Kpi {
   new_leads_today: number; rfqs_this_week: number; rfq_value_this_week: number;
@@ -50,6 +50,7 @@ export default function AnalyticsPage() {
   // PM Monitor state
   const [pmUnits, setPmUnits]     = useState<AdminUnit[]>([]);
   const [pmSummary, setPmSummary] = useState<PmSummary | null>(null);
+  const [isExportingAdmin, setIsExportingAdmin] = useState<'pdf'|'excel'|null>(null);
   const [pmFilter, setPmFilter]   = useState<'all' | 'ok' | 'due_soon' | 'overdue'>('all');
   const [pmSearch, setPmSearch]   = useState('');
   const [loadingPm, setLoadingPm] = useState(false);
@@ -88,6 +89,30 @@ export default function AnalyticsPage() {
   useEffect(() => {
     if (tab === 'pm' && !pmLoaded) fetchPm();
   }, [tab, pmLoaded, fetchPm]);
+
+  const handleAdminExport = async (format: 'pdf' | 'excel') => {
+    setIsExportingAdmin(format);
+    try {
+      const endpoint = format === 'pdf' ? '/admin/units/export/pdf' : '/admin/units/export/excel';
+      const res = await adminApi.get(endpoint, { responseType: 'blob' });
+      const blob = new Blob([res.data], {
+        type: format === 'pdf'
+          ? 'application/pdf'
+          : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = format === 'pdf' ? 'laporan-pm-semua-unit.pdf' : 'laporan-pm-semua-unit.xlsx';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      // toast not available here, silent fail with console
+      console.error('Export failed');
+    } finally {
+      setIsExportingAdmin(null);
+    }
+  };
 
   const filteredPm = pmUnits.filter(u => {
     const matchStatus = pmFilter === 'all' || u.pm_status === pmFilter;
@@ -249,15 +274,33 @@ export default function AnalyticsPage() {
                 </div>
               )}
 
-              {/* Search */}
-              <div>
+              {/* Search + Export */}
+              <div className="flex flex-wrap items-center gap-3">
                 <input
                   type="text"
                   value={pmSearch}
                   onChange={e => setPmSearch(e.target.value)}
                   placeholder="Cari unit, model, customer, perusahaan..."
-                  className="input w-full max-w-md text-sm"
+                  className="input flex-1 min-w-[200px] max-w-md text-sm"
                 />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleAdminExport('pdf')}
+                    disabled={isExportingAdmin !== null || pmUnits.length === 0}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {isExportingAdmin === 'pdf' ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
+                    Export PDF
+                  </button>
+                  <button
+                    onClick={() => handleAdminExport('excel')}
+                    disabled={isExportingAdmin !== null || pmUnits.length === 0}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {isExportingAdmin === 'excel' ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
+                    Export Excel
+                  </button>
+                </div>
               </div>
 
               {/* Unit table */}
@@ -342,3 +385,4 @@ export default function AnalyticsPage() {
     </AdminShell>
   );
 }
+
