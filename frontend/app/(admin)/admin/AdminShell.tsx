@@ -1,7 +1,7 @@
 'use client';
 import { useAuth } from '@/lib/auth-context';
 import Link from 'next/link';
-import { Users, FileText, Target, Building2, Wrench, BarChart2, Settings, LogOut, ArrowRight, LayoutDashboard } from 'lucide-react';
+import { Users, FileText, Target, Building2, Wrench, BarChart2, Settings, LogOut, ArrowRight, LayoutDashboard, Bell } from 'lucide-react';
 
 function LogoutButton() {
   const { logout } = useAuth();
@@ -24,6 +24,7 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
     { href: '/admin/rfq',        label: 'RFQ',             icon: <FileText size={16} /> },
     { href: '/admin/parts',      label: 'Database Part',   icon: <Wrench size={16} /> },
     { href: '/admin/analytics',  label: 'Analitik',        icon: <BarChart2 size={16} /> },
+    { href: '/admin/pm-reminders', label: 'PM Reminder',    icon: <Bell size={16} /> },
     { href: '/admin/settings',   label: 'Pengaturan',      icon: <Settings size={16} /> },
   ];
 
