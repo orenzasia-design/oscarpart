@@ -6,6 +6,7 @@ import { adminApi } from '@/lib/api-client';
 import { formatIDR, formatDateTime, STATUS_BADGE, STATUS_LABELS } from '../../../../lib/formatters';
 import { AdminShell } from '../AdminShell';
 import toast from 'react-hot-toast';
+import { SkeletonTableRow } from '@/components/ui/Skeleton';
 import { Search, Download, ChevronLeft, ChevronRight, FileText, ChevronDown } from 'lucide-react';
 import { adminApi, api } from '@/lib/api-client';
 
@@ -138,7 +139,7 @@ setTotal(totalCount);
             </thead>
             <tbody className="divide-y divide-surface-border">
               {loading ? (
-                <tr><td colSpan={8} className="text-center py-10 text-gray-400 text-sm">Memuat...</td></tr>
+                {Array.from({length:6}).map((_,i)=><SkeletonTableRow key={i} cols={8}/>)}
               ) : rfqs.length === 0 ? (
                 <tr><td colSpan={8} className="text-center py-10 text-gray-400 text-sm">Tidak ada data.</td></tr>
               ) : rfqs.map((rfq) => (
