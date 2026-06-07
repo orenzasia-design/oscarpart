@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../../../lib/auth-context';
 import toast from 'react-hot-toast';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 // Komponen dalam yang menggunakan useSearchParams()
 function LoginContent() {
@@ -43,7 +44,8 @@ function LoginContent() {
   };
 
   return (
-    <div className="min-h-screen bg-surface flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[--bg-page] flex items-center justify-center px-4">
+      <div className="absolute top-4 right-4"><ThemeToggle /></div>
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="text-2xl font-black text-brand-600 tracking-widest">OSCARPART</Link>
