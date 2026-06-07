@@ -40,6 +40,7 @@ export async function getMyUnits(req: Request, res: Response): Promise<void> {
     const userId = req.user!.sub;
     const result = await query(
       `SELECT id, unit_name, model, serial_number, current_hm, hm_updated_at,
+              last_pm_hm, last_pm_date, last_pm_notes,
               year_of_manufacture, site_location, notes, is_active, created_at, updated_at
        FROM customer_units
        WHERE user_id = $1 AND is_active = true
@@ -124,6 +125,7 @@ export async function updateUnit(req: Request, res: Response): Promise<void> {
          updated_at          = NOW()
        WHERE id = $9 AND user_id = $10
        RETURNING id, unit_name, model, serial_number, current_hm, hm_updated_at,
+                 last_pm_hm, last_pm_date, last_pm_notes,
                  year_of_manufacture, site_location, notes, is_active, created_at, updated_at`,
       [
         unit_name?.trim() || null,
@@ -208,6 +210,47 @@ export async function adminGetAllUnits(req: Request, res: Response): Promise<voi
         },
       },
     });
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'INTERNAL_ERROR' });
+  }
+}
+
+// ============================================================
+// PATCH /api/v1/units/:id/pm — catat PM selesai dilakukan
+// Body: { last_pm_hm, last_pm_date?, last_pm_notes? }
+// ============================================================
+export async function recordPmDone(req: Request, res: Response): Promise<void> {
+  try {
+    const userId = req.user!.sub;
+    const { id } = req.params;
+    const { last_pm_hm, last_pm_date, last_pm_notes } = req.body;
+
+    if (!last_pm_hm) {
+      res.status(422).json({ success: false, error: 'VALIDATION_ERROR', message: 'last_pm_hm wajib diisi.' });
+      return;
+    }
+
+    const existing = await query(
+      `SELECT id FROM customer_units WHERE id = $1 AND user_id = $2 AND is_active = true`,
+      [id, userId]
+    );
+    if (!existing.rows.length) {
+      res.status(404).json({ success: false, error: 'NOT_FOUND' });
+      return;
+    }
+
+    const result = await query(
+      `UPDATE customer_units SET
+         last_pm_hm    = $1,
+         last_pm_date  = COALESCE($2, NOW()),
+         last_pm_notes = $3,
+         updated_at    = NOW()
+       WHERE id = $4 AND user_id = $5
+       RETURNING id, unit_name, model, current_hm, last_pm_hm, last_pm_date, last_pm_notes`,
+      [parseFloat(last_pm_hm), last_pm_date || null, last_pm_notes || null, id, userId]
+    );
+
+    res.json({ success: true, data: result.rows[0], message: 'PM berhasil dicatat.' });
   } catch (err) {
     res.status(500).json({ success: false, error: 'INTERNAL_ERROR' });
   }
