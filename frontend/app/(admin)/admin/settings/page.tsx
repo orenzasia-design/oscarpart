@@ -4,7 +4,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { adminApi } from '@/lib/api-client';
 import { AdminShell } from '../AdminShell';
 import toast from 'react-hot-toast';
-import { Save, Settings } from 'lucide-react';
+import { Save, Settings, Palette } from 'lucide-react';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 interface Setting { key: string; value: string; description?: string; }
 
@@ -88,6 +89,20 @@ export default function SettingsPage() {
             </div>
           </div>
         ))}
+
+        {/* Dark Mode Toggle */}
+        <div className="card">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <Palette size={16} className="text-brand-600" />
+                <p className="font-semibold text-gray-800 dark:text-slate-100 text-sm">Tampilan</p>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-slate-400">Pilih mode tampilan: Light, Dark, atau ikuti sistem.</p>
+            </div>
+            <ThemeToggle variant="full" />
+          </div>
+        </div>
 
         <div className="card bg-brand-50 border-brand-200">
           <p className="text-sm font-semibold text-brand-700 mb-1">Catatan</p>
