@@ -329,3 +329,103 @@ export async function getUnitAnalytics(req: Request, res: Response): Promise<voi
     res.status(500).json({ success: false, error: 'INTERNAL_ERROR' });
   }
 }
+
+// ============================================================
+// GET /api/v1/admin/units — semua unit semua customer (admin only)
+// Query params: ?status=overdue|due_soon|ok&search=keyword&limit=50&page=1
+// ============================================================
+export async function adminGetAllUnits(req: Request, res: Response): Promise<void> {
+  try {
+    const { status, search, limit: lq, page: pq } = req.query as Record<string, string>;
+    const limit = Math.min(parseInt(lq || '50'), 100);
+    const page  = Math.max(parseInt(pq || '1'), 1);
+    const offset = (page - 1) * limit;
+
+    // Build WHERE clauses
+    const conditions: string[] = ['cu.is_active = true'];
+    const params: unknown[] = [];
+    let pi = 1;
+
+    if (search) {
+      conditions.push(`(cu.unit_name ILIKE $${pi} OR cu.model ILIKE $${pi} OR u.full_name ILIKE $${pi} OR u.company_name ILIKE $${pi})`);
+      params.push(`%${search}%`);
+      pi++;
+    }
+
+    const where = conditions.length ? 'WHERE ' + conditions.join(' AND ') : '';
+
+    const rows = await query(
+      `SELECT
+         cu.id, cu.unit_name, cu.model, cu.serial_number,
+         cu.current_hm, cu.hm_updated_at,
+         cu.last_pm_hm, cu.last_pm_date,
+         cu.site_location, cu.year_of_manufacture,
+         u.id AS user_id, u.full_name, u.company_name, u.phone,
+         COALESCE(pb.interval_hm, 250) AS interval_hm
+       FROM customer_units cu
+       JOIN users u ON u.id = cu.user_id
+       LEFT JOIN LATERAL (
+         SELECT interval_hm FROM pm_bundles
+         WHERE unit_model = cu.model
+         ORDER BY interval_hm ASC LIMIT 1
+       ) pb ON true
+       ${where}
+       ORDER BY cu.updated_at DESC
+       LIMIT $${pi} OFFSET $${pi + 1}`,
+      [...params, limit, offset]
+    );
+
+    const countRes = await query(
+      `SELECT COUNT(*) FROM customer_units cu
+       JOIN users u ON u.id = cu.user_id
+       ${where}`,
+      params
+    );
+
+    // Compute PM status for each unit
+    const mapped = rows.rows.map((u: {
+      id: string; unit_name: string; model: string; serial_number: string | null;
+      current_hm: number | null; hm_updated_at: string | null;
+      last_pm_hm: number | null; last_pm_date: string | null;
+      site_location: string | null; year_of_manufacture: number | null;
+      user_id: string; full_name: string; company_name: string | null; phone: string | null;
+      interval_hm: number;
+    }) => {
+      const cur = u.current_hm || 0;
+      const lastPm = u.last_pm_hm || 0;
+      const hmSince = Math.max(0, cur - lastPm);
+      const hmToNext = u.interval_hm - hmSince;
+      let pm_status: 'ok' | 'due_soon' | 'overdue' = 'ok';
+      if (hmToNext <= 0) pm_status = 'overdue';
+      else if (hmToNext <= 50) pm_status = 'due_soon';
+      return { ...u, hm_since_pm: hmSince, hm_to_next_pm: hmToNext, pm_status };
+    });
+
+    // Filter by status after computing
+    const filtered = status ? mapped.filter((u: { pm_status: string }) => u.pm_status === status) : mapped;
+
+    // Summary counts (from full unfiltered set for KPIs)
+    const all = mapped;
+    const summary = {
+      total:    all.length,
+      ok:       all.filter((u: { pm_status: string }) => u.pm_status === 'ok').length,
+      due_soon: all.filter((u: { pm_status: string }) => u.pm_status === 'due_soon').length,
+      overdue:  all.filter((u: { pm_status: string }) => u.pm_status === 'overdue').length,
+    };
+
+    res.json({
+      success: true,
+      data: {
+        summary,
+        units: filtered,
+        pagination: {
+          total: parseInt(countRes.rows[0].count),
+          page, limit,
+          totalPages: Math.ceil(parseInt(countRes.rows[0].count) / limit),
+        },
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'INTERNAL_ERROR' });
+  }
+}
