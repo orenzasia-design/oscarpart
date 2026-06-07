@@ -33,7 +33,7 @@ interface BundleItem {
 async function fetchModels(): Promise<string[]> {
   try {
     const res = await api.get('/pm-bundles/models');
-    const json = await res.json();
+    const json = res.data;
     return json.data ?? [];
   } catch { return []; }
 }
@@ -41,7 +41,7 @@ async function fetchModels(): Promise<string[]> {
 async function fetchBundles(model: string): Promise<PmBundle[]> {
   try {
     const res = await api.get(`/pm-bundles?unit_model=${model}`);
-    const json = await res.json();
+    const json = res.data;
     return json.data ?? [];
   } catch { return []; }
 }
@@ -49,7 +49,7 @@ async function fetchBundles(model: string): Promise<PmBundle[]> {
 async function fetchBundleDetail(id: number): Promise<BundleItem[]> {
   try {
     const res = await api.get(`/pm-bundles/${id}`);
-    const json = await res.json();
+    const json = res.data;
     return json.data?.items ?? [];
   } catch { return []; }
 }
@@ -128,9 +128,8 @@ export default function OmmPocketGuidePage() {
     setRfqLoading(true);
     setRfqSuccess(null);
     try {
-      const res = await api.post('/rfq/from-pm-bundle', {
-        { bundle_id: bundle.id });
-      const json = await res.json();
+      const res = await api.post('/rfq/from-pm-bundle', { bundle_id: bundle.id });
+      const json = res.data;
       if (json.success) setRfqSuccess(json.data);
       else alert('Gagal membuat RFQ: ' + (json.error ?? 'unknown error'));
     } catch {
