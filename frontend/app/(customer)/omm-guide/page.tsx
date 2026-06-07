@@ -197,8 +197,13 @@ export default function OmmPocketGuidePage() {
               )}
               {selectedBundle && items.length > 0 && (
                 rfqSuccess ? (
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-lg text-sm font-semibold border border-green-300">
-                    <CheckCircle2 size={15} /> RFQ {rfqSuccess.rfq_number} dibuat ({rfqSuccess.item_count} items)
+                  <div className="flex items-center gap-2">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-lg text-sm font-semibold border border-green-300">
+                      <CheckCircle2 size={15} /> RFQ {rfqSuccess.rfq_number} dibuat ({rfqSuccess.item_count} items)
+                    </div>
+                    <Link href="/history" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:border-brand-400 hover:text-brand-600 transition-colors">
+                      Lihat RFQ Saya →
+                    </Link>
                   </div>
                 ) : (
                   <button
