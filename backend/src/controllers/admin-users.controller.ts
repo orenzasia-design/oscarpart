@@ -56,7 +56,8 @@ export async function listUsers(req: Request, res: Response): Promise<void> {
         u.company_name, u.business_type, u.contact_person, u.position,
         u.mobile_number, u.whatsapp_number, u.project_location, u.industry, u.website,
         u.approved_at, u.rejection_reason, u.created_at, u.last_login_at,
-        a.full_name AS approved_by_name
+        a.full_name AS approved_by_name,
+        (SELECT COUNT(*) FROM rfq_sessions WHERE user_id = u.id AND status != 'draft')::int AS rfq_count
        FROM users u
        LEFT JOIN users a ON a.id = u.approved_by
        ${where}
@@ -74,10 +75,18 @@ export async function listUsers(req: Request, res: Response): Promise<void> {
 
     const total = parseInt(countResult.rows[0].count);
 
+    // Summary breakdown by status (always fetched without status filter)
+    const summaryResult = await query<{ status: string; count: string }>(
+      `SELECT status, COUNT(*) as count FROM users GROUP BY status`
+    );
+    const summary: Record<string, number> = {};
+    summaryResult.rows.forEach((r) => { summary[r.status] = parseInt(r.count); });
+
     res.status(200).json({
       success: true,
       data: {
         users:      usersResult.rows,
+        summary,
         pagination: {
           total,
           page,
@@ -335,3 +344,4 @@ export async function suspendUser(req: Request, res: Response): Promise<void> {
 }
 
 export default { listUsers, getPendingCount, getUserById, approve, reject, updateRole, suspendUser };
+
