@@ -255,3 +255,98 @@ export const submitDraftRFQ = async (req: Request, res: Response): Promise<void>
     res.status(500).json({ success: false, error: 'INTERNAL_ERROR' });
   }
 };
+
+/**
+ * POST /api/v1/rfq/from-pm-bundle
+ * Create RFQ draft langsung dari PM Bundle items
+ * Body: { bundle_id, unit_id?, project_name?, notes? }
+ */
+export const createRfqFromPmBundle = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = (req as any).user?.sub as string | undefined;
+    if (!userId) { res.status(401).json({ success: false, error: 'UNAUTHORIZED' }); return; }
+
+    const { bundle_id, unit_id, project_name, notes } = req.body;
+    if (!bundle_id) { res.status(400).json({ success: false, error: 'bundle_id required' }); return; }
+
+    // Get bundle info
+    const bundleResult = await query(
+      `SELECT pb.*, COUNT(bi.id) as item_count
+       FROM pm_bundles pb
+       LEFT JOIN pm_bundle_items bi ON bi.bundle_id = pb.id AND bi.part_number IS NOT NULL
+       WHERE pb.id = $1
+       GROUP BY pb.id`,
+      [bundle_id] as any[]
+    );
+    if (!bundleResult.rows.length) {
+      res.status(404).json({ success: false, error: 'PM Bundle not found' }); return;
+    }
+    const bundle = bundleResult.rows[0] as any;
+
+    // Get bundle items with part numbers only
+    const itemsResult = await query(
+      `SELECT * FROM pm_bundle_items WHERE bundle_id = $1 AND part_number IS NOT NULL ORDER BY item_no`,
+      [bundle_id] as any[]
+    );
+    if (!itemsResult.rows.length) {
+      res.status(400).json({ success: false, error: 'No items with part numbers in this bundle' }); return;
+    }
+
+    // Get unit info if provided
+    let unitInfo: any = null;
+    if (unit_id) {
+      const ur = await query(`SELECT * FROM units WHERE id = $1 AND user_id = $2`, [unit_id, userId] as any[]);
+      if (ur.rows.length) unitInfo = ur.rows[0];
+    }
+
+    // Get user info
+    const userResult = await query(`SELECT full_name, company_name, phone FROM users WHERE id = $1`, [userId] as any[]);
+    const user = userResult.rows[0] as any;
+
+    // Generate RFQ number
+    const rfqNumber = \`RFQ-PM-\${Date.now().toString(36).toUpperCase()}\`;
+
+    // Create RFQ session (draft)
+    const autoProjectName = project_name
+      || (unitInfo ? \`PM \${bundle.interval_hm.toLocaleString()} HM — \${unitInfo.unit_name}\` : \`PM \${bundle.interval_hm.toLocaleString()} HM — \${bundle.unit_model}\`);
+
+    const sessionResult = await query(
+      `INSERT INTO rfq_sessions
+         (user_id, rfq_number, status, contact_person, project_name, notes)
+       VALUES ($1, $2, 'draft', $3, $4, $5)
+       RETURNING id, rfq_number`,
+      [userId, rfqNumber, user?.full_name ?? '', autoProjectName,
+       notes ?? \`Auto-generated dari PM Bundle: \${bundle.bundle_name}\`] as any[]
+    );
+    const session = sessionResult.rows[0] as any;
+
+    // Insert items
+    const items = itemsResult.rows as any[];
+    for (const item of items) {
+      await query(
+        `INSERT INTO rfq_items
+           (rfq_session_id, part_number, description, qty, unit, notes)
+         VALUES ($1, $2, $3, $4, $5, $6)`,
+        [session.id, item.part_number, item.component_name,
+         item.qty ?? 1, item.unit ?? 'pcs', item.spec ?? null] as any[]
+      );
+    }
+
+    logger.info(\`RFQ \${rfqNumber} created from PM Bundle \${bundle_id} by user \${userId} — \${items.length} items\`);
+
+    res.json({
+      success: true,
+      data: {
+        rfq_id:     session.id,
+        rfq_number: session.rfq_number,
+        item_count: items.length,
+        bundle_name: bundle.bundle_name,
+        unit_model:  bundle.unit_model,
+        interval_hm: bundle.interval_hm,
+      }
+    });
+  } catch (error) {
+    logger.error('Error in createRfqFromPmBundle:', error);
+    res.status(500).json({ success: false, error: 'INTERNAL_ERROR' });
+  }
+};
