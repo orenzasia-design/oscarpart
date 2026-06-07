@@ -13,6 +13,7 @@
 
 import { query } from '../config/database';
 import logger from '../config/logger';
+import { broadcastToAdmins } from './sse.service';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface PmReminderRow {
@@ -247,6 +248,15 @@ export async function runPmReminders(thresholdHm = 50): Promise<{ sent: number; 
           );
         }
 
+        // SSE broadcast to admin dashboard
+        broadcastToAdmins('pm_overdue', {
+          unit_name:   row.unit_name,
+          model:       row.model,
+          bundle_name: row.bundle_name,
+          hm_overdue:  Math.abs(row.hm_to_next),
+          user_name:   row.user_name,
+          timestamp:   new Date().toISOString(),
+        });
         await logReminder(row.unit_id, row.bundle_id, 'overdue', row.hm_to_next);
         sent++;
       }
@@ -288,3 +298,4 @@ export async function runPmReminders(thresholdHm = 50): Promise<{ sent: number; 
 }
 
 export default { runPmReminders };
+
