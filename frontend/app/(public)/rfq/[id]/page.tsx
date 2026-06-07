@@ -6,6 +6,7 @@ import { useAuth } from '../../../../lib/auth-context';
 import { rfqApi } from '../../../../lib/api-client';
 import { formatIDR, formatDateTime, STATUS_BADGE, STATUS_LABELS } from '../../../../lib/formatters';
 import { LogOut, FileText, ChevronLeft, Package, CheckCircle, AlertCircle, Clock, XCircle, Loader2 } from 'lucide-react';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import toast from 'react-hot-toast';
 
 interface RfqSession {
@@ -100,6 +101,7 @@ export default function RfqDetailPage() {
           <div className="flex items-center gap-4 ml-auto">
             <Link href="/history" className="text-sm text-white/80 hover:text-white hidden sm:block">History RFQ</Link>
             <Link href="/my-dashboard" className="text-sm text-white/80 hover:text-white hidden sm:block">Dashboard</Link>
+            <ThemeToggle className="opacity-70 hover:opacity-100" />
             <button onClick={logout} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors">
               <LogOut size={16} />
             </button>
