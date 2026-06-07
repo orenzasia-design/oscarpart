@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { LogOut, ChevronLeft, Printer, ChevronDown, ChevronUp, CheckSquare, Square } from 'lucide-react';
+import { LogOut, ChevronLeft, Printer, ChevronDown, ChevronUp, CheckSquare, Square, ShoppingCart, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../../lib/auth-context';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -84,6 +84,8 @@ export default function OmmPocketGuidePage() {
   const [loadingB, setLoadingB]     = useState(false);
   const [loadingI, setLoadingI]     = useState(false);
   const [expandedBundleId, setExpandedBundleId] = useState<number | null>(null);
+  const [rfqLoading, setRfqLoading]   = useState(false);
+  const [rfqSuccess, setRfqSuccess]   = useState<{rfq_number: string; item_count: number} | null>(null);
 
   // Load models on mount
   useEffect(() => {
@@ -120,6 +122,26 @@ export default function OmmPocketGuidePage() {
     const data = await fetchBundleDetail(bundle.id);
     setItems(data);
     setLoadingI(false);
+  };
+
+  const createRfq = async (bundle: PmBundle) => {
+    setRfqLoading(true);
+    setRfqSuccess(null);
+    try {
+      const token = localStorage.getItem('accessToken');
+      const res = await fetch(`${API_BASE}/rfq/from-pm-bundle`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ bundle_id: bundle.id }),
+      });
+      const json = await res.json();
+      if (json.success) setRfqSuccess(json.data);
+      else alert('Gagal membuat RFQ: ' + (json.error ?? 'unknown error'));
+    } catch {
+      alert('Gagal terhubung ke server.');
+    } finally {
+      setRfqLoading(false);
+    }
   };
 
   const toggleCheck = (id: number) =>
@@ -164,14 +186,31 @@ export default function OmmPocketGuidePage() {
               <h1 className="text-2xl font-bold text-gray-900">OMM Pocket Guide</h1>
               <p className="text-gray-500 mt-1">Panduan PM interaktif — bisa digunakan di lapangan sebagai checklist</p>
             </div>
-            {selectedBundle && items.length > 0 && (
-              <button
-                onClick={() => window.print()}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors"
-              >
-                <Printer size={15} /> Cetak / PDF
-              </button>
-            )}
+            <div className="flex gap-2 flex-wrap">
+              {selectedBundle && items.length > 0 && (
+                <button
+                  onClick={() => window.print()}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors border border-gray-300"
+                >
+                  <Printer size={15} /> Cetak / PDF
+                </button>
+              )}
+              {selectedBundle && items.length > 0 && (
+                rfqSuccess ? (
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 rounded-lg text-sm font-semibold border border-green-300">
+                    <CheckCircle2 size={15} /> RFQ {rfqSuccess.rfq_number} dibuat ({rfqSuccess.item_count} items)
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => createRfq(selectedBundle)}
+                    disabled={rfqLoading}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors disabled:opacity-50"
+                  >
+                    <ShoppingCart size={15} /> {rfqLoading ? 'Membuat RFQ...' : 'Buat RFQ dari Bundle ini'}
+                  </button>
+                )
+              )}
+            </div>
           </div>
         </div>
 
