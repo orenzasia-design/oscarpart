@@ -7,6 +7,7 @@ import { rfqApi, partsApi } from '@/lib/api-client';
 import { useAuth } from '../../../lib/auth-context';
 import { formatIDR, formatDate, STATUS_BADGE, STATUS_LABELS } from '../../../lib/formatters';
 import { Search, FileText, History, LogOut, ChevronRight, AlertCircle, Package, Gauge, BarChart2, ClipboardList, TrendingUp } from 'lucide-react';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import toast from 'react-hot-toast';
 import { SkeletonKpiCards, SkeletonTable } from '@/components/ui/Skeleton';
 
@@ -63,6 +64,7 @@ export default function CustomerDashboard() {
             <Link href="/search"  className="text-sm text-white/80 hover:text-white hidden sm:block">Cari Part</Link>
             <Link href="/rfq"     className="text-sm text-white/80 hover:text-white hidden sm:block">Buat RFQ</Link>
             <Link href="/history" className="text-sm text-white/80 hover:text-white hidden sm:block">History</Link>
+            <ThemeToggle className="text-white/60 hover:text-white" />
             <button onClick={logout} className="flex items-center gap-1.5 text-white/60 hover:text-white text-sm">
               <LogOut size={14} /> Keluar
             </button>
