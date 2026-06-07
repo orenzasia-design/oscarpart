@@ -123,9 +123,7 @@ export default function HistoryPage() {
 
         {/* List */}
         {loading && rfqs.length === 0 ? (
-          <div className="card text-center py-14 text-gray-400">
-            <Loader2 size={28} className="animate-spin mx-auto mb-2" />
-          </div>
+          <SkeletonTable rows={5} cols={3} />
         ) : rfqs.length === 0 ? (
           <div className="card text-center py-14">
             <Package size={40} className="text-gray-200 mx-auto mb-3" />
