@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../lib/auth-context';
 import { api } from '../../../lib/api-client';
 import { LogOut, Gauge, AlertTriangle, CheckCircle, XCircle, ChevronRight, BarChart2, Loader2, Download } from 'lucide-react';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import toast from 'react-hot-toast';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -131,6 +132,7 @@ export default function AnalyticsPage() {
             <Link href="/units"    className="text-sm text-white/80 hover:text-white hidden sm:block">Unit</Link>
             <Link href="/pm-bundles" className="text-sm text-white/80 hover:text-white hidden sm:block">PM Bundle</Link>
             <Link href="/my-dashboard" className="text-sm text-white/80 hover:text-white hidden sm:block">Dashboard</Link>
+            <ThemeToggle className="opacity-70 hover:opacity-100" />
             <button onClick={logout} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors">
               <LogOut size={16} />
             </button>
