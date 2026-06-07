@@ -19,6 +19,7 @@ import { runPmBundlesMigration } from './scripts/run-pm-bundles-migration';
 import { seedSkt105sData } from './scripts/seed-skt105s';
 import { seedSkt80sData } from './scripts/seed-skt80s';
 import monthlyReportRouter from './routes/monthly-report.routes'; // ✅ Laporan Bulanan
+import { updateSrt95cPartNumbers } from './scripts/update-srt95c-pn'; // ✅ SRT95C PN
 import { updatePartNumbersFinal } from './scripts/update-part-numbers-final'; // ✅ Update PN SKT90S/SKT105S/SYZ440C
 import {
   leadsRouter,
@@ -156,7 +157,8 @@ async function bootstrap(): Promise<void> {
   await runPmBundlesMigration();  // ✅ Run pm_bundles migration
   await seedSkt105sData();           // ✅ Seed SKT105S PM items (idempotent)
   await seedSkt80sData();            // ✅ Seed SKT80S PM items with part numbers (idempotent)
-  await updatePartNumbersFinal();    // ✅ Update part numbers SKT90S/SKT105S/SYZ440C dari catalogue
+  await updatePartNumbersFinal();
+    await updateSrt95cPartNumbers(); // SRT95C Cummins QSK50 + Allison H8610AR    // ✅ Update part numbers SKT90S/SKT105S/SYZ440C dari catalogue
   try {
     await createRedisClient();
   } catch (err) {
