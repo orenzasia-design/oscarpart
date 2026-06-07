@@ -17,6 +17,10 @@ import {
 import { body, param } from 'express-validator';
 import { getAllRfqs, getRfqById } from '../controllers/rfq.controller';
 import { adminGetAllUnits } from '../controllers/units.controller';
+import {
+  exportAdminPdf,
+  exportAdminExcel,
+} from '../controllers/export.controller';
 
 const router = Router();
 
@@ -46,5 +50,9 @@ router.get('/rfq/:id', getRfqById);
 
 // -- PM Unit Monitor --
 router.get('/units', adminGetAllUnits);
+
+// -- PM Unit Export --
+router.get('/units/export/pdf', exportAdminPdf);
+router.get('/units/export/excel', exportAdminExcel);
 
 export default router;
