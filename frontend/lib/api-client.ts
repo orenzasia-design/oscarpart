@@ -171,7 +171,7 @@ export const rfqApi = {
 export const adminApi = {
   // Users
   users:            (params?: Record<string,unknown>) => api.get('/admin/users', { params }),
-  getUser: (id: string) => axios.get(`/admin/users/${id}`),
+  getUser: (id: string) => api.get(`/admin/users/${id}`),
   approveUser:      (id: string)                      => api.patch(`/admin/users/${id}/approve`),
   rejectUser:       (id: string, reason: string)      => api.patch(`/admin/users/${id}/reject`, { reason }),
   suspendUser:      (id: string)                      => api.patch(`/admin/users/${id}/suspend`),
@@ -233,3 +233,4 @@ export const pmBundlesApi = {
   getBundleDetail: (id: number) =>
     fetch(`${API_BASE}/pm-bundles/${id}`).then((r) => r.json()),
 };
+
