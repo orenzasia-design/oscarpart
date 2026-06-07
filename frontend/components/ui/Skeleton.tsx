@@ -3,7 +3,7 @@
 
 export function SkeletonBox({ className = '' }: { className?: string }) {
   return (
-    <div className={`animate-pulse bg-gray-200 rounded ${className}`} />
+    <div className={`animate-pulse bg-gray-200 dark:bg-slate-700 rounded ${className}`} />
   );
 }
 
@@ -13,7 +13,7 @@ export function SkeletonText({ lines = 2, className = '' }: { lines?: number; cl
       {Array.from({ length: lines }).map((_, i) => (
         <div
           key={i}
-          className={`animate-pulse bg-gray-200 rounded h-4 ${i === lines - 1 && lines > 1 ? 'w-3/4' : 'w-full'}`}
+          className={`animate-pulse bg-gray-200 dark:bg-slate-700 rounded h-4 ${i === lines - 1 && lines > 1 ? 'w-3/4' : 'w-full'}`}
         />
       ))}
     </div>
@@ -61,7 +61,7 @@ export function SkeletonTableRow({ cols = 5 }: { cols?: number }) {
 export function SkeletonTable({ rows = 5, cols = 5 }: { rows?: number; cols?: number }) {
   return (
     <div className="card overflow-hidden p-0">
-      <div className="px-4 py-3 border-b border-surface-border">
+      <div className="px-4 py-3 border-b border-surface-border dark:border-slate-700">
         <SkeletonBox className="h-4 w-32" />
       </div>
       <table className="w-full">
