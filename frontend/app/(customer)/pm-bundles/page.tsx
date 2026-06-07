@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { api } from '../../../lib/api-client';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 interface PmBundle {
@@ -26,13 +27,12 @@ interface PmBundleItem {
 }
 
 // ─── API helpers ─────────────────────────────────────────────────────────────
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000/api/v1';
 
 async function fetchBundles(model?: string): Promise<PmBundle[]> {
   const url = model
-    ? `${API_BASE}/pm-bundles?unit_model=${model}`
-    : `${API_BASE}/pm-bundles`;
-  const res = await fetch(url);
+    ? `/pm-bundles?unit_model=${model}`
+    : `/pm-bundles`;
+  const res = await api.get(url);
   const json = await res.json();
   return json.data ?? [];
 }
@@ -40,13 +40,13 @@ async function fetchBundles(model?: string): Promise<PmBundle[]> {
 async function fetchBundleDetail(
   id: number
 ): Promise<{ bundle: PmBundle; items: PmBundleItem[] }> {
-  const res = await fetch(`${API_BASE}/pm-bundles/${id}`);
+  const res = await api.get(`/pm-bundles/${id}`);
   const json = await res.json();
   return json.data;
 }
 
 async function fetchModels(): Promise<string[]> {
-  const res = await fetch(`${API_BASE}/pm-bundles/models`);
+  const res = await api.get('/pm-bundles/models');
   const json = await res.json();
   return json.data ?? [];
 }
