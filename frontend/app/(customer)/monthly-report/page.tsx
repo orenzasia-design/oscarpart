@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { LogOut, ChevronLeft, AlertTriangle, Clock, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import { useAuth } from '../../../lib/auth-context';
 import { api } from '../../../lib/api-client';
 
@@ -125,6 +126,7 @@ export default function MonthlyReportPage() {
           <div className="flex items-center gap-4 ml-auto">
             <Link href="/units" className="text-sm text-white/80 hover:text-white hidden sm:block">Unit Saya</Link>
             <Link href="/pm-bundles" className="text-sm text-white/80 hover:text-white hidden sm:block">Bundle PM</Link>
+            <ThemeToggle className="opacity-70 hover:opacity-100" />
             <button onClick={logout} className="flex items-center gap-1.5 text-white/60 hover:text-white text-sm">
               <LogOut size={14} /> Keluar
             </button>
