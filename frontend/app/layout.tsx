@@ -6,9 +6,37 @@ import { Toaster } from 'react-hot-toast';
 
 // const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
+const SITE_URL = 'https://oscarpart.vercel.app';
+
 export const metadata: Metadata = {
-  title: 'OSCARPART – Mining Parts & Equipment',
-  description: 'Platform pengadaan spare part dan equipment pertambangan terpercaya.',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default:  'OSCARPART – Mining Parts & Equipment',
+    template: '%s | OSCARPART',
+  },
+  description: 'Platform pengadaan spare part dan equipment pertambangan terpercaya. Spare part SANY, excavator, bulldozer, grader – harga kompetitif, stok ready.',
+  keywords: ['spare part tambang', 'SANY', 'excavator', 'mining parts', 'oscarpart', 'bulldozer', 'RFQ', 'alat berat'],
+  authors: [{ name: 'OSCARPART', url: SITE_URL }],
+  openGraph: {
+    type:        'website',
+    locale:      'id_ID',
+    url:         SITE_URL,
+    siteName:    'OSCARPART',
+    title:       'OSCARPART – Mining Parts & Equipment',
+    description: 'Spare part alat berat tambang: SANY, excavator, bulldozer, grader. RFQ online, harga kompetitif.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'OSCARPART' }],
+  },
+  twitter: {
+    card:        'summary_large_image',
+    title:       'OSCARPART – Mining Parts & Equipment',
+    description: 'Platform pengadaan spare part tambang terpercaya.',
+    images:      ['/og-image.png'],
+  },
+  robots: {
+    index:  true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+  },
   keywords: 'spare part tambang, mining equipment, alat berat, katalog part',
   robots: 'index, follow',
   openGraph: {
