@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { adminApi } from '@/lib/api-client';
 import { formatDateTime, STATUS_BADGE, STATUS_LABELS } from '@/lib/formatters';
 import { AdminShell } from '../AdminShell';
+import { SkeletonTableRow } from '@/components/ui/Skeleton';
 import toast from 'react-hot-toast';
 import { Search, Filter, CheckCircle, XCircle, UserX, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -160,7 +161,13 @@ function AdminUsersContent() {
             </thead>
             <tbody className="divide-y divide-surface-border">
               {loading ? (
-                <tr><td colSpan={5} className="text-center py-10 text-gray-400 text-sm">Memuat...</td></tr>
+                <>
+                  <SkeletonTableRow cols={5} />
+                  <SkeletonTableRow cols={5} />
+                  <SkeletonTableRow cols={5} />
+                  <SkeletonTableRow cols={5} />
+                  <SkeletonTableRow cols={5} />
+                </>
               ) : users.length === 0 ? (
                 <tr><td colSpan={5} className="text-center py-10 text-gray-400 text-sm">Tidak ada data.</td></tr>
               ) : users.map((user) => (
