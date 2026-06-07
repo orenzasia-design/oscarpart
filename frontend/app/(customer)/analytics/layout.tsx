@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title:       'Analitik PM',
-  description: 'Analitik konsumsi part dan jadwal Preventive Maintenance unit alat berat Anda.',
+  title: 'Analitik PM - OSCARPART',
+  description: 'Analitik preventive maintenance unit alat berat Anda. Pantau status PM dan riwayat HM.',
   openGraph: {
-    title:       'Analitik PM | OSCARPART',
-    description: 'Analitik konsumsi part dan jadwal Preventive Maintenance unit alat berat Anda.',
+    title: 'Analitik PM - OSCARPART | OSCARPART',
+    description: 'Analitik preventive maintenance unit alat berat Anda. Pantau status PM dan riwayat HM.',
   },
 };
 
