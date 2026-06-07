@@ -34,6 +34,7 @@ export default function CustomersPage() {
   const [statusFilter, setStatus] = useState('approved');
   const [page, setPage]           = useState(1);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [summary, setSummary] = useState<Record<string, number>>({});
   const limit = 20;
 
   const load = useCallback(async () => {
@@ -42,6 +43,7 @@ export default function CustomersPage() {
       const res = await adminApi.users({ page, limit, status: statusFilter || undefined, search: search || undefined });
       setCustomers(res.data.data.users);
       setTotal(res.data.data.pagination.total);
+      if (res.data.data.summary) setSummary(res.data.data.summary);
     } catch {
       toast.error('Gagal memuat data customer.');
     } finally {
@@ -77,16 +79,21 @@ export default function CustomersPage() {
   return (
     <AdminShell title="Customer">
       {/* Stat Cards */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
-          { label: 'Total Ditampilkan', value: total, color: 'text-brand-600' },
-          { label: 'Filter Aktif', value: statusFilter || 'Semua', color: 'text-gray-600', isStr: true },
-          { label: 'Halaman', value: `${page} / ${totalPages || 1}`, color: 'text-gray-600', isStr: true },
+          { label: 'Total',      value: (summary.approved||0)+(summary.pending||0)+(summary.rejected||0)+(summary.suspended||0), color: 'text-brand-600',  bg: 'bg-brand-50',  border: 'border-brand-200',  filter: '' },
+          { label: 'Disetujui', value: summary.approved  || 0, color: 'text-green-700', bg: 'bg-green-50',  border: 'border-green-200',  filter: 'approved'  },
+          { label: 'Pending',   value: summary.pending   || 0, color: 'text-amber-700', bg: 'bg-amber-50',  border: 'border-amber-200',  filter: 'pending'   },
+          { label: 'Suspended', value: summary.suspended || 0, color: 'text-red-700',   bg: 'bg-red-50',    border: 'border-red-200',    filter: 'suspended' },
         ].map((s) => (
-          <div key={s.label} className="card py-4">
-            <p className={`text-xl font-black ${s.color}`}>{s.isStr ? s.value : (s.value as number).toLocaleString('id-ID')}</p>
+          <button
+            key={s.label}
+            onClick={() => { setStatus(s.filter); setPage(1); }}
+            className={`card py-3 text-left transition-all cursor-pointer ${s.bg} ${s.border} border-2 ${statusFilter === s.filter ? 'ring-2 ring-brand-400 ring-offset-1' : 'hover:shadow-sm'}`}
+          >
+            <p className={`text-2xl font-black ${s.color}`}>{s.value.toLocaleString('id-ID')}</p>
             <p className="text-xs text-gray-500 mt-0.5">{s.label}</p>
-          </div>
+          </button>
         ))}
       </div>
 
@@ -123,15 +130,16 @@ export default function CustomersPage() {
                 <th className="table-header px-4 py-3 text-left">Industri</th>
                 <th className="table-header px-4 py-3 text-left">Kontak</th>
                 <th className="table-header px-4 py-3 text-center">Status</th>
+                <th className="table-header px-4 py-3 text-center">RFQ</th>
                 <th className="table-header px-4 py-3 text-left">Terdaftar</th>
                 <th className="table-header px-4 py-3 text-center">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-border">
               {loading ? (
-                <tr><td colSpan={6} className="text-center py-10 text-gray-400 text-sm">Memuat...</td></tr>
+                <tr><td colSpan={7} className="text-center py-10 text-gray-400 text-sm">Memuat...</td></tr>
               ) : customers.length === 0 ? (
-                <tr><td colSpan={6} className="text-center py-10 text-gray-400 text-sm">
+                <tr><td colSpan={7} className="text-center py-10 text-gray-400 text-sm">
                   <Building2 size={36} className="mx-auto mb-2 opacity-20" />
                   Tidak ada data customer.
                 </td></tr>
@@ -163,6 +171,11 @@ export default function CustomersPage() {
                   <td className="table-cell text-center">
                     <span className={STATUS_BADGE[c.status] || 'badge-gray'}>
                       {STATUS_LABELS[c.status] || c.status}
+                    </span>
+                  </td>
+                  <td className="table-cell text-center">
+                    <span className={`text-sm font-bold ${(c.rfq_count||0) > 0 ? 'text-brand-600' : 'text-gray-300'}`}>
+                      {c.rfq_count || 0}
                     </span>
                   </td>
                   <td className="table-cell">
