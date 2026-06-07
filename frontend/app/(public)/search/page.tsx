@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search, Package, AlertCircle, Lock, CheckCircle, XCircle, ShoppingCart, ArrowLeft } from 'lucide-react';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import { partsApi, rfqApi } from '@/lib/api-client';
 import { useAuth } from '../../../lib/auth-context';
 import toast from 'react-hot-toast';
@@ -123,6 +124,7 @@ function SearchContent() {
           {!user && (
             <Link href="/login" className="text-sm bg-white/10 border border-white/20 px-3 py-1.5 rounded-lg text-xs">Login</Link>
           )}
+          <ThemeToggle className="ml-auto opacity-80 hover:opacity-100" />
         </div>
       </nav>
 
