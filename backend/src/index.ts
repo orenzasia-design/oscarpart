@@ -20,6 +20,8 @@ import { seedSkt105sData } from './scripts/seed-skt105s';
 import { seedSkt80sData } from './scripts/seed-skt80s';
 import monthlyReportRouter from './routes/monthly-report.routes'; // ✅ Laporan Bulanan
 import { updateSrt95cPartNumbers } from './scripts/update-srt95c-pn'; // ✅ SRT95C PN
+import { createPmReminderLogsTable } from './scripts/create-pm-reminder-logs'; // ✅ PM reminder table
+import { runPmReminders } from './services/pm-reminder.service'; // ✅ PM reminder
 import { updatePartNumbersFinal } from './scripts/update-part-numbers-final'; // ✅ Update PN SKT90S/SKT105S/SYZ440C
 import {
   leadsRouter,
@@ -151,6 +153,29 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
   });
 });
 
+
+// ─── PM Reminder Cron — setiap hari jam 07:00 WIB (00:00 UTC) ──────────────
+function startPmReminderScheduler(): void {
+  // Run immediately on startup (for testing), then every 24h
+  const RUN_INTERVAL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+  const tick = async () => {
+    const now = new Date();
+    const hourWIB = (now.getUTCHours() + 7) % 24;
+    // Only send between 07:00–08:00 WIB to avoid spamming
+    if (hourWIB >= 7 && hourWIB < 8) {
+      logger.info('⏰ PM Reminder tick — sending reminders...');
+      await runPmReminders(50); // threshold: 50 HM
+    } else {
+      logger.debug(`PM Reminder: skipping (WIB hour = ${hourWIB})`);
+    }
+  };
+
+  // Check every hour
+  setInterval(tick, 60 * 60 * 1000);
+  logger.info('✅ PM Reminder scheduler started (checks every hour, runs 07–08 WIB)');
+}
+
 async function bootstrap(): Promise<void> {
   logger.info('🚀 Starting OSCARPART API...');
   await testDatabaseConnection();
@@ -158,7 +183,9 @@ async function bootstrap(): Promise<void> {
   await seedSkt105sData();           // ✅ Seed SKT105S PM items (idempotent)
   await seedSkt80sData();            // ✅ Seed SKT80S PM items with part numbers (idempotent)
   await updatePartNumbersFinal();
-    await updateSrt95cPartNumbers(); // SRT95C Cummins QSK50 + Allison H8610AR    // ✅ Update part numbers SKT90S/SKT105S/SYZ440C dari catalogue
+    await updateSrt95cPartNumbers(); // SRT95C Cummins QSK50 + Allison H8610AR
+    await createPmReminderLogsTable(); // ensure pm_reminder_logs exists
+    startPmReminderScheduler(); // daily PM reminder cron    // ✅ Update part numbers SKT90S/SKT105S/SYZ440C dari catalogue
   try {
     await createRedisClient();
   } catch (err) {
