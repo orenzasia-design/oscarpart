@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { rfqApi, partsApi } from '@/lib/api-client';
 import { useAuth } from '../../../lib/auth-context';
 import { formatIDR, formatDate, STATUS_BADGE, STATUS_LABELS } from '../../../lib/formatters';
-import { Search, FileText, Clock, LogOut, ChevronRight, AlertCircle, Package, Gauge, BarChart2 } from 'lucide-react';
+import { Search, FileText, Clock, LogOut, ChevronRight, AlertCircle, Package, Gauge, BarChart2, ClipboardList } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface RecentRfq {
@@ -150,6 +150,13 @@ export default function CustomerDashboard() {
               desc: 'Status PM semua unit',
               href: '/monthly-report',
               bg: 'bg-blue-50',
+            },
+            {
+              icon: <ClipboardList size={22} className="text-teal-600" />,
+              title: 'OMM Pocket Guide',
+              desc: 'Checklist PM di lapangan',
+              href: '/omm-guide',
+              bg: 'bg-teal-50',
             },
           ].map((a) => (
             <Link key={a.title} href={a.href} className="card hover:shadow-lg transition-all group flex items-center gap-4">
