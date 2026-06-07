@@ -70,7 +70,7 @@ import { query as dbQuery } from '../config/database';
 import { authenticate as authSettings, requireRole as requireSettings } from '../middleware/auth.middleware';
 
 const settingsRouter = SettingsRouter();
-settingsRouter.use(authSettings, requireSettings('superadmin'));
+settingsRouter.use(authSettings, requireSettings('admin'));
 settingsRouter.get('/', async (_req, res) => {
   const result = await dbQuery('SELECT key, value, value_type, description FROM settings ORDER BY key');
   res.json({ success: true, data: result.rows });
@@ -118,3 +118,4 @@ rfqStatusRouter.patch('/:id/status', async (req, res) => {
 });
 
 export { rfqStatusRouter };
+
