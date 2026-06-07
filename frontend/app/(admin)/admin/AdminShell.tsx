@@ -7,6 +7,7 @@ import {
   Users, FileText, Target, Building2, Wrench, BarChart2,
   Settings, LogOut, ArrowRight, LayoutDashboard, Bell, Menu, X
 } from 'lucide-react';
+import NotificationBell from '@/components/ui/NotificationBell';
 
 function LogoutButton() {
   const { logout } = useAuth();
@@ -113,13 +114,20 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
           </button>
           <span className="font-black text-sm tracking-widest">OSCARPART</span>
           <span className="text-white/40 text-xs ml-1">/ {title}</span>
+          <div className="ml-auto">
+            <NotificationBell />
+          </div>
         </div>
 
         <div className="px-4 sm:px-8 py-4 sm:py-6">
-          <h1 className="text-xl sm:text-2xl font-black text-gray-800 mb-4 sm:mb-6 hidden lg:block">{title}</h1>
+          <div className="hidden lg:flex items-center justify-between mb-4 sm:mb-6">
+            <h1 className="text-xl sm:text-2xl font-black text-gray-800">{title}</h1>
+            <NotificationBell />
+          </div>
           {children}
         </div>
       </main>
     </div>
   );
 }
+
