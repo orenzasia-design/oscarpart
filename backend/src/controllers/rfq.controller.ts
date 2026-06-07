@@ -30,10 +30,15 @@ export const getUserRfqs = async (req: Request, res: Response): Promise<void> =>
     const userId = (req as any).user?.sub as string | undefined;
     if (!userId) { res.status(401).json({ success: false, error: 'UNAUTHORIZED' }); return; }
     const result = await query(
-      `SELECT id, rfq_number, created_at, status, notes FROM rfq_sessions WHERE user_id = $1 ORDER BY created_at DESC`,
+      `SELECT s.id, s.rfq_number, s.created_at, s.submitted_at, s.status, s.notes,
+              s.project_name, s.contact_person, s.grand_total, s.subtotal, s.tax_amount,
+              (SELECT COUNT(*) FROM rfq_items i WHERE i.rfq_session_id = s.id)::int AS item_count
+       FROM rfq_sessions s
+       WHERE s.user_id = $1
+       ORDER BY s.created_at DESC`,
       [userId] as any[]
     );
-    res.json({ success: true, data: result.rows });
+    res.json({ success: true, data: { rfqs: result.rows } });
   } catch (error) {
     logger.error('Error in getUserRfqs:', error);
     res.status(500).json({ success: false, error: 'INTERNAL_ERROR' });
@@ -350,3 +355,4 @@ export const createRfqFromPmBundle = async (req: Request, res: Response): Promis
     res.status(500).json({ success: false, error: 'INTERNAL_ERROR' });
   }
 };
+
