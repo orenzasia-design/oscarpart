@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../lib/auth-context';
 import { api } from '../../../lib/api-client';
+import { SkeletonCard, SkeletonPageHeader } from '@/components/ui/Skeleton';
 import { LogOut, Plus, Pencil, Trash2, ChevronRight, Gauge, MapPin, Calendar, AlertCircle, X, Check, Loader2, BarChart2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -173,8 +174,13 @@ export default function UnitsPage() {
   }
 
   if (loading || !user) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p className="text-gray-400">Memuat...</p>
+    <div className="min-h-screen bg-surface p-4 sm:p-8">
+      <div className="max-w-5xl mx-auto">
+        <SkeletonPageHeader />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          <SkeletonCard /><SkeletonCard /><SkeletonCard />
+        </div>
+      </div>
     </div>
   );
 
