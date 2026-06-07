@@ -186,27 +186,28 @@ export async function runPmReminders(thresholdHm = 50): Promise<{ sent: number; 
     // Get all units with PM status + user contact
     const result = await query<PmReminderRow>(`
       SELECT
-        u.id          AS unit_id,
-        u.unit_name,
-        u.model,
-        u.current_hm,
-        us.id         AS user_id,
-        us.email      AS user_email,
-        us.full_name  AS user_name,
-        us.phone      AS whatsapp,
-        pb.id         AS bundle_id,
+        cu.id          AS unit_id,
+        cu.unit_name,
+        cu.model,
+        cu.current_hm,
+        us.id          AS user_id,
+        us.email       AS user_email,
+        us.full_name   AS user_name,
+        us.phone       AS whatsapp,
+        pb.id          AS bundle_id,
         pb.bundle_name,
         pb.interval_hm,
-        COALESCE(u.last_pm_hm, 0) AS last_pm_hm,
-        (COALESCE(u.last_pm_hm, 0) + pb.interval_hm) AS next_pm_hm,
-        (COALESCE(u.last_pm_hm, 0) + pb.interval_hm - u.current_hm) AS hm_to_next
-      FROM units u
-      JOIN users us ON u.user_id = us.id
-      JOIN pm_bundles pb ON pb.unit_model = u.model
-      WHERE u.current_hm > 0
+        COALESCE(cu.last_pm_hm, 0) AS last_pm_hm,
+        (COALESCE(cu.last_pm_hm, 0) + pb.interval_hm) AS next_pm_hm,
+        (COALESCE(cu.last_pm_hm, 0) + pb.interval_hm - cu.current_hm) AS hm_to_next
+      FROM customer_units cu
+      JOIN users us ON cu.user_id = us.id
+      JOIN pm_bundles pb ON pb.unit_model = cu.model
+      WHERE cu.current_hm > 0
+        AND cu.is_active = true
         AND us.status = 'approved'
-        AND (COALESCE(u.last_pm_hm, 0) + pb.interval_hm - u.current_hm) <= $1
-      ORDER BY u.user_id, u.id, hm_to_next ASC
+        AND (COALESCE(cu.last_pm_hm, 0) + pb.interval_hm - cu.current_hm) <= $1
+      ORDER BY cu.user_id, cu.id, hm_to_next ASC
     `, [thresholdHm]);
 
     if (!result.rows.length) {
