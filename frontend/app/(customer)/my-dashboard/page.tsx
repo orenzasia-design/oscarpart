@@ -8,6 +8,7 @@ import { useAuth } from '../../../lib/auth-context';
 import { formatIDR, formatDate, STATUS_BADGE, STATUS_LABELS } from '../../../lib/formatters';
 import { Search, FileText, History, LogOut, ChevronRight, AlertCircle, Package, Gauge, BarChart2, ClipboardList, TrendingUp } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { SkeletonKpiCards, SkeletonTable } from '@/components/ui/Skeleton';
 
 interface RecentRfq {
   id:           string;
@@ -43,8 +44,12 @@ export default function CustomerDashboard() {
   };
 
   if (loading || !user) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p className="text-gray-400">Memuat...</p>
+    <div className="min-h-screen bg-surface">
+      <nav className="bg-brand-600 h-14" />
+      <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
+        <SkeletonKpiCards count={4} />
+        <SkeletonTable rows={4} cols={4} />
+      </div>
     </div>
   );
 
@@ -189,7 +194,7 @@ export default function CustomerDashboard() {
           </div>
 
           {loading ? (
-            <div className="py-8 text-center text-gray-400 text-sm">Memuat...</div>
+            <SkeletonTable rows={3} cols={4} />
           ) : recentRfqs.length === 0 ? (
             <div className="py-10 text-center">
               <Package size={36} className="text-gray-200 mx-auto mb-3" />
