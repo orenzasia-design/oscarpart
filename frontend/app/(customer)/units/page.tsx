@@ -7,6 +7,7 @@ import { useAuth } from '../../../lib/auth-context';
 import { api } from '../../../lib/api-client';
 import { SkeletonCard, SkeletonPageHeader } from '@/components/ui/Skeleton';
 import { LogOut, Plus, Pencil, Trash2, ChevronRight, Gauge, MapPin, Calendar, AlertCircle, X, Check, Loader2, BarChart2 } from 'lucide-react';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import toast from 'react-hot-toast';
 
 interface CustomerUnit {
@@ -194,6 +195,7 @@ export default function UnitsPage() {
             <Link href="/my-dashboard" className="text-sm text-white/80 hover:text-white hidden sm:block">Dashboard</Link>
             <Link href="/search"       className="text-sm text-white/80 hover:text-white hidden sm:block">Cari Part</Link>
             <Link href="/rfq"          className="text-sm text-white/80 hover:text-white hidden sm:block">Buat RFQ</Link>
+            <ThemeToggle className="opacity-70 hover:opacity-100" />
             <button onClick={logout} className="flex items-center gap-1.5 text-white/60 hover:text-white text-sm">
               <LogOut size={14} /> Keluar
             </button>
