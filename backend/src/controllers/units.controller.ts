@@ -255,3 +255,77 @@ export async function recordPmDone(req: Request, res: Response): Promise<void> {
     res.status(500).json({ success: false, error: 'INTERNAL_ERROR' });
   }
 }
+
+// ============================================================
+// GET /api/v1/units/analytics — ringkasan PM & HM semua unit user
+// ============================================================
+export async function getUnitAnalytics(req: Request, res: Response): Promise<void> {
+  try {
+    const userId = req.user!.sub;
+
+    // All units with PM data
+    const units = await query(
+      `SELECT id, unit_name, model, current_hm, last_pm_hm, last_pm_date,
+              hm_updated_at, site_location, year_of_manufacture
+       FROM customer_units
+       WHERE user_id = $1 AND is_active = true
+       ORDER BY unit_name ASC`,
+      [userId]
+    );
+
+    // PM bundle thresholds per model (join pm_bundles)
+    const bundles = await query(
+      `SELECT DISTINCT ON (unit_model) unit_model, interval_hm
+       FROM pm_bundles
+       ORDER BY unit_model, interval_hm ASC`
+    );
+    const intervalMap: Record<string, number> = {};
+    bundles.rows.forEach((b: { unit_model: string; interval_hm: number }) => {
+      intervalMap[b.unit_model] = b.interval_hm;
+    });
+
+    const rows = units.rows.map((u: {
+      id: string; unit_name: string; model: string;
+      current_hm: number | null; last_pm_hm: number | null;
+      last_pm_date: string | null; hm_updated_at: string | null;
+      site_location: string | null; year_of_manufacture: number | null;
+    }) => {
+      const interval = intervalMap[u.model] || 250;
+      const currentHm = u.current_hm || 0;
+      const lastPmHm  = u.last_pm_hm || 0;
+      const hmSincePm = currentHm - lastPmHm;
+      const hmToNext  = interval - hmSincePm;
+      const pctUsed   = Math.min(100, Math.round((hmSincePm / interval) * 100));
+      let status: 'ok' | 'due_soon' | 'overdue' = 'ok';
+      if (hmToNext <= 0)  status = 'overdue';
+      else if (hmToNext <= 50) status = 'due_soon';
+      return {
+        id: u.id,
+        unit_name: u.unit_name,
+        model: u.model,
+        current_hm: currentHm,
+        last_pm_hm: lastPmHm,
+        last_pm_date: u.last_pm_date,
+        hm_updated_at: u.hm_updated_at,
+        site_location: u.site_location,
+        year_of_manufacture: u.year_of_manufacture,
+        interval_hm: interval,
+        hm_since_pm: Math.max(0, hmSincePm),
+        hm_to_next_pm: hmToNext,
+        pct_used: pctUsed,
+        status,
+      };
+    });
+
+    const summary = {
+      total: rows.length,
+      ok:       rows.filter((r: { status: string }) => r.status === 'ok').length,
+      due_soon: rows.filter((r: { status: string }) => r.status === 'due_soon').length,
+      overdue:  rows.filter((r: { status: string }) => r.status === 'overdue').length,
+    };
+
+    res.json({ success: true, data: { summary, units: rows } });
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'INTERNAL_ERROR' });
+  }
+}
