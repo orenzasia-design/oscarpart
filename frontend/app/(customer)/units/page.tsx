@@ -18,6 +18,8 @@ interface CustomerUnit {
   year_of_manufacture: number | null;
   site_location: string | null;
   notes: string | null;
+  last_pm_hm: number | null;
+  last_pm_date: string | null;
   is_active: boolean;
   created_at: string;
 }
@@ -62,6 +64,9 @@ export default function UnitsPage() {
   const [saving, setSaving]     = useState(false);
   const [useCustomModel, setUseCustomModel] = useState(false);
   const [deleteConfirm, setDeleteConfirm]   = useState<string | null>(null);
+  const [pmModal, setPmModal]               = useState<{ id: string; name: string } | null>(null);
+  const [pmHmInput, setPmHmInput]           = useState('');
+  const [pmSaving, setPmSaving]             = useState(false);
 
   const fetchUnits = useCallback(async () => {
     try {
@@ -135,6 +140,24 @@ export default function UnitsPage() {
       toast.error('Gagal menyimpan. Coba lagi.');
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleRecordPM() {
+    if (!pmModal || !pmHmInput) return;
+    const hm = parseFloat(pmHmInput);
+    if (isNaN(hm) || hm < 0) { toast.error('HM tidak valid.'); return; }
+    setPmSaving(true);
+    try {
+      await api.patch(`/units/${pmModal.id}/record-pm`, { last_pm_hm: hm });
+      toast.success('PM berhasil dicatat!');
+      setPmModal(null);
+      setPmHmInput('');
+      fetchUnits();
+    } catch {
+      toast.error('Gagal mencatat PM. Coba lagi.');
+    } finally {
+      setPmSaving(false);
     }
   }
 
@@ -235,12 +258,24 @@ export default function UnitsPage() {
                       {unit.serial_number && (
                         <span className="text-gray-400">S/N: {unit.serial_number}</span>
                       )}
+                      {unit.last_pm_hm != null && (
+                        <span className="flex items-center gap-1 text-green-600 font-medium">
+                          <Check size={11} /> PM Terakhir: {unit.last_pm_hm.toLocaleString()} HM
+                        </span>
+                      )}
                     </div>
                     {unit.notes && (
                       <p className="text-xs text-gray-400 mt-1.5 italic">{unit.notes}</p>
                     )}
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
+                    <button
+                      onClick={() => { setPmModal({ id: unit.id, name: unit.unit_name }); setPmHmInput(unit.current_hm?.toString() || ''); }}
+                      className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-green-50 text-gray-400 hover:text-green-600 transition-colors"
+                      title="Catat PM Selesai"
+                    >
+                      <Check size={15} />
+                    </button>
                     <button
                       onClick={() => openEdit(unit)}
                       className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-brand-50 text-gray-400 hover:text-brand-600 transition-colors"
@@ -273,6 +308,42 @@ export default function UnitsPage() {
           </div>
         )}
       </div>
+
+      {/* Modal Catat PM Selesai */}
+      {pmModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setPmModal(null)} />
+          <div className="relative bg-white w-full max-w-sm mx-4 rounded-2xl shadow-2xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-bold text-gray-800">✅ Catat PM Selesai</h2>
+              <button onClick={() => setPmModal(null)} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400">
+                <X size={18} />
+              </button>
+            </div>
+            <p className="text-sm text-gray-500 mb-4">Unit: <strong className="text-gray-700">{pmModal.name}</strong></p>
+            <div className="mb-5">
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">HM Saat PM Dilakukan</label>
+              <input
+                type="number"
+                value={pmHmInput}
+                onChange={(e) => setPmHmInput(e.target.value)}
+                placeholder="Contoh: 12500"
+                min="0"
+                className="input w-full"
+                autoFocus
+              />
+              <p className="text-xs text-gray-400 mt-1.5">Masukkan angka Hour Meter di saat PM selesai dikerjakan.</p>
+            </div>
+            <div className="flex gap-3">
+              <button onClick={() => setPmModal(null)} className="flex-1 btn-secondary">Batal</button>
+              <button onClick={handleRecordPM} disabled={pmSaving || !pmHmInput} className="flex-1 btn-primary flex items-center justify-center gap-2">
+                {pmSaving ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
+                Simpan
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal Form Tambah/Edit Unit */}
       {showForm && (
