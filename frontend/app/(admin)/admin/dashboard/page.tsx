@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { adminApi } from '@/lib/api-client';
 import { formatIDR, formatDateTime } from '@/lib/formatters';
 import { AdminShell } from '../AdminShell';
+import { SkeletonKpiCards, SkeletonTable } from '@/components/ui/Skeleton';
 import { Users, FileText, TrendingUp, Clock, AlertTriangle, Search, Activity, ArrowRight } from 'lucide-react';
 
 interface Kpi {
@@ -50,7 +51,15 @@ export default function AdminDashboard() {
     }).finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <AdminShell title="Dashboard"><div className="animate-pulse text-gray-400 text-sm">Memuat data...</div></AdminShell>;
+  if (loading) return (
+    <AdminShell title="Dashboard">
+      <SkeletonKpiCards count={4} />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <div className="card"><SkeletonTable rows={5} cols={3} /></div>
+        <div className="card"><SkeletonTable rows={5} cols={3} /></div>
+      </div>
+    </AdminShell>
+  );
 
   return (
     <AdminShell title="Dashboard">
