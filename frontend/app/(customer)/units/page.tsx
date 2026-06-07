@@ -203,9 +203,14 @@ export default function UnitsPage() {
             <h1 className="text-2xl font-black text-gray-800">Unit Saya</h1>
             <p className="text-gray-500 text-sm mt-0.5">Kelola data unit alat berat Anda</p>
           </div>
-          <button onClick={openAdd} className="btn-primary flex items-center gap-2 text-sm">
-            <Plus size={16} /> Tambah Unit
-          </button>
+          <div className="flex items-center gap-2">
+            <Link href="/analytics" className="btn-secondary flex items-center gap-2 text-sm">
+              <BarChart2 size={16} /> Analitik PM
+            </Link>
+            <button onClick={openAdd} className="btn-primary flex items-center gap-2 text-sm">
+              <Plus size={16} /> Tambah Unit
+            </button>
+          </div>
         </div>
 
         {/* Not approved warning */}
