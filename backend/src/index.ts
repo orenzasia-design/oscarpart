@@ -20,6 +20,7 @@ import { seedSkt105sData } from './scripts/seed-skt105s';
 import { seedSkt80sData } from './scripts/seed-skt80s';
 import monthlyReportRouter from './routes/monthly-report.routes'; // ✅ Laporan Bulanan
 import { updateSrt95cPartNumbers } from './scripts/update-srt95c-pn'; // ✅ SRT95C PN
+import pmReminderAdminRouter from './routes/pm-reminder.routes'; // ✅ Admin PM Reminder
 import { createPmReminderLogsTable } from './scripts/create-pm-reminder-logs'; // ✅ PM reminder table
 import { runPmReminders } from './services/pm-reminder.service'; // ✅ PM reminder
 import { updatePartNumbersFinal } from './scripts/update-part-numbers-final'; // ✅ Update PN SKT90S/SKT105S/SYZ440C
@@ -133,6 +134,7 @@ app.use(`${API}/rfq`, rfqRouter);              // ✅ menggunakan rfqRouter dari
 app.use(`${API}/units`, unitsRouter);           // ✅ Loyalty Engine - Unit & HM Tracker
 app.use(`${API}/pm-bundles`, pmBundlesRouter);           // ✅ Bundle PM SANY
 app.use(`${API}/monthly-report`, monthlyReportRouter); // ✅ Laporan Bulanan
+app.use(`${API}/admin/pm-reminders`, pmReminderAdminRouter); // ✅ Admin PM Reminder
 app.use(`${API}/admin/leads`, leadsRouter);
 app.use(`${API}/admin/analytics`, analyticsRouter);
 app.use(`${API}/admin/pdf`, pdfRouter);
