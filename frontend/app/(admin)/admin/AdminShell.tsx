@@ -8,6 +8,7 @@ import {
   Settings, LogOut, ArrowRight, LayoutDashboard, Bell, Menu, X
 } from 'lucide-react';
 import NotificationBell from '@/components/ui/NotificationBell';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 function LogoutButton() {
   const { logout } = useAuth();
@@ -103,7 +104,7 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-y-auto min-w-0">
+      <main className="flex-1 overflow-y-auto min-w-0 bg-[--bg-page] transition-colors">
         {/* Mobile top bar */}
         <div className="lg:hidden sticky top-0 z-30 bg-brand-900 text-white h-12 flex items-center px-4 gap-3">
           <button
@@ -114,15 +115,19 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
           </button>
           <span className="font-black text-sm tracking-widest">OSCARPART</span>
           <span className="text-white/40 text-xs ml-1">/ {title}</span>
-          <div className="ml-auto">
+          <div className="ml-auto flex items-center gap-1">
+            <ThemeToggle />
             <NotificationBell />
           </div>
         </div>
 
         <div className="px-4 sm:px-8 py-4 sm:py-6">
           <div className="hidden lg:flex items-center justify-between mb-4 sm:mb-6">
-            <h1 className="text-xl sm:text-2xl font-black text-gray-800">{title}</h1>
-            <NotificationBell />
+            <h1 className="text-xl sm:text-2xl font-black text-gray-800 dark:text-slate-100">{title}</h1>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <NotificationBell />
+            </div>
           </div>
           {children}
         </div>
