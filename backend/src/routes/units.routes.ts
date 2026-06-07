@@ -9,6 +9,10 @@ import {
   recordPmDone,
   getUnitAnalytics,
 } from '../controllers/units.controller';
+import {
+  exportCustomerPdf,
+  exportCustomerExcel,
+} from '../controllers/export.controller';
 
 const unitsRouter = Router();
 
@@ -21,6 +25,13 @@ unitsRouter.use(authenticate, requireRole('approved'));
 // GET semua unit milik user yang sedang login
 unitsRouter.get('/my', getMyUnits);
 
+// GET analytics PM & HM per unit
+unitsRouter.get('/analytics', getUnitAnalytics);
+
+// GET export PDF/Excel laporan PM (customer)
+unitsRouter.get('/export/pdf', exportCustomerPdf);
+unitsRouter.get('/export/excel', exportCustomerExcel);
+
 // POST daftarkan unit baru
 unitsRouter.post('/', createUnit);
 
@@ -29,9 +40,6 @@ unitsRouter.patch('/:id', updateUnit);
 
 // PATCH catat PM selesai
 unitsRouter.patch('/:id/pm', recordPmDone);
-
-// GET analytics PM & HM per unit
-unitsRouter.get('/analytics', getUnitAnalytics);
 
 // DELETE hapus unit (soft delete)
 unitsRouter.delete('/:id', deleteUnit);
