@@ -6,7 +6,7 @@ import { adminApi } from '@/lib/api-client';
 import { formatIDR, formatNumber } from '@/lib/formatters';
 import { AdminShell } from '../AdminShell';
 import toast from 'react-hot-toast';
-import { Search, Upload, Plus, ChevronLeft, ChevronRight, Package } from 'lucide-react';
+import { Search, Upload, ChevronLeft, ChevronRight, Package, Edit2, X, Check } from 'lucide-react';
 
 interface Part {
   id:                string;
@@ -30,6 +30,9 @@ export default function AdminPartsPage() {
   const [importLoading, setImportLoading] = useState(false);
   const [importResult, setImportResult]   = useState<{ imported: number; errors: string[] } | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editForm, setEditForm]   = useState<Partial<Part>>({});
+  const [savingEdit, setSavingEdit] = useState(false);
   const limit = 50;
 
   const loadParts = useCallback(async () => {
@@ -84,6 +87,32 @@ export default function AdminPartsPage() {
     } finally {
       setImportLoading(false);
       if (fileRef.current) fileRef.current.value = '';
+    }
+  };
+
+  const openEdit = (p: Part) => {
+    setEditingId(p.id);
+    setEditForm({
+      description: p.description || '',
+      brand_name: p.brand_name || '',
+      unit_type: p.unit_type || '',
+      stock_quantity: p.stock_quantity,
+      unit_price: p.unit_price ?? undefined,
+      warehouse_location: p.warehouse_location || '',
+    });
+  };
+
+  const saveEdit = async (partNumber: string) => {
+    setSavingEdit(true);
+    try {
+      await adminApi.upsertPart(partNumber, editForm);
+      toast.success('Part diperbarui.');
+      setEditingId(null);
+      loadParts();
+    } catch {
+      toast.error('Gagal menyimpan.');
+    } finally {
+      setSavingEdit(false);
     }
   };
 
@@ -154,6 +183,7 @@ export default function AdminPartsPage() {
                 <th className="table-header px-4 py-3 text-right">Harga</th>
                 <th className="table-header px-4 py-3 text-left">Gudang</th>
                 <th className="table-header px-4 py-3 text-center">Status</th>
+                <th className="table-header px-4 py-3 text-center">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-border">
@@ -166,8 +196,9 @@ export default function AdminPartsPage() {
                     <p className="text-sm">Belum ada data part. Import file XLSX untuk mulai.</p>
                   </td>
                 </tr>
-              ) : parts.map((part) => (
-                <tr key={part.id} className="hover:bg-surface transition-colors">
+              ) : parts.map((part) => {
+                const isEditing = editingId === part.id;
+                return (<tr key={part.id} className={`transition-colors ${isEditing ? 'bg-brand-50' : 'hover:bg-surface'}`}>
                   <td className="table-cell">
                     <span className="font-mono font-bold text-brand-600 text-xs">{part.part_number}</span>
                   </td>
@@ -181,23 +212,57 @@ export default function AdminPartsPage() {
                     <span className="text-xs text-gray-500">{part.unit_type || '-'}</span>
                   </td>
                   <td className="table-cell text-right">
-                    <span className={`text-sm font-semibold ${part.stock_quantity > 0 ? 'text-green-700' : 'text-red-500'}`}>
-                      {formatNumber(part.stock_quantity)}
-                    </span>
+                    {isEditing ? (
+                      <input type="number" value={editForm.stock_quantity ?? ''} onChange={e => setEditForm(f => ({...f, stock_quantity: parseFloat(e.target.value)||0}))}
+                        className="input w-20 text-right text-xs py-1" />
+                    ) : (
+                      <span className={`text-sm font-semibold ${part.stock_quantity > 0 ? 'text-green-700' : 'text-red-500'}`}>
+                        {formatNumber(part.stock_quantity)}
+                      </span>
+                    )}
                   </td>
                   <td className="table-cell text-right">
-                    <span className="text-sm price-field">{formatIDR(part.unit_price)}</span>
+                    {isEditing ? (
+                      <input type="number" value={editForm.unit_price ?? ''} onChange={e => setEditForm(f => ({...f, unit_price: parseFloat(e.target.value)||undefined}))}
+                        className="input w-28 text-right text-xs py-1" placeholder="0" />
+                    ) : (
+                      <span className="text-sm price-field">{formatIDR(part.unit_price)}</span>
+                    )}
                   </td>
                   <td className="table-cell">
-                    <span className="text-xs text-gray-500">{part.warehouse_location || '-'}</span>
+                    {isEditing ? (
+                      <input type="text" value={editForm.warehouse_location ?? ''} onChange={e => setEditForm(f => ({...f, warehouse_location: e.target.value}))}
+                        className="input w-24 text-xs py-1" placeholder="Gudang..." />
+                    ) : (
+                      <span className="text-xs text-gray-500">{part.warehouse_location || '-'}</span>
+                    )}
                   </td>
                   <td className="table-cell text-center">
                     <span className={`badge ${part.status === 'active' ? 'badge-green' : 'badge-gray'}`}>
                       {part.status}
                     </span>
                   </td>
-                </tr>
-              ))}
+                  <td className="table-cell text-center">
+                    {isEditing ? (
+                      <div className="flex items-center justify-center gap-1">
+                        <button onClick={() => saveEdit(part.part_number)} disabled={savingEdit}
+                          className="p-1.5 rounded bg-green-100 text-green-700 hover:bg-green-200 disabled:opacity-50">
+                          <Check size={13} />
+                        </button>
+                        <button onClick={() => setEditingId(null)}
+                          className="p-1.5 rounded bg-gray-100 text-gray-600 hover:bg-gray-200">
+                          <X size={13} />
+                        </button>
+                      </div>
+                    ) : (
+                      <button onClick={() => openEdit(part)}
+                        className="p-1.5 rounded hover:bg-brand-50 text-gray-400 hover:text-brand-600 transition-colors">
+                        <Edit2 size={13} />
+                      </button>
+                    )}
+                  </td>
+                </tr>);
+              })}
             </tbody>
           </table>
         </div>
