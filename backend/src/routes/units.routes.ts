@@ -6,6 +6,7 @@ import {
   updateUnit,
   deleteUnit,
   getUnitModels,
+  recordPmDone,
 } from '../controllers/units.controller';
 
 const unitsRouter = Router();
@@ -24,6 +25,9 @@ unitsRouter.post('/', createUnit);
 
 // PATCH update data unit (termasuk HM)
 unitsRouter.patch('/:id', updateUnit);
+
+// PATCH catat PM selesai
+unitsRouter.patch('/:id/pm', recordPmDone);
 
 // DELETE hapus unit (soft delete)
 unitsRouter.delete('/:id', deleteUnit);
