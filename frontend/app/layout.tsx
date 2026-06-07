@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 // import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '../lib/auth-context';
+import { ThemeProvider } from '../lib/ThemeProvider';
 import { Toaster } from 'react-hot-toast';
 
 // const inter = Inter({ subsets: ['latin'], display: 'swap' });
@@ -48,12 +49,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="bg-surface text-gray-900 antialiased">
-        <AuthProvider>
+        <ThemeProvider>
+      <AuthProvider>
           {children}
           <Toaster
             position="top-right"
@@ -65,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}
           />
         </AuthProvider>
+      </ThemeProvider>
 
         {/* Floating WhatsApp Button */}
         <a
