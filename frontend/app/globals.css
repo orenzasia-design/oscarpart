@@ -80,3 +80,15 @@
     @apply text-lg font-bold text-brand-600 border-l-4 border-brand-600 pl-3 mb-4;
   }
 }
+
+@media print {
+  nav, .print\:hidden { display: none !important; }
+  .print\:block { display: block !important; }
+  .print\:flex { display: flex !important; }
+  body { background: white; font-size: 11pt; }
+  .rounded-xl, .rounded-lg { border-radius: 0 !important; }
+  .shadow-sm { box-shadow: none !important; }
+  .border { border: 1px solid #ccc !important; }
+  a { color: inherit !important; text-decoration: none !important; }
+  .print\:cursor-default { cursor: default; }
+}
