@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../lib/auth-context';
 import { api } from '../../../lib/api-client';
-import { LogOut, Plus, Pencil, Trash2, ChevronRight, Gauge, MapPin, Calendar, AlertCircle, X, Check, Loader2 } from 'lucide-react';
+import { LogOut, Plus, Pencil, Trash2, ChevronRight, Gauge, MapPin, Calendar, AlertCircle, X, Check, Loader2, BarChart2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface CustomerUnit {
