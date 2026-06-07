@@ -234,3 +234,8 @@ export const pmBundlesApi = {
     fetch(`${API_BASE}/pm-bundles/${id}`).then((r) => r.json()),
 };
 
+// ─── PM Reminders Admin API ───────────────────────────────────────────────────
+export const pmRemindersApi = {
+  getLogs:    ()                          => api.get('/admin/pm-reminders/logs'),
+  run:        (threshold_hm?: number)     => api.post('/admin/pm-reminders/run', { threshold_hm: threshold_hm ?? 50 }),
+};
