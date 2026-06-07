@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title:       'Dashboard Saya',
-  description: 'Dashboard pelanggan OSCARPART — unit, history RFQ, dan rekomendasi jadwal PM.',
+  title: 'Dashboard Saya - OSCARPART',
+  description: 'Dashboard customer OSCARPART. Pantau unit, RFQ, dan jadwal PM alat berat Anda.',
   openGraph: {
-    title:       'Dashboard Saya | OSCARPART',
-    description: 'Dashboard pelanggan OSCARPART — unit, history RFQ, dan rekomendasi jadwal PM.',
+    title: 'Dashboard Saya - OSCARPART | OSCARPART',
+    description: 'Dashboard customer OSCARPART. Pantau unit, RFQ, dan jadwal PM alat berat Anda.',
   },
 };
 
