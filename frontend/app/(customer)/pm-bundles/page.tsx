@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { SkeletonCard } from '@/components/ui/Skeleton';
 import { api } from '../../../lib/api-client';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -133,7 +134,9 @@ export default function BundlePmPage() {
           </h2>
 
           {loading && !activeBundle && (
-            <p className="text-gray-400 text-sm">Memuat...</p>
+            <div className="space-y-3">
+              <SkeletonCard /><SkeletonCard /><SkeletonCard />
+            </div>
           )}
 
           <div className="space-y-2">
