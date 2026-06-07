@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 // Tipe data untuk part SANY
 type SanyPart = {
@@ -54,11 +55,12 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Navbar */}
-      <nav className="bg-white shadow-sm border-b border-gray-200">
+      <nav className="bg-[--bg-card] shadow-sm border-b border-[--border-color] transition-colors">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <span className="font-bold text-blue-600 text-lg">OscarPart</span>
-          <div className="flex gap-3">
-            <Link href="/login" className="text-sm text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md hover:bg-gray-100 transition">
+          <div className="flex gap-3 items-center">
+            <ThemeToggle />
+            <Link href="/login" className="text-sm text-[--text-secondary] hover:text-blue-600 px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-slate-700 transition">
               Login
             </Link>
             <Link href="/register" className="text-sm bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
