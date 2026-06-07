@@ -21,6 +21,7 @@ import { seedSkt80sData } from './scripts/seed-skt80s';
 import monthlyReportRouter from './routes/monthly-report.routes'; // ✅ Laporan Bulanan
 import { updateSrt95cPartNumbers } from './scripts/update-srt95c-pn'; // ✅ SRT95C PN
 import pmReminderAdminRouter from './routes/pm-reminder.routes'; // ✅ Admin PM Reminder
+import sseRouter from './routes/sse.routes'; // ✅ SSE real-time events
 import { migrateLastPmHm } from './scripts/migrate-last-pm-hm'; // ✅ last_pm_hm columns
 import { createPmReminderLogsTable } from './scripts/create-pm-reminder-logs'; // ✅ PM reminder table
 import { runPmReminders } from './services/pm-reminder.service'; // ✅ PM reminder
@@ -136,6 +137,7 @@ app.use(`${API}/units`, unitsRouter);           // ✅ Loyalty Engine - Unit & H
 app.use(`${API}/pm-bundles`, pmBundlesRouter);           // ✅ Bundle PM SANY
 app.use(`${API}/monthly-report`, monthlyReportRouter); // ✅ Laporan Bulanan
 app.use(`${API}/admin/pm-reminders`, pmReminderAdminRouter); // ✅ Admin PM Reminder
+app.use(`${API}/events`, sseRouter);              // ✅ SSE real-time events
 app.use(`${API}/admin/leads`, leadsRouter);
 app.use(`${API}/admin/analytics`, analyticsRouter);
 app.use(`${API}/admin/pdf`, pdfRouter);
@@ -210,3 +212,4 @@ process.on('SIGTERM', async () => {
 bootstrap().catch((err) => { logger.error('Bootstrap failed:', err); process.exit(1); });
 
 export default app;
+
