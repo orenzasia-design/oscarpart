@@ -33,7 +33,7 @@ async function fetchBundles(model?: string): Promise<PmBundle[]> {
     ? `/pm-bundles?unit_model=${model}`
     : `/pm-bundles`;
   const res = await api.get(url);
-  const json = await res.json();
+  const json = res.data;
   return json.data ?? [];
 }
 
@@ -41,13 +41,13 @@ async function fetchBundleDetail(
   id: number
 ): Promise<{ bundle: PmBundle; items: PmBundleItem[] }> {
   const res = await api.get(`/pm-bundles/${id}`);
-  const json = await res.json();
+  const json = res.data;
   return json.data;
 }
 
 async function fetchModels(): Promise<string[]> {
   const res = await api.get('/pm-bundles/models');
-  const json = await res.json();
+  const json = res.data;
   return json.data ?? [];
 }
 
