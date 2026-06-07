@@ -1,4 +1,6 @@
 import nodemailer from 'nodemailer';
+import { broadcastToAdmins, sendToUser } from './sse.service';
+
 import { query } from '../config/database';
 import logger from '../config/logger';
 import type { RfqSession } from './rfq.service';
@@ -321,6 +323,15 @@ export async function notifyAdminNewRfq(rfq: RfqSession): Promise<void> {
     <a href="${frontendUrl}/admin/rfq/${rfq.rfq_number}" class="btn">Lihat RFQ</a>
   `);
 
+  // ─── SSE broadcast to all admin clients ───────────────────────────────
+  broadcastToAdmins('new_rfq', {
+    rfq_number:   rfq.rfq_number,
+    company_name: rfq.company_name,
+    contact:      rfq.contact_person,
+    total_items:  rfq.items?.length ?? 0,
+    timestamp:    new Date().toISOString(),
+  });
+
   await sendEmail({
     to:      adminEmail,
     subject: `[OSCARPART] RFQ Baru: ${rfq.rfq_number} — ${rfq.company_name}`,
@@ -328,6 +339,7 @@ export async function notifyAdminNewRfq(rfq: RfqSession): Promise<void> {
   });
 }
 
+export { sendToUser, broadcastToAdmins };
 export default {
   buildWhatsAppUrl,
   notifyAdminNewRegistration,
