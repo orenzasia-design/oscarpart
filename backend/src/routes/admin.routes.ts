@@ -16,6 +16,7 @@ import {
 } from '../controllers/admin-users.controller';
 import { body, param } from 'express-validator';
 import { getAllRfqs, getRfqById } from '../controllers/rfq.controller';
+import { adminGetAllUnits } from '../controllers/units.controller';
 
 const router = Router();
 
@@ -42,5 +43,8 @@ router.patch('/users/:id/suspend', validateApproval, handleValidationErrors, sus
 // -- RFQ Management --
 router.get('/rfq', getAllRfqs);
 router.get('/rfq/:id', getRfqById);
+
+// -- PM Unit Monitor --
+router.get('/units', adminGetAllUnits);
 
 export default router;
