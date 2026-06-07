@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { authApi } from '@/lib/api-client';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -67,7 +68,8 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center px-4">
+      <div className="relative min-h-screen bg-[--bg-page] flex items-center justify-center px-4">
+      <div className="absolute top-4 right-4"><ThemeToggle /></div>
         <div className="bg-white rounded-2xl shadow-lg max-w-md w-full p-8 text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg viewBox="0 0 24 24" className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -96,7 +98,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface py-10 px-4">
+    <div className="relative min-h-screen bg-[--bg-page] py-10 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <Link href="/" className="text-2xl font-black text-brand-600 tracking-widest">OSCARPART</Link>
