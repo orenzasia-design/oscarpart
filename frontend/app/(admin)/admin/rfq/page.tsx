@@ -6,7 +6,8 @@ import { adminApi } from '@/lib/api-client';
 import { formatIDR, formatDateTime, STATUS_BADGE, STATUS_LABELS } from '../../../../lib/formatters';
 import { AdminShell } from '../AdminShell';
 import toast from 'react-hot-toast';
-import { Search, Download, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
+import { Search, Download, ChevronLeft, ChevronRight, FileText, ChevronDown } from 'lucide-react';
+import { adminApi, api } from '@/lib/api-client';
 
 interface Rfq {
   id:            string;
@@ -33,6 +34,7 @@ export default function AdminRfqPage() {
   const [statusFilter, setStatusFilter] = useState('');
   const [page, setPage]         = useState(1);
   const [pdfLoading, setPdfLoading] = useState<string | null>(null);
+  const [statusLoading, setStatusLoading] = useState<string | null>(null);
   const limit = 20;
 
   const loadRfqs = useCallback(async () => {
@@ -71,6 +73,19 @@ setTotal(totalCount);
       toast.error('Gagal generate PDF. Pastikan Puppeteer terinstall di server.');
     } finally {
       setPdfLoading(null);
+    }
+  };
+
+  const updateStatus = async (rfqId: string, newStatus: string) => {
+    setStatusLoading(rfqId);
+    try {
+      await adminApi.updateRfqStatus(rfqId, newStatus);
+      toast.success('Status RFQ diperbarui.');
+      load();
+    } catch {
+      toast.error('Gagal update status.');
+    } finally {
+      setStatusLoading(null);
     }
   };
 
@@ -145,9 +160,27 @@ setTotal(totalCount);
                     <span className="font-semibold text-gray-800 text-sm">{formatIDR(rfq.grand_total)}</span>
                   </td>
                   <td className="table-cell">
-                    <span className={STATUS_BADGE[rfq.status] || 'badge-gray'}>
-                      {STATUS_LABELS[rfq.status] || rfq.status}
-                    </span>
+                    <div className="relative">
+                      <select
+                        value={rfq.status}
+                        onChange={(e) => updateStatus(rfq.id, e.target.value)}
+                        disabled={statusLoading === rfq.id}
+                        className={`text-xs font-semibold px-2 py-1 pr-6 rounded-full border cursor-pointer appearance-none transition-colors disabled:opacity-50
+                          ${rfq.status === 'quoted' ? 'bg-green-50 text-green-700 border-green-200' :
+                            rfq.status === 'processing' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                            rfq.status === 'submitted' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                            rfq.status === 'closed' ? 'bg-brand-50 text-brand-700 border-brand-200' :
+                            rfq.status === 'cancelled' ? 'bg-red-50 text-red-400 border-red-200' :
+                            'bg-gray-50 text-gray-500 border-gray-200'}`}
+                      >
+                        <option value="submitted">Submitted</option>
+                        <option value="processing">Processing</option>
+                        <option value="quoted">Quoted</option>
+                        <option value="closed">Closed</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                      <ChevronDown size={10} className="absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400" />
+                    </div>
                   </td>
                   <td className="table-cell">
                     <p className="text-xs">{formatDateTime(rfq.submitted_at || rfq.created_at)}</p>
