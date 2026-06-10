@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPARTAAN PRO — PT. Orenz Suku Cadang Asia Raya</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F1923;
+  --surface: #162130;
+  --card: #1A2840;
+  --card2: #1F3050;
+  --border: #2A3F58;
+  --orange: #FF6B1A;
+  --orange2: #FF8A45;
+  --text: #E8EEF4;
+  --muted: #8BA4BE;
+  --green: #22C55E;
+  --yellow: #F59E0B;
+  --red: #EF4444;
+  --gold: #F5C518;
+  --blue: #3B82F6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:3px}
+
+/* HEADER */
+.header{background:linear-gradient(180deg,#0A1219 0%,var(--navy) 100%);border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--orange),#FF8A45);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:18px;color:#fff;letter-spacing:1px}
+.logo-text{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:22px;color:var(--text);letter-spacing:2px}
+.logo-sub{font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-top:-2px}
+.header-badge{background:rgba(255,107,26,0.15);border:1px solid rgba(255,107,26,0.4);color:var(--orange);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#0D1E35 50%,#0F1923 100%);padding:48px 24px 40px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,107,26,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:1400px;margin:0 auto}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:3px;color:var(--orange);text-transform:uppercase;margin-bottom:12px}
+.hero-title{font-family:'Rajdhani',sans-serif;font-size:42px;font-weight:700;line-height:1.1;margin-bottom:12px;color:#fff}
+.hero-title span{color:var(--orange)}
+.hero-sub{color:var(--muted);font-size:16px;max-width:620px;line-height:1.6;margin-bottom:28px}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column}
+.stat-val{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--orange)}
+.stat-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+
+/* TRUST BAR */
+.trust-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px}
+.trust-bar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.trust-item svg{color:var(--orange)}
+.trust-sep{width:1px;height:16px;background:var(--border)}
+
+/* NAV TABS */
+.nav-tabs{background:var(--surface);border-bottom:2px solid var(--border);padding:0 24px;position:sticky;top:64px;z-index:90}
+.nav-tabs-inner{max-width:1400px;margin:0 auto;display:flex;gap:4px;overflow-x:auto}
+.tab-btn{background:transparent;border:none;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;padding:16px 20px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--orange);border-bottom-color:var(--orange)}
+.tab-icon{font-size:16px}
+
+/* MAIN CONTENT */
+.main{max-width:1400px;margin:0 auto;padding:32px 24px}
+.section{display:none}
+.section.active{display:block}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.card-title{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--text);letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.card-title-icon{color:var(--orange);font-size:20px}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+/* FORM ELEMENTS */
+.form-group{margin-bottom:16px}
+.label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block}
+.input,.select,.textarea{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;padding:10px 14px;outline:none;transition:border-color .2s}
+.input:focus,.select:focus{border-color:var(--orange)}
+.select option{background:var(--card)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:8px;border:none;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--orange),#FF8A45);color:#fff}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(255,107,26,0.35)}
+.btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--orange);color:var(--orange)}
+.btn-success{background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
+.btn-sm{padding:7px 16px;font-size:12px}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;letter-spacing:0.5px}
+.badge-green{background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
+.badge-yellow{background:rgba(245,158,11,0.15);color:var(--yellow);border:1px solid rgba(245,158,11,0.3)}
+.badge-red{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
+.badge-orange{background:rgba(255,107,26,0.15);color:var(--orange);border:1px solid rgba(255,107,26,0.3)}
+.badge-blue{background:rgba(59,130,246,0.15);color:var(--blue);border:1px solid rgba(59,130,246,0.3)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--surface);color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid rgba(42,63,88,0.5);color:var(--text)}
+tr:hover td{background:rgba(255,107,26,0.03)}
+.part-number{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--orange)}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:24px 0}
+
+/* METRIC CARDS */
+.metric-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;position:relative;overflow:hidden}
+.metric-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),#FF8A45)}
+.metric-val{font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:700;color:var(--orange);line-height:1}
+.metric-label{font-size:12px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+.metric-sub{font-size:11px;color:var(--muted);margin-top:4px;opacity:0.7}
+
+/* ALERT BOX */
+.alert{padding:14px 18px;border-radius:8px;font-size:13px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px}
+.alert-info{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:#93C5FD}
+.alert-warning{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:#FCD34D}
+.alert-success{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#86EFAC}
+.alert-danger{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#FCA5A5}
+
+/* PROGRESS BAR */
+.progress-bar{height:6px;background:var(--surface);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width 0.5s ease}
+.fill-green{background:linear-gradient(90deg,#16A34A,var(--green))}
+.fill-yellow{background:linear-gradient(90deg,#D97706,var(--yellow))}
+.fill-red{background:linear-gradient(90deg,#DC2626,var(--red))}
+
+/* PM STATUS GAUGE */
+.gauge-wrap{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface)}
+.gauge-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.dot-green{background:var(--green);box-shadow:0 0 8px rgba(34,197,94,0.5)}
+.dot-yellow{background:var(--yellow);box-shadow:0 0 8px rgba(245,158,11,0.5)}
+.dot-red{background:var(--red);box-shadow:0 0 8px rgba(239,68,68,0.5);animation:pulse-red 1.5s infinite}
+@keyframes pulse-red{0%,100%{opacity:1}50%{opacity:0.5}}
+
+/* RESULT SECTION */
+.result-section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:24px}
+.result-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.result-logo{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--orange);letter-spacing:2px}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border)}
+.timeline-item{position:relative;margin-bottom:20px}
+.timeline-dot{position:absolute;left:-20px;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid;background:var(--card)}
+.timeline-dot-orange{border-color:var(--orange);background:rgba(255,107,26,0.2)}
+.timeline-dot-green{border-color:var(--green);background:rgba(34,197,94,0.2)}
+.timeline-dot-yellow{border-color:var(--yellow);background:rgba(245,158,11,0.2)}
+.timeline-content{padding:12px 16px;background:var(--card2);border:1px solid var(--border);border-radius:8px}
+.timeline-interval{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:1px}
+
+/* SEARCH */
+.search-wrap{position:relative}
+.search-wrap input{padding-left:40px}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+
+/* PARTS GRID */
+.parts-grid{display:grid;gap:12px}
+.part-row{display:grid;grid-template-columns:auto 1fr auto auto auto;gap:12px;align-items:center;padding:12px 16px;background:var(--card2);border:1px solid var(--border);border-radius:8px;transition:border-color .2s}
+.part-row:hover{border-color:var(--orange)}
+.part-qty{background:var(--orange);color:#fff;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.part-info{min-width:0}
+.part-name{font-weight:500;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.part-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--orange);margin-top:2px}
+.part-price{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;color:var(--green);text-align:right;white-space:nowrap}
+.part-interval{font-size:11px;color:var(--muted);text-align:right;white-space:nowrap}
+
+/* TIER BADGES */
+.tier1{background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+.tier2{background:rgba(245,158,11,0.1);color:var(--yellow);border:1px solid rgba(245,158,11,0.2);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+.tier3{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+.tier4{background:rgba(139,92,246,0.1);color:#A78BFA;border:1px solid rgba(139,92,246,0.2);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+
+/* SUMMARY BOX */
+.summary-box{background:linear-gradient(135deg,rgba(255,107,26,0.1),rgba(255,138,69,0.05));border:1px solid rgba(255,107,26,0.3);border-radius:12px;padding:24px}
+.summary-title{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(42,63,88,0.5)}
+.summary-row:last-child{border-bottom:none;padding-top:12px;margin-top:4px}
+.summary-key{font-size:13px;color:var(--muted)}
+.summary-val{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
+.summary-total .summary-val{font-size:24px;color:var(--orange)}
+
+/* TCO CHART */
+.tco-bar-chart{margin-top:16px}
+.chart-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.chart-label{font-size:12px;color:var(--muted);width:140px;flex-shrink:0;text-align:right}
+.chart-bar-wrap{flex:1;height:24px;background:var(--surface);border-radius:4px;overflow:hidden;position:relative}
+.chart-bar{height:100%;border-radius:4px;transition:width 0.8s ease;display:flex;align-items:center;padding-left:8px;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:#fff;white-space:nowrap}
+
+/* CRITICAL PARTS */
+.critical-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:16px;transition:all .2s}
+.critical-card:hover{border-color:var(--orange);transform:translateY(-1px)}
+.critical-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.critical-name{font-weight:600;font-size:14px;color:var(--text);line-height:1.3}
+.critical-pn{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--orange);margin-top:4px}
+.critical-life{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.life-bar{flex:1}
+.critical-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.critical-price{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700}
+
+
+/* LIVE CLOCK */
+.live-clock-bar{background:rgba(255,107,26,0.08);border:1px solid rgba(255,107,26,0.2);border-radius:8px;padding:8px 16px;display:inline-flex;align-items:center;gap:10px;margin-bottom:16px}
+.live-clock-time{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--orange)}
+.live-clock-date{font-size:12px;color:var(--muted)}
+
+/* PRINT STYLES */
+@media print{
+  .header,.nav-tabs,.hero,.trust-bar,.btn,.no-print{display:none!important}
+  body{background:#fff;color:#000}
+  .card,.result-section{border:1px solid #ddd;break-inside:avoid}
+  .part-number{color:#c00}
+  .metric-val,.summary-val,.critical-price{color:#c00}
+}
+
+/* ANIMATIONS */
+.fade-in{animation:fadeIn 0.4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* WHATSAPP BUTTON */
+.wa-btn{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,0.4);z-index:200;transition:transform .2s}
+.wa-btn:hover{transform:scale(1.1)}
+
+/* FOOTER */
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--muted);font-size:12px;margin-top:48px}
+.footer strong{color:var(--orange)}
+
+/* TOOLTIP */
+.tooltip-wrap{position:relative;display:inline-block}
+.tooltip{visibility:hidden;opacity:0;background:var(--card2);color:var(--text);font-size:11px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);position:absolute;bottom:130%;left:50%;transform:translateX(-50%);white-space:nowrap;transition:opacity .2s;pointer-events:none;z-index:50}
+.tooltip-wrap:hover .tooltip{visibility:visible;opacity:1}
+
+/* UNIT MODEL SELECTOR */
+.model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:20px}
+.model-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;text-align:center;transition:all .2s;color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.model-btn:hover,.model-btn.active{background:rgba(255,107,26,0.1);border-color:var(--orange);color:var(--orange)}
+.model-type{font-size:10px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:0.5px}
+
+/* LOADING */
+.loading{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;padding:20px 0}
+.spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--orange);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* CHECKLIST */
+.checklist-item{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all .2s;background:var(--card2)}
+.checklist-item.checked{background:rgba(34,197,94,0.05);border-color:rgba(34,197,94,0.3)}
+.check-box{width:20px;height:20px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:1px}
+.checklist-item.checked .check-box{background:var(--green);border-color:var(--green)}
+
+/* PANEL SPLIT */
+.panel-split{display:grid;grid-template-columns:380px 1fr;gap:24px}
+@media(max-width:900px){.panel-split{grid-template-columns:1fr}}
+
+/* SECTION TITLE */
+.section-eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;color:var(--orange);text-transform:uppercase;margin-bottom:8px}
+.section-title{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--text);margin-bottom:6px}
+.section-desc{color:var(--muted);font-size:14px;margin-bottom:24px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon" style="background:transparent;border-radius:50%;overflow:hidden;padding:0"><img src="LOGO_PT._OSCAR.png" alt="Logo" style="width:38px;height:38px;border-radius:50%;object-fit:cover;display:block"></div>
+      <div>
+        <div class="logo-text">SPARTAAN PRO</div>
+        <div class="logo-sub">SANY Parts Automation &amp; Analytics Network</div>
+        <div style="font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:-1px">PT. ORENZ SUKU CADANG ASIA RAYA</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div id="header-clock" style="text-align:right;display:none">
+        <div style="font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--orange);line-height:1" id="header-time">--:--:--</div>
+        <div style="font-size:10px;color:var(--muted);letter-spacing:0.5px" id="header-date">--</div>
+      </div>
+      <div class="header-badge">⭐ SANY Original Parts Distributor</div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">🔧 Powered by OrenzAsia / Oscarpart</div>
+    <h1 class="hero-title">Rencanakan Perawatan.<br>Kontrol <span>Total Cost of Ownership</span>.</h1>
+    <p class="hero-sub">Platform estimasi kebutuhan parts dan kalkulasi TCO untuk Dump Truck & Alat Berat SANY. Data resmi dari OMM & Parts Book SANY — akurat, transparan, terpercaya.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-val">11</div><div class="stat-label">Model Unit</div></div>
+      <div class="stat"><div class="stat-val" id="hero-parts-count">438+</div><div class="stat-label">Part Number Valid</div></div>
+      <div class="stat"><div class="stat-val">6</div><div class="stat-label">Interval PM (250H–4000H)</div></div>
+      <div class="stat"><div class="stat-val">100%</div><div class="stat-label">Data VALID</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-item"><svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Original SANY Parts</div>
+    <div class="trust-sep"></div>
+    <div class="trust-item"><svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Harga Transparan</div>
+    <div class="trust-sep"></div>
+    <div class="trust-item"><svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Ready Stock Tersedia</div>
+    <div class="trust-sep"></div>
+    <div class="trust-item"><svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Pengiriman ke Seluruh Indonesia</div>
+    <div class="trust-sep"></div>
+    <div class="trust-item"><svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Garansi Keaslian</div>
+  </div>
+</div>
+
+<!-- NAVIGATION TABS -->
+<nav class="nav-tabs">
+  <div class="nav-tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('pm-estimator',this)"><span class="tab-icon">📋</span> PM Estimator</button>
+    <button class="tab-btn" onclick="switchTab('tco',this)"><span class="tab-icon">💰</span> TCO Calculator</button>
+    <button class="tab-btn" onclick="switchTab('critical',this)"><span class="tab-icon">⚠️</span> Critical Parts</button>
+    <button class="tab-btn" onclick="switchTab('finder',this)"><span class="tab-icon">🔍</span> Parts Finder</button>
+    <button class="tab-btn" onclick="switchTab('checklist',this)"><span class="tab-icon">✅</span> PM Checklist</button>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+<!-- ============================================================ -->
+<!-- SECTION 1: PM ESTIMATOR -->
+<!-- ============================================================ -->
+<div id="pm-estimator" class="section active fade-in">
+  <div class="section-eyebrow">Modul 1</div>
+  <div class="section-title">PM Parts Estimator</div>
+  <div class="section-desc">Estimasi kebutuhan parts servis berkala (PM) berdasarkan model unit, HM saat ini, dan target periode operasi. Dapatkan list lengkap part number, qty, dan estimasi biaya.</div>
+
+  <div class="panel-split">
+    <!-- INPUT PANEL -->
+    <div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="card-title-icon">⚙️</span> Parameter Input</div>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Model Unit</label>
+          <select class="select" id="pm-model" onchange="updatePMModel()">
+            <option value="">— Pilih Model —</option>
+            <optgroup label="Dump Truck">
+              <option value="SYZ326C">SYZ326C — Dump Truck 26T</option>
+              <option value="SYZ440C">SYZ440C — Dump Truck 44T</option>
+              <option value="SRT95C">SRT95C — Rigid Dump Truck 95T</option>
+              <option value="SKT80S">SKT80S — Off-Highway Wide-Body Mining Truck 50T</option>
+              <option value="SKT90S">SKT90S — Off-Highway Wide-Body Mining Truck 60T</option>
+              <option value="SKT105S">SKT105S — Off-Highway Wide-Body Mining Truck 65T</option>
+            </optgroup>
+            <optgroup label="Excavator">
+              <option value="SY215">SY215 — Excavator 21T</option>
+              <option value="SY365H">SY365H — Excavator 36T</option>
+              <option value="SY500H">SY500H — Excavator 50T</option>
+              <option value="SY750H">SY750H — Excavator 75T</option>
+            </optgroup>
+            <optgroup label="Motor Grader">
+              <option value="STG230C-8S">STG230C-8S — Motor Grader 230HP</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="label">HM (Hour Meter) Saat Ini</label>
+          <input type="number" class="input" id="pm-hm" placeholder="Contoh: 2750" min="0" max="50000">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Target Periode Estimasi</label>
+          <select class="select" id="pm-period">
+            <option value="250">1 PM Interval — 250 Jam Kerja</option>
+            <option value="500">PM 500H</option>
+            <option value="1000" selected>PM 1000H</option>
+            <option value="2000">PM 2000H</option>
+            <option value="3000">PM 3000H</option>
+            <option value="4000">PM 4000H (Major Service)</option>
+            <option value="custom">Custom Periode (isi manual)</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="custom-period-wrap" style="display:none">
+          <label class="label">Periode Custom (Jam)</label>
+          <input type="number" class="input" id="pm-custom-period" placeholder="Contoh: 1500" min="250" max="20000" step="250">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Kondisi Operasi</label>
+          <select class="select" id="pm-condition">
+            <option value="normal">Normal — Jalan hauling baik</option>
+            <option value="hard">Hard Duty — Tambang berat, dusty</option>
+            <option value="extreme">Extreme — Kondisi ekstrem, lumpur/batu</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Jumlah Unit Fleet</label>
+          <input type="number" class="input" id="pm-units" value="1" min="1" max="200">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Jam Kerja Rata-rata / Hari</label>
+          <input type="number" class="input" id="pm-hours-day" value="20" min="1" max="24" placeholder="Contoh: 20">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Hari Kerja dalam Sebulan</label>
+          <input type="number" class="input" id="pm-days-month" value="26" min="1" max="31" placeholder="Contoh: 26">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="calculatePM()">
+          ⚡ Hitung Kebutuhan Parts
+        </button>
+      </div>
+
+      <div class="card" style="margin-top:16px" id="pm-interval-info">
+        <div class="card-title" style="margin-bottom:12px"><span class="card-title-icon">📅</span> PM Due Schedule</div>
+        <div id="pm-due-list"></div>
+      </div>
+    </div>
+
+    <!-- RESULT PANEL -->
+    <div id="pm-result-panel">
+      <div class="live-clock-bar">
+        <span>🕐</span>
+        <div>
+          <div class="live-clock-time" id="live-time">--:--:--</div>
+          <div class="live-clock-date" id="live-date">Loading...</div>
+        </div>
+      </div>
+      <div class="card" style="text-align:center;padding:48px 24px;color:var(--muted)">
+        <div style="font-size:48px;margin-bottom:16px">🔧</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px">Pilih Model & Parameter</div>
+        <div style="font-size:13px">Isi parameter di sebelah kiri, lalu klik "Hitung Kebutuhan Parts"</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: TCO CALCULATOR -->
+<!-- ============================================================ -->
+<div id="tco" class="section fade-in">
+  <div class="section-eyebrow">Modul 2</div>
+  <div class="section-title">TCO Calculator</div>
+  <div class="section-desc">Kalkulasi Total Cost of Ownership (TCO) untuk fleet Anda. Analisis biaya maintenance, parts, dan operasional tahunan secara menyeluruh untuk keputusan bisnis yang akurat.</div>
+
+  <div class="panel-split">
+    <div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="card-title-icon">🏭</span> Data Fleet</div>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Model Unit</label>
+          <select class="select" id="tco-model">
+            <option value="">— Pilih Model —</option>
+            <optgroup label="Dump Truck">
+              <option value="SYZ326C">SYZ326C — Dump Truck 26T</option>
+              <option value="SYZ440C">SYZ440C — Dump Truck 44T</option>
+              <option value="SRT95C">SRT95C — Rigid Dump Truck 95T</option>
+              <option value="SKT80S">SKT80S — Off-Highway Wide-Body Mining Truck 50T</option>
+              <option value="SKT90S">SKT90S — Off-Highway Wide-Body Mining Truck 60T</option>
+              <option value="SKT105S">SKT105S — Off-Highway Wide-Body Mining Truck 65T</option>
+            </optgroup>
+            <optgroup label="Excavator">
+              <option value="SY215">SY215 — Excavator 21T</option>
+              <option value="SY365H">SY365H — Excavator 36T</option>
+              <option value="SY500H">SY500H — Excavator 50T</option>
+              <option value="SY750H">SY750H — Excavator 75T</option>
+            </optgroup>
+            <optgroup label="Motor Grader">
+              <option value="STG230C-8S">STG230C-8S — Motor Grader 230HP</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Jumlah Unit</label>
+          <input type="number" class="input" id="tco-units" value="5" min="1" max="500">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Jam Kerja / Hari</label>
+          <input type="number" class="input" id="tco-hours-day" value="20" min="1" max="24">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Hari Operasi / Bulan</label>
+          <input type="number" class="input" id="tco-days-month" value="26" min="1" max="31">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Periode Analisis (Tahun)</label>
+          <select class="select" id="tco-years">
+            <option value="1">1 Tahun</option>
+            <option value="2">2 Tahun</option>
+            <option value="3" selected>3 Tahun</option>
+            <option value="5">5 Tahun</option>
+          </select>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="form-group">
+          <label class="label">Kondisi Operasi</label>
+          <select class="select" id="tco-condition">
+            <option value="1.0">Normal (faktor: 1.0×)</option>
+            <option value="1.2">Hard Duty (faktor: 1.2×)</option>
+            <option value="1.5">Extreme (faktor: 1.5×)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="label">Biaya Operator / Bulan (Rp)</label>
+          <input type="number" class="input" id="tco-operator" value="6000000" step="500000">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Biaya Bahan Bakar / Liter (Rp)</label>
+          <input type="number" class="input" id="tco-fuel-price" value="11000" step="500">
+        </div>
+
+        <div class="form-group">
+          <label class="label">Konsumsi BBM (Liter/Jam)</label>
+          <input type="number" class="input" id="tco-fuel-rate" value="18" step="1">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="calculateTCO()">
+          💰 Hitung TCO Sekarang
+        </button>
+      </div>
+    </div>
+
+    <div id="tco-result-panel">
+      <div class="card" style="text-align:center;padding:48px 24px;color:var(--muted)">
+        <div style="font-size:48px;margin-bottom:16px">💰</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px">Kalkulasi TCO Fleet</div>
+        <div style="font-size:13px">Isi parameter fleet di sebelah kiri untuk mendapatkan analisis biaya lengkap</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: CRITICAL PARTS -->
+<!-- ============================================================ -->
+<div id="critical" class="section fade-in">
+  <div class="section-eyebrow">Modul 3</div>
+  <div class="section-title">Critical Parts Monitor</div>
+  <div class="section-desc">Daftar komponen kritis dengan estimasi lifetime. Penggantian proaktif sebelum gagal = cegah unplanned downtime mahal. Filter berdasarkan model dan urgensi.</div>
+
+  <div class="grid-4" style="margin-bottom:20px">
+    <div class="metric-card">
+      <div class="metric-val" id="cp-total">438</div>
+      <div class="metric-label">Total Parts</div>
+    </div>
+    <div class="metric-card" style="--col:var(--red)">
+      <div class="metric-val" style="color:var(--red)" id="cp-critical">24</div>
+      <div class="metric-label">Sangat Kritis</div>
+      <div class="metric-sub">Filter < 500 Jam</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--yellow)" id="cp-medium">87</div>
+      <div class="metric-label">Perhatian</div>
+      <div class="metric-sub">Lifetime 500–2000 Jam</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--green)" id="cp-ok">327</div>
+      <div class="metric-label">Normal</div>
+      <div class="metric-sub">Lifetime > 2000 Jam</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end">
+      <div class="form-group" style="margin-bottom:0;flex:1;min-width:180px">
+        <label class="label">Filter Model</label>
+        <select class="select" id="cp-model-filter" onchange="filterCriticalParts()">
+          <option value="all">Semua Model</option>
+          <option value="SKT80S">SKT80S</option>
+          <option value="SYZ326C">SYZ326C</option>
+          <option value="SYZ440C">SYZ440C</option>
+          <option value="SRT95C">SRT95C</option>
+          <option value="SKT90S">SKT90S</option>
+          <option value="SKT105S">SKT105S</option>
+          <option value="SY215">SY215</option>
+          <option value="SY365H">SY365H</option>
+          <option value="SY500H">SY500H</option>
+          <option value="SY750H">SY750H</option>
+          <option value="STG230C-8S">STG230C-8S</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0;flex:1;min-width:180px">
+        <label class="label">Filter Kategori</label>
+        <select class="select" id="cp-cat-filter" onchange="filterCriticalParts()">
+          <option value="all">Semua Kategori</option>
+          <option value="Filter">Filter</option>
+          <option value="Fluid">Fluid</option>
+          <option value="Belt">Belt & Hose</option>
+          <option value="Wear">Wear Part</option>
+          <option value="Assembly">Assembly</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0;flex:1;min-width:180px">
+        <label class="label">Urgensi</label>
+        <select class="select" id="cp-urgency-filter" onchange="filterCriticalParts()">
+          <option value="all">Semua</option>
+          <option value="critical">🔴 Kritis (< 500H)</option>
+          <option value="medium">🟡 Perhatian (500–2000H)</option>
+          <option value="ok">🟢 Normal (> 2000H)</option>
+        </select>
+      </div>
+      <div>
+        <button class="btn btn-secondary" onclick="filterCriticalParts()">Filter</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="critical-parts-grid" class="grid-2"></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: PARTS FINDER -->
+<!-- ============================================================ -->
+<div id="finder" class="section fade-in">
+  <div class="section-eyebrow">Modul 4</div>
+  <div class="section-title">Smart Parts Finder</div>
+  <div class="section-desc">Cari part number atau nama komponen dengan cepat. Tersedia data harga, spesifikasi, dan kompatibilitas antar model.</div>
+
+  <div class="card" style="margin-bottom:24px">
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <div class="search-wrap" style="flex:1;min-width:250px">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="input" id="parts-search" placeholder="Cari nama komponen atau part number..." oninput="searchParts()" style="padding-left:40px">
+      </div>
+      <select class="select" id="finder-model" style="max-width:220px" onchange="searchParts()">
+        <option value="all">Semua Model</option>
+        <option value="SKT80S">SKT80S</option>
+        <option value="SYZ326C">SYZ326C</option>
+        <option value="SYZ440C">SYZ440C</option>
+        <option value="SRT95C">SRT95C</option>
+        <option value="SKT90S">SKT90S</option>
+        <option value="SKT105S">SKT105S</option>
+        <option value="SY215">SY215</option>
+        <option value="SY365H">SY365H</option>
+        <option value="SY500H">SY500H</option>
+        <option value="SY750H">SY750H</option>
+        <option value="STG230C-8S">STG230C-8S</option>
+      </select>
+      <select class="select" id="finder-system" style="max-width:180px" onchange="searchParts()">
+        <option value="all">Semua Sistem</option>
+        <option value="ENGINE">Engine</option>
+        <option value="TRANSMISSION">Transmission</option>
+        <option value="HYDRAULIC">Hydraulic</option>
+        <option value="BRAKE">Brake</option>
+        <option value="AXLE">Axle</option>
+        <option value="SUSPENSION">Suspension</option>
+        <option value="ELECTRIC">Electric</option>
+        <option value="LUBRICATION">Lubrication</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span class="card-title-icon">📦</span> Hasil Pencarian</div>
+      <div id="finder-count" style="font-size:13px;color:var(--muted)">Masukkan kata kunci untuk mencari</div>
+    </div>
+    <div class="table-wrap">
+      <table id="finder-table">
+        <thead>
+          <tr>
+            <th>Part Number</th>
+            <th>Nama Komponen</th>
+            <th>Sistem</th>
+            <th>Model</th>
+            <th>Interval</th>
+            <th>Harga (HJ)</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="finder-tbody">
+          <tr><td colspan="7" style="text-align:center;padding:32px;color:var(--muted)">Masukkan kata kunci di atas untuk mencari parts</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: PM CHECKLIST -->
+<!-- ============================================================ -->
+<div id="checklist" class="section fade-in">
+  <div class="section-eyebrow">Modul 5</div>
+  <div class="section-title">PM Checklist Digital</div>
+  <div class="section-desc">Checklist PM interaktif yang bisa langsung diisi di lapangan atau dicetak. Sesuaikan dengan model dan interval servis.</div>
+
+  <div class="grid-2" style="margin-bottom:24px">
+    <div class="card">
+      <div class="form-group">
+        <label class="label">Model Unit</label>
+        <select class="select" id="cl-model" onchange="loadChecklist()">
+          <option value="">— Pilih Model —</option>
+          <optgroup label="Dump Truck">
+            <option value="SKT80S">SKT80S</option>
+            <option value="SYZ326C">SYZ326C</option>
+            <option value="SYZ440C">SYZ440C</option>
+            <option value="SRT95C">SRT95C</option>
+            <option value="SKT90S">SKT90S</option>
+            <option value="SKT105S">SKT105S</option>
+          </optgroup>
+          <optgroup label="Excavator">
+            <option value="SY215">SY215</option>
+            <option value="SY365H">SY365H</option>
+            <option value="SY500H">SY500H</option>
+            <option value="SY750H">SY750H</option>
+          </optgroup>
+          <optgroup label="Motor Grader">
+            <option value="STG230C-8S">STG230C-8S</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="label">Interval PM</label>
+        <select class="select" id="cl-interval" onchange="loadChecklist()">
+          <option value="250">250 Jam</option>
+          <option value="500">500 Jam</option>
+          <option value="1000" selected>1000 Jam</option>
+          <option value="2000">2000 Jam</option>
+          <option value="4000">4000 Jam (Major PM)</option>
+          <option value="OH">🔧 Top Overhaul (OH)</option>
+        </select>
+      </div>
+    </div>
+    <div class="card">
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="label">Nama Teknisi</label>
+          <input type="text" class="input" id="cl-tech" placeholder="Nama teknisi">
+        </div>
+        <div class="form-group">
+          <label class="label">No. Unit</label>
+          <input type="text" class="input" id="cl-unit-no" placeholder="Cth: DT-001">
+        </div>
+        <div class="form-group">
+          <label class="label">HM Saat Ini</label>
+          <input type="number" class="input" id="cl-hm" placeholder="Contoh: 2750">
+        </div>
+        <div class="form-group">
+          <label class="label">Tanggal</label>
+          <input type="date" class="input" id="cl-date">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="checklist-progress-bar" style="display:none;margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+      <span style="font-size:13px;color:var(--muted)">Progress Checklist</span>
+      <span id="cl-progress-text" style="font-size:13px;font-weight:600;color:var(--orange)">0 / 0</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill fill-green" id="cl-progress-fill" style="width:0%"></div></div>
+  </div>
+
+  <div id="checklist-container">
+    <div class="card" style="text-align:center;padding:48px 24px;color:var(--muted)">
+      <div style="font-size:48px;margin-bottom:16px">✅</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px">Pilih Model & Interval PM</div>
+      <div style="font-size:13px">Checklist akan tampil otomatis sesuai model yang dipilih</div>
+    </div>
+  </div>
+
+  <div id="cl-print-btn" style="margin-top:20px;display:none;gap:12px;flex-wrap:wrap">
+    <button class="btn btn-primary" onclick="printChecklist()">🖨️ Print Checklist</button>
+    <button class="btn btn-secondary" onclick="resetChecklist()">🔄 Reset Semua</button>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>SPARTAAN PRO</strong> — SANY Parts Automation &amp; Analytics Network | PT. ORENZ SUKU CADANG ASIA RAYA<br>
+  Data berdasarkan OMM & Parts Book resmi SANY. Harga bersumber dari Price List Principal SANY.<br>
+  <span style="color:var(--orange)">Distributor Resmi Spareparts SANY Original</span> | Untuk order & konsultasi: <strong>Hubungi Tim Kami</strong>
+</div>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/6281234567890?text=Halo, saya ingin konsultasi kebutuhan spareparts SANY" class="wa-btn" title="Chat WhatsApp" target="_blank">
+  <img src="logowa.jpg" alt="WhatsApp" id="wa-logo-img" style="width:32px;height:32px;object-fit:contain;display:none">
+  <svg id="wa-logo-svg" width="32" height="32" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.417.634 4.686 1.742 6.651L2 30l7.534-1.697A13.932 13.932 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.574 11.574 0 01-5.895-1.609l-.423-.251-4.472 1.007 1.031-4.353-.274-.447A11.551 11.551 0 014.4 16C4.4 9.594 9.594 4.4 16 4.4S27.6 9.594 27.6 16 22.406 27.6 16 27.6zM22.4 19.072c-.336-.168-1.99-.983-2.299-1.095-.308-.112-.533-.168-.757.168-.224.336-.868 1.095-1.064 1.32-.196.224-.392.252-.728.084-.336-.168-1.418-.523-2.701-1.667-.998-.89-1.673-1.99-1.869-2.326-.196-.336-.021-.518.148-.686.152-.15.336-.392.504-.588.168-.196.224-.336.336-.56.112-.224.056-.42-.028-.588-.084-.168-.757-1.823-1.037-2.494-.273-.655-.55-.566-.757-.576l-.644-.012c-.224 0-.588.084-.896.42-.308.336-1.176 1.148-1.176 2.8s1.204 3.248 1.372 3.472c.168.224 2.369 3.617 5.74 5.074.803.347 1.429.554 1.917.708.805.257 1.538.221 2.117.134.645-.096 1.99-.814 2.27-1.6.28-.784.28-1.456.196-1.6-.084-.144-.308-.224-.644-.392z"/>
+  </svg>
+</a>
+
+<script>
+// ==========================================
+// PRICE MAP from validated Excel (SANY_Parts_List_All_Models.xlsx — 2026)
+// ==========================================
+const PRICE_MAP = {"60327523":{hpp:134000,hj:195000,tier:"Tier 1"},"160604020018":{hpp:667000,hj:865000,tier:"Tier 2"},"160604020017":{hpp:375000,hj:545000,tier:"Tier 1"},"160603020024A":{hpp:305000,hj:440000,tier:"Tier 1"},"160602020020A":{hpp:611000,hj:795000,tier:"Tier 2"},"160602030016A":{hpp:100000,hj:145000,tier:"Tier 1"},"60141428":{hpp:128000,hj:185000,tier:"Tier 1"},"160399000008A":{hpp:270000,hj:390000,tier:"Tier 1"},"160899000348A":{hpp:3094000,hj:4000000,tier:"Tier 2"},"61000099":{hpp:7555000,hj:9200000,tier:"Tier 3"},"160201000004A":{hpp:3607000,hj:4700000,tier:"Tier 2"},"160202000001A":{hpp:117000,hj:170000,tier:"Tier 1"},"60345316":{hpp:396000,hj:575000,tier:"Tier 1"},"141502000017":{hpp:147000,hj:215000,tier:"Tier 1"},"141502000077":{hpp:94000,hj:135000,tier:"Tier 1"},"152599000172A001":{hpp:197000,hj:285000,tier:"Tier 1"},"A222100000393":{hpp:35000,hj:51000,tier:"Tier 1"},"60022607":{hpp:76000,hj:110000,tier:"Tier 1"},"60190637":{hpp:1512000,hj:1950000,tier:"Tier 2"},"61019554":{hpp:1450000,hj:1900000,tier:"Tier 2"},"61019553":{hpp:2329000,hj:3050000,tier:"Tier 2"},"152599000112A001":{hpp:892000,hj:1150000,tier:"Tier 2"},"24001922":{hpp:173000,hj:250000,tier:"Tier 1"},"B222100000595":{hpp:434000,hj:630000,tier:"Tier 1"},"A222100000615":{hpp:477000,hj:690000,tier:"Tier 1"},"60133933":{hpp:201000,hj:290000,tier:"Tier 1"},"11576509":{hpp:228000,hj:330000,tier:"Tier 1"},"60025678":{hpp:2667000,hj:3450000,tier:"Tier 2"},"60215480":{hpp:3490000,hj:4550000,tier:"Tier 2"},"60328867":{hpp:83000,hj:120000,tier:"Tier 1"},"61027331":{hpp:87000,hj:125000,tier:"Tier 1"},"160603020013":{hpp:201000,hj:290000,tier:"Tier 1"},"160101120038A001":{hpp:869000,hj:1150000,tier:"Tier 2"},"60339522":{hpp:233000,hj:340000,tier:"Tier 1"},"60339523":{hpp:265000,hj:385000,tier:"Tier 1"},"168899000430":{hpp:3847000,hj:5000000,tier:"Tier 2"},"61026495":{hpp:8343000,hj:10000000,tier:"Tier 3"},"160101100046A019":{hpp:3943000,hj:5150000,tier:"Tier 2"},"160101120038A019":{hpp:2250000,hj:2900000,tier:"Tier 2"},"160101100046A016":{hpp:12194000,hj:15000000,tier:"Tier 3"},"131402010260A011":{hpp:95000,hj:140000,tier:"Tier 1"},"131488000229A":{hpp:74000,hj:105000,tier:"Tier 1"}};
+
+function getPriceFor(pn){
+  return PRICE_MAP[pn] || null;
+}
+
+// ==========================================
+// DATA PARTS (from SPARTAAN Excel)
+// ==========================================
+const PARTS_DATA = [
+  // SKT80S — Prices from Excel 2026
+  {pn:"60327523",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SKT80S",system:"ENGINE",interval:"250H",qty:2,hpp:134000,hj:195000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"160604020017",name:"Fuel Coarse Filter Core",nameID:"Filter Solar Kasar",model:"SKT80S",system:"ENGINE",interval:"250H",qty:1,hpp:375000,hj:545000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"160604020018",name:"Fuel Fine Filter Core",nameID:"Filter Solar Halus",model:"SKT80S",system:"ENGINE",interval:"500H",qty:1,hpp:667000,hj:865000,life:1000,cat:"Filter",tier:"Tier 2"},
+  {pn:"160603020024A",name:"Water Separator Element",nameID:"Elemen Water Separator",model:"SKT80S",system:"ENGINE",interval:"250H",qty:2,hpp:305000,hj:440000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"160602020020A",name:"Air Filter Outer Element",nameID:"Filter Udara Luar",model:"SKT80S",system:"ENGINE",interval:"1000H",qty:1,hpp:611000,hj:795000,life:2000,cat:"Filter",tier:"Tier 2"},
+  {pn:"160602030016A",name:"Air Filter Inner Element",nameID:"Filter Udara Dalam",model:"SKT80S",system:"ENGINE",interval:"1000H",qty:1,hpp:100000,hj:145000,life:4000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60060965",name:"Air Dryer Element",nameID:"Elemen Air Dryer",model:"SKT80S",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"130202000093A023",name:"Transmission Filter (TM)",nameID:"Filter Transmisi",model:"SKT80S",system:"TRANSMISSION",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60167851",name:"HYD Return Oil Filter",nameID:"Filter Hidrolik Return",model:"SKT80S",system:"HYDRAULIC",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60345316",name:"Steering Hydraulic Filter",nameID:"Filter Hidrolik Steering",model:"SKT80S",system:"HYDRAULIC",interval:"500H",qty:1,hpp:396000,hj:575000,life:1000,cat:"Filter",tier:"Tier 1"},
+  {pn:"24001922",name:"Hydraulic Tank Air Filter",nameID:"Breather Tangki Hidrolik",model:"SKT80S",system:"HYDRAULIC",interval:"1000H",qty:1,hpp:173000,hj:250000,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"141502000017",name:"AC Fresh Air Filter",nameID:"Filter Kabin AC",model:"SKT80S",system:"ELECTRIC",interval:"250H",qty:1,hpp:147000,hj:215000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"60141428",name:"Belt (Poly V)",nameID:"Belt Poly V",model:"SKT80S",system:"ENGINE",interval:"1000H",qty:1,hpp:128000,hj:185000,life:2000,cat:"Belt",tier:"Tier 1"},
+  {pn:"160399000008A",name:"Poly V Belt",nameID:"Poly V-Belt",model:"SKT80S",system:"ENGINE",interval:"1000H",qty:1,hpp:270000,hj:390000,life:2000,cat:"Belt",tier:"Tier 1"},
+  {pn:"YNF01-00044",name:"Brake Lining / Shoe",nameID:"Kampas Rem",model:"SKT80S",system:"BRAKE",interval:"Insidentil",qty:1,hpp:0,hj:0,life:8000,cat:"Wear",tier:"Tier 2"},
+  // SYZ326C — Prices from Excel 2026
+  {pn:"160101120038A001",name:"Fuel Filter Element",nameID:"Elemen Filter Solar",model:"SYZ326C",system:"ENGINE",interval:"250H",qty:2,hpp:869000,hj:1150000,life:500,cat:"Filter",tier:"Tier 2"},
+  {pn:"1000424916",name:"Water Separator",nameID:"Water Separator",model:"SYZ326C",system:"ENGINE",interval:"250H",qty:1,hpp:0,hj:0,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"160602020036A",name:"Air Filter Outer",nameID:"Filter Udara Luar",model:"SYZ326C",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"160602030026A",name:"Air Filter Inner",nameID:"Filter Udara Dalam",model:"SYZ326C",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:4000,cat:"Filter",tier:"Tier 1"},
+  {pn:"152599000172A001",name:"Air Dryer Filter",nameID:"Filter Air Dryer",model:"SYZ326C",system:"ENGINE",interval:"500H",qty:1,hpp:197000,hj:285000,life:1000,cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000393",name:"Steering Filter Element",nameID:"Elemen Filter Steering",model:"SYZ326C",system:"STEERING",interval:"500H",qty:1,hpp:35000,hj:51000,life:1000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60022607",name:"Hydraulic Filter Strainer",nameID:"Strainer Filter Hidrolik",model:"SYZ326C",system:"HYDRAULIC",interval:"250H",qty:1,hpp:76000,hj:110000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"141502000017",name:"AC Fresh Air Filter",nameID:"Filter Kabin AC",model:"SYZ326C",system:"ELECTRIC",interval:"250H",qty:1,hpp:147000,hj:215000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"131402010260A011",name:"Brake Lining Upper",nameID:"Kampas Rem Atas",model:"SYZ326C",system:"BRAKE",interval:"500H",qty:4,hpp:95000,hj:140000,life:2000,cat:"Wear",tier:"Tier 1"},
+  // SYZ440C — Prices from Excel 2026
+  {pn:"60328867",name:"Engine Oil Filter Element",nameID:"Filter Oli Mesin",model:"SYZ440C",system:"ENGINE",interval:"250H",qty:2,hpp:83000,hj:120000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"61027331",name:"Diesel Fine Filter Core",nameID:"Filter Solar Halus",model:"SYZ440C",system:"ENGINE",interval:"500H",qty:2,hpp:87000,hj:125000,life:1000,cat:"Filter",tier:"Tier 1"},
+  {pn:"160603020013",name:"Oil-water separator element",nameID:"Water Separator",model:"SYZ440C",system:"ENGINE",interval:"500H",qty:1,hpp:201000,hj:290000,life:1000,cat:"Filter",tier:"Tier 1"},
+  {pn:"152599000172A001",name:"Drying Cylinder (Air Dryer)",nameID:"Silinder Pengering",model:"SYZ440C",system:"ENGINE",interval:"500H",qty:1,hpp:197000,hj:285000,life:1000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60339522",name:"Belt",nameID:"Serpentine Belt",model:"SYZ440C",system:"ENGINE",interval:"1000H",qty:1,hpp:233000,hj:340000,life:2000,cat:"Belt",tier:"Tier 1"},
+  {pn:"60339523",name:"Poly V Belt",nameID:"Poly V Belt",model:"SYZ440C",system:"ENGINE",interval:"1000H",qty:1,hpp:265000,hj:385000,life:2000,cat:"Belt",tier:"Tier 1"},
+  {pn:"168899000430",name:"Water Pump",nameID:"Water Pump",model:"SYZ440C",system:"ENGINE",interval:"Insidentil",qty:1,hpp:3847000,hj:5000000,life:8000,cat:"Assembly",tier:"Tier 2"},
+  {pn:"61026495",name:"Starter Motor",nameID:"Motor Starter",model:"SYZ440C",system:"ELECTRIC",interval:"Insidentil",qty:1,hpp:8343000,hj:10000000,life:8000,cat:"Assembly",tier:"Tier 3"},
+  {pn:"160101100046A019",name:"Alternator",nameID:"Alternator",model:"SYZ440C",system:"ELECTRIC",interval:"Insidentil",qty:1,hpp:3943000,hj:5150000,life:8000,cat:"Assembly",tier:"Tier 2"},
+  {pn:"160101120038A019",name:"Injector",nameID:"Injektor",model:"SYZ440C",system:"ENGINE",interval:"1500H",qty:6,hpp:2250000,hj:2900000,life:3000,cat:"Assembly",tier:"Tier 2"},
+  {pn:"160101100046A016",name:"Turbocharger",nameID:"Turbocharger",model:"SYZ440C",system:"ENGINE",interval:"Insidentil",qty:1,hpp:12194000,hj:15000000,life:10000,cat:"Assembly",tier:"Tier 3"},
+  // SRT95C — Prices from Excel 2026
+  {pn:"B222100000595",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SRT95C",system:"ENGINE",interval:"250H",qty:4,hpp:434000,hj:630000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000615",name:"Fuel Filter Element",nameID:"Elemen Filter Solar",model:"SRT95C",system:"ENGINE",interval:"500H",qty:1,hpp:477000,hj:690000,life:1000,cat:"Filter",tier:"Tier 1"},
+  {pn:"B229900005676",name:"Water Separator",nameID:"Water Separator",model:"SRT95C",system:"ENGINE",interval:"250H",qty:1,hpp:5166000,hj:6300000,life:500,cat:"Filter",tier:"Tier 3"},
+  {pn:"60133933",name:"Air Filter Outer",nameID:"Filter Udara Luar",model:"SRT95C",system:"ENGINE",interval:"1000H",qty:1,hpp:201000,hj:290000,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"11576509",name:"V-Belt",nameID:"V-Belt",model:"SRT95C",system:"ENGINE",interval:"1000H",qty:1,hpp:228000,hj:330000,life:2000,cat:"Belt",tier:"Tier 1"},
+  {pn:"60025678",name:"Alternator Belt",nameID:"Belt Alternator",model:"SRT95C",system:"ENGINE",interval:"1000H",qty:1,hpp:2667000,hj:3450000,life:2000,cat:"Belt",tier:"Tier 2"},
+  {pn:"10504472",name:"Transmission Oil Filter (Allison)",nameID:"Filter Transmisi Allison",model:"SRT95C",system:"TRANSMISSION",interval:"2000H",qty:1,hpp:53426000,hj:61500000,life:4000,cat:"Filter",tier:"Tier 4"},
+  {pn:"60215480",name:"Hydraulic Return Filter Element",nameID:"Filter Hidrolik Return",model:"SRT95C",system:"HYDRAULIC",interval:"500H",qty:2,hpp:3490000,hj:4550000,life:1000,cat:"Filter",tier:"Tier 2"},
+  // SKT90S
+  {pn:"60327523",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SKT90S",system:"ENGINE",interval:"250H",qty:2,hpp:134000,hj:195000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"61019553",name:"Fuel Coarse Filter",nameID:"Filter Solar Kasar",model:"SKT90S",system:"ENGINE",interval:"500H",qty:1,hpp:2329000,hj:3050000,life:1000,cat:"Filter",tier:"Tier 2"},
+  {pn:"160603020024A",name:"Water Separator",nameID:"Water Separator",model:"SKT90S",system:"ENGINE",interval:"250H",qty:2,hpp:305000,hj:440000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"152599000112A001",name:"Air Dryer",nameID:"Air Dryer",model:"SKT90S",system:"ENGINE",interval:"1000H",qty:1,hpp:892000,hj:1150000,life:2000,cat:"Filter",tier:"Tier 2"},
+  {pn:"60345316",name:"HYD Return Filter",nameID:"Filter Hidrolik Return",model:"SKT90S",system:"HYDRAULIC",interval:"500H",qty:1,hpp:396000,hj:575000,life:1000,cat:"Filter",tier:"Tier 1"},
+  // SKT105S
+  {pn:"60327523",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SKT105S",system:"ENGINE",interval:"250H",qty:2,hpp:134000,hj:195000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"152599000112A001",name:"Air Dryer",nameID:"Air Dryer",model:"SKT105S",system:"ENGINE",interval:"1000H",qty:1,hpp:892000,hj:1150000,life:2000,cat:"Filter",tier:"Tier 2"},
+  {pn:"60345316",name:"HYD Return Filter",nameID:"Filter Hidrolik Return",model:"SKT105S",system:"HYDRAULIC",interval:"500H",qty:1,hpp:396000,hj:575000,life:1000,cat:"Filter",tier:"Tier 1"},
+  {pn:"24001922",name:"Hydraulic Tank Breather",nameID:"Breather Hidrolik",model:"SKT105S",system:"HYDRAULIC",interval:"1000H",qty:1,hpp:173000,hj:250000,life:2000,cat:"Filter",tier:"Tier 1"},
+  // SY215 (Excavator)
+  {pn:"60275370",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SY215",system:"ENGINE",interval:"250H",qty:1,hpp:0,hj:0,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"60310822",name:"Fuel Pre-filter",nameID:"Filter Solar Pre",model:"SY215",system:"ENGINE",interval:"250H",qty:1,hpp:0,hj:0,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"60307172",name:"Fuel Fine Filter",nameID:"Filter Solar Halus",model:"SY215",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60250669",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SY215",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"B222100000711",name:"Air Filter Safety",nameID:"Filter Udara Safety",model:"SY215",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60200365",name:"Hydraulic Return Filter",nameID:"Filter Hidrolik Return",model:"SY215",system:"HYDRAULIC",interval:"2000H",qty:1,hpp:0,hj:0,life:4000,cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000119",name:"Hydraulic Pilot Filter",nameID:"Filter Pilot Hidrolik",model:"SY215",system:"HYDRAULIC",interval:"2000H",qty:1,hpp:0,hj:0,life:4000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60129702",name:"Hydraulic Tank Breather",nameID:"Breather Tangki Hidrolik",model:"SY215",system:"HYDRAULIC",interval:"2000H",qty:1,hpp:0,hj:0,life:4000,cat:"Filter",tier:"Tier 1"},
+  // SY365H
+  {pn:"B222100000488",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SY365H",system:"ENGINE",interval:"250H",qty:1,hpp:0,hj:0,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"60250941",name:"Fuel Filter Primary",nameID:"Filter Solar Primer",model:"SY365H",system:"ENGINE",interval:"250H",qty:1,hpp:0,hj:0,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"13443687",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SY365H",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"B222100000640",name:"Air Filter Safety",nameID:"Filter Udara Safety",model:"SY365H",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60193541",name:"Hydraulic Return Filter",nameID:"Filter Hidrolik Return",model:"SY365H",system:"HYDRAULIC",interval:"2000H",qty:1,hpp:0,hj:0,life:4000,cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000119",name:"Hydraulic Pilot Filter",nameID:"Filter Pilot Hidrolik",model:"SY365H",system:"HYDRAULIC",interval:"2000H",qty:1,hpp:0,hj:0,life:4000,cat:"Filter",tier:"Tier 1"},
+  // SY500H
+  {pn:"B222100000488",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SY500H",system:"ENGINE",interval:"250H",qty:1,hpp:0,hj:0,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"13291554",name:"Fuel Filter Set",nameID:"Set Filter Solar",model:"SY500H",system:"ENGINE",interval:"250H",qty:1,hpp:0,hj:0,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"60270815",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SY500H",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60014122",name:"Hydraulic Return Filter",nameID:"Filter Hidrolik Return",model:"SY500H",system:"HYDRAULIC",interval:"2000H",qty:1,hpp:0,hj:0,life:4000,cat:"Filter",tier:"Tier 1"},
+  // SY750H
+  {pn:"B222100000488",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SY750H",system:"ENGINE",interval:"250H",qty:1,hpp:0,hj:0,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"60205949",name:"Fuel Filter Set",nameID:"Set Filter Solar",model:"SY750H",system:"ENGINE",interval:"250H",qty:1,hpp:0,hj:0,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"60148482",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SY750H",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60186788",name:"Hydraulic Filter Set",nameID:"Set Filter Hidrolik",model:"SY750H",system:"HYDRAULIC",interval:"2000H",qty:1,hpp:0,hj:0,life:4000,cat:"Filter",tier:"Tier 1"},
+  // STG230C-8S
+  {pn:"B222100000595",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"STG230C-8S",system:"ENGINE",interval:"250H",qty:1,hpp:434000,hj:630000,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"14514316",name:"Fuel Filter Primary",nameID:"Filter Solar Primer",model:"STG230C-8S",system:"ENGINE",interval:"250H",qty:1,hpp:0,hj:0,life:500,cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000044",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"STG230C-8S",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000085",name:"Air Filter Safety",nameID:"Filter Udara Safety",model:"STG230C-8S",system:"ENGINE",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60035175",name:"Transmission Filter",nameID:"Filter Transmisi",model:"STG230C-8S",system:"TRANSMISSION",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+  {pn:"60129702",name:"Hydraulic Tank Breather",nameID:"Breather Hidrolik",model:"STG230C-8S",system:"HYDRAULIC",interval:"1000H",qty:1,hpp:0,hj:0,life:2000,cat:"Filter",tier:"Tier 1"},
+];
+
+// TCO base data per model (annual PM cost estimate in Rp, per unit)
+const TCO_BASE = {
+  "SYZ326C":{pm250:1800000,pm500:3200000,pm1000:8500000,pm2000:22000000,pm3000:18000000,pm4000:35000000,unitPrice:1800000000},
+  "SYZ440C":{pm250:2200000,pm500:4000000,pm1000:11000000,pm2000:28000000,pm3000:22000000,pm4000:42000000,unitPrice:2800000000},
+  "SRT95C":{pm250:3500000,pm500:6000000,pm1000:15000000,pm2000:40000000,pm3000:30000000,pm4000:60000000,unitPrice:9000000000},
+  "SKT80S":{pm250:1600000,pm500:2800000,pm1000:7500000,pm2000:20000000,pm3000:16000000,pm4000:32000000,unitPrice:3500000000},
+  "SKT90S":{pm250:1700000,pm500:3000000,pm1000:8000000,pm2000:21000000,pm3000:17000000,pm4000:34000000,unitPrice:3800000000},
+  "SKT105S":{pm250:1900000,pm500:3400000,pm1000:9000000,pm2000:23000000,pm3000:19000000,pm4000:36000000,unitPrice:4200000000},
+  "SY215":{pm250:900000,pm500:1600000,pm1000:4500000,pm2000:14000000,pm3000:12000000,pm4000:24000000,unitPrice:1600000000},
+  "SY365H":{pm250:1200000,pm500:2200000,pm1000:6000000,pm2000:18000000,pm3000:15000000,pm4000:28000000,unitPrice:2800000000},
+  "SY500H":{pm250:1500000,pm500:2700000,pm1000:7500000,pm2000:22000000,pm3000:18000000,pm4000:34000000,unitPrice:4500000000},
+  "SY750H":{pm250:2000000,pm500:3600000,pm1000:10000000,pm2000:30000000,pm3000:25000000,pm4000:48000000,unitPrice:7500000000},
+  "STG230C-8S":{pm250:1100000,pm500:1900000,pm1000:5200000,pm2000:16000000,pm3000:13000000,pm4000:26000000,unitPrice:2200000000},
+};
+
+// ==========================================
+// UTILITY FUNCTIONS
+// ==========================================
+function fmt(n){if(!n||n===0)return"—";return"Rp "+n.toLocaleString('id-ID')}
+function fmtShort(n){if(!n||n===0)return"—";if(n>=1000000000)return"Rp "+(n/1000000000).toFixed(1)+"M";if(n>=1000000)return"Rp "+(n/1000000).toFixed(1)+" jt";return"Rp "+n.toLocaleString('id-ID')}
+function tierBadge(t){const m={t1:'tier1',t2:'tier2',t3:'tier3',t4:'tier4'};const c=t&&t.includes('1')?'tier1':t&&t.includes('2')?'tier2':t&&t.includes('3')?'tier3':'tier4';return`<span class="${c}">${t||'Tier 1'}</span>`}
+
+// ==========================================
+// TAB SWITCHING
+// ==========================================
+function switchTab(id, btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+function updatePMModel(){
+  // Reset result panel when model changes
+  const panel = document.getElementById('pm-result-panel');
+  if(panel){
+    panel.innerHTML = `
+    <div class="live-clock-bar">
+      <span>🕐</span>
+      <div>
+        <div class="live-clock-time" id="live-time">--:--:--</div>
+        <div class="live-clock-date" id="live-date">--</div>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;padding:48px 24px;color:var(--muted)">
+      <div style="font-size:48px;margin-bottom:16px">🔧</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px">Pilih Model & Parameter</div>
+      <div style="font-size:13px">Isi parameter di sebelah kiri, lalu klik "Hitung Kebutuhan Parts"</div>
+    </div>`;
+    updateClock();
+  }
+}
+
+// ==========================================
+// PM ESTIMATOR
+// ==========================================
+document.getElementById('pm-period').addEventListener('change',function(){
+  document.getElementById('custom-period-wrap').style.display=this.value==='custom'?'block':'none';
+});
+
+function getPartsForModel(model){
+  return PARTS_DATA.filter(p=>p.model===model);
+}
+
+function getPartsForInterval(parts, intervalH, condFactor){
+  const intervals=[250,500,1000,2000,3000,4000];
+  const targetIntervals=intervals.filter(i=>i<=intervalH);
+  const result=[];
+  parts.forEach(p=>{
+    const iStr=p.interval;
+    let match=false;
+    if(iStr==='250H'&&targetIntervals.includes(250))match=true;
+    else if(iStr==='500H'&&targetIntervals.includes(500))match=true;
+    else if(iStr==='1000H'&&targetIntervals.includes(1000))match=true;
+    else if(iStr==='1500H'&&targetIntervals.includes(1000))match=true;
+    else if(iStr==='2000H'&&targetIntervals.includes(2000))match=true;
+    else if(iStr==='3000H'&&targetIntervals.includes(3000))match=true;
+    else if(iStr==='4000H'&&targetIntervals.includes(4000))match=true;
+    if(match) result.push({...p,qty:p.qty||1});
+  });
+  return result;
+}
+
+function calculatePM(){
+  const model=document.getElementById('pm-model').value;
+  const hm=parseInt(document.getElementById('pm-hm').value)||0;
+  const periodEl=document.getElementById('pm-period');
+  let period=parseInt(periodEl.value);
+  if(periodEl.value==='custom') period=parseInt(document.getElementById('pm-custom-period').value)||1000;
+  const cond=document.getElementById('pm-condition').value;
+  const units=parseInt(document.getElementById('pm-units').value)||1;
+  const hoursDay=parseFloat(document.getElementById('pm-hours-day').value)||20;
+  const daysMonth=parseInt(document.getElementById('pm-days-month').value)||26;
+  
+  if(!model){alert('Pilih model unit terlebih dahulu!');return;}
+  if(!period){alert('Pilih atau masukkan periode PM!');return;}
+
+  const condFactor=cond==='extreme'?1.3:cond==='hard'?1.15:1.0;
+  const parts=getPartsForModel(model);
+  const activeParts=getPartsForInterval(parts,period,condFactor);
+
+  // === CALCULATE DUE DATE ===
+  const hoursPerMonth = hoursDay * daysMonth;
+  // remaining hours to next PM
+  const remainingHM = period - (hm % period === 0 && hm > 0 ? period : hm % period);
+  const remainingDays = remainingHM > 0 ? Math.ceil(remainingHM / hoursDay) : 0;
+  const dueDate = new Date();
+  dueDate.setDate(dueDate.getDate() + remainingDays);
+  const dueDateStr = dueDate.toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const nextPMHM = hm + remainingHM;
+
+  // Also compute schedule for next 3 PM
+  const pmSchedule = [];
+  let simHM = hm;
+  for(let i=0;i<4;i++){
+    const rem = period - (simHM % period === 0 && simHM > 0 ? period : simHM % period);
+    simHM += rem;
+    const days = Math.ceil((simHM - hm) / hoursDay);
+    const dt = new Date();
+    dt.setDate(dt.getDate() + days);
+    pmSchedule.push({hm:simHM, date:dt.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})});
+  }
+
+  // Render results
+  let totalCost=0;
+  let partsHTML='';
+  
+  activeParts.forEach(p=>{
+    const cost=p.hj*p.qty*units;
+    totalCost+=cost;
+    partsHTML+=`
+    <div class="part-row">
+      <div class="part-qty">${p.qty}</div>
+      <div class="part-info">
+        <div class="part-name">${p.nameID||p.name}</div>
+        <div class="part-num">${p.pn}</div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);text-align:right;white-space:nowrap">${p.interval}</div>
+      <div class="part-price">${p.hj>0?fmt(p.hj*p.qty):'POA'}</div>
+      <button class="btn btn-secondary btn-sm" onclick="orderPart('${p.pn}','${p.nameID||p.name}')" title="Order / Tanya harga">📞</button>
+    </div>`;
+  });
+
+  if(activeParts.length===0){
+    partsHTML=`<div style="text-align:center;padding:32px;color:var(--muted)">Tidak ada parts yang ditemukan untuk interval ini.<br><small>Coba ubah model atau interval PM.</small></div>`;
+  }
+
+  // Condition warnings
+  let condAlert='';
+  if(cond==='hard') condAlert=`<div class="alert alert-warning">⚠️ Kondisi Hard Duty: Beberapa parts mungkin memerlukan penggantian lebih awal. Konsultasikan dengan teknisi SANY.</div>`;
+  else if(cond==='extreme') condAlert=`<div class="alert alert-danger">🔴 Kondisi Extreme: Interval servis dipersingkat. Lakukan oil sampling lebih sering dan monitor parts kritis secara harian.</div>`;
+
+  // PM Schedule rows
+  const scheduleRows = pmSchedule.map((s,i)=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:${i===0?'rgba(255,107,26,0.1)':'var(--card2)'};border-radius:6px;margin-bottom:6px;border:1px solid ${i===0?'rgba(255,107,26,0.3)':'var(--border)'}">
+      <span style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${i===0?'var(--orange)':'var(--text)'};font-size:15px">${i===0?'🔔 ':''}PM ke-${i+1}: ${s.hm.toLocaleString()} HM</span>
+      <span style="font-size:12px;color:${i===0?'var(--orange)':'var(--muted)'}">📅 ${s.date}</span>
+    </div>`).join('');
+
+  const resultHTML=`
+  <div class="fade-in">
+    <div class="live-clock-bar">
+      <span>🕐</span>
+      <div>
+        <div class="live-clock-time" id="live-time-result">${new Date().toLocaleTimeString('id-ID')}</div>
+        <div class="live-clock-date">${new Date().toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div>
+      </div>
+    </div>
+    ${condAlert}
+    <div class="result-section" style="margin-top:0">
+      <div class="result-header">
+        <div style="font-size:24px">📋</div>
+        <div>
+          <div class="result-logo">SPARTAAN PARTS ESTIMATE</div>
+          <div style="font-size:12px;color:var(--muted)">Model: <strong style="color:var(--text)">${model}</strong> | Interval: <strong style="color:var(--orange)">${period}H</strong> | Fleet: <strong style="color:var(--text)">${units} unit</strong></div>
+        </div>
+      </div>
+      
+      <div class="grid-3" style="margin-bottom:20px">
+        <div class="metric-card">
+          <div class="metric-val">${activeParts.length}</div>
+          <div class="metric-label">Item Parts</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val" style="font-size:20px">${fmtShort(totalCost>0?totalCost:0)}</div>
+          <div class="metric-label">Est. Total (${units} unit)</div>
+          <div class="metric-sub">${totalCost>0?'Belum termasuk jasa & BBM':'-'}</div>
+        </div>
+        <div class="metric-card" style="background:rgba(255,107,26,0.08);border-color:rgba(255,107,26,0.3)">
+          <div class="metric-val" style="font-size:16px;color:var(--orange)">${nextPMHM.toLocaleString()} HM</div>
+          <div class="metric-label">PM Berikutnya</div>
+          <div class="metric-sub" style="color:var(--orange);font-size:12px">📅 ${dueDateStr}</div>
+        </div>
+      </div>
+
+      <!-- PM DUE SCHEDULE -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px">
+        <div style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px">
+          📅 Jadwal PM Berikutnya <span style="color:var(--muted);font-size:11px">(berdasarkan ${hoursDay} jam/hari × ${daysMonth} hari/bulan)</span>
+        </div>
+        ${scheduleRows}
+        <div style="font-size:11px;color:var(--muted);margin-top:8px">* HM saat ini: ${hm.toLocaleString()} | Jam kerja: ${hoursDay} H/hari × ${daysMonth} hari/bulan = ${hoursPerMonth} H/bulan</div>
+      </div>
+
+      <div class="parts-grid" style="margin-bottom:20px">
+        ${partsHTML}
+      </div>
+
+      <div class="summary-box">
+        <div class="summary-title">📊 Ringkasan Estimasi Biaya</div>
+        <div class="summary-row"><span class="summary-key">Model Unit</span><span class="summary-val">${model}</span></div>
+        <div class="summary-row"><span class="summary-key">Interval PM</span><span class="summary-val">${period} Jam</span></div>
+        <div class="summary-row"><span class="summary-key">Jumlah Unit</span><span class="summary-val">${units} unit</span></div>
+        <div class="summary-row"><span class="summary-key">Total Item Parts</span><span class="summary-val">${activeParts.length} item</span></div>
+        <div class="summary-row"><span class="summary-key">Kondisi Operasi</span><span class="summary-val">${cond==='extreme'?'⚠️ Extreme':cond==='hard'?'⚡ Hard Duty':'✅ Normal'}</span></div>
+        <div class="summary-row"><span class="summary-key">HM Saat Ini</span><span class="summary-val">${hm.toLocaleString()} HM</span></div>
+        <div class="summary-row"><span class="summary-key">PM Jatuh Tempo</span><span class="summary-val" style="color:var(--orange)">${nextPMHM.toLocaleString()} HM — ${dueDateStr}</span></div>
+        <div class="summary-row summary-total">
+          <span class="summary-key" style="font-weight:600;color:var(--text)">Est. Total Biaya Parts</span>
+          <span class="summary-val">${totalCost>0?fmt(totalCost):'Hubungi kami untuk harga'}</span>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="orderAllParts('${model}','${period}H')">📞 Order Semua Parts</button>
+        <button class="btn btn-secondary" onclick="window.print()">🖨️ Print / Save PDF</button>
+      </div>
+    </div>
+  </div>`;
+
+  document.getElementById('pm-result-panel').innerHTML=resultHTML;
+}
+
+function orderPart(pn,name){
+  const msg=`Halo, saya ingin memesan:\n\n*Part Number:* ${pn}\n*Nama Parts:* ${name}\n\nMohon informasi harga & ketersediaan stok. Terima kasih.`;
+  window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+function orderAllParts(model,interval){
+  const msg=`Halo, saya membutuhkan *Parts PM ${interval}* untuk unit *SANY ${model}*.\n\nMohon kirimkan penawaran lengkap dengan harga dan estimasi pengiriman. Terima kasih.`;
+  window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ==========================================
+// TCO CALCULATOR
+// ==========================================
+function calculateTCO(){
+  const model=document.getElementById('tco-model').value;
+  const units=parseInt(document.getElementById('tco-units').value)||1;
+  const hoursDay=parseFloat(document.getElementById('tco-hours-day').value)||20;
+  const daysMonth=parseInt(document.getElementById('tco-days-month').value)||26;
+  const years=parseInt(document.getElementById('tco-years').value)||1;
+  const condFactor=parseFloat(document.getElementById('tco-condition').value)||1.0;
+  const operatorCost=parseInt(document.getElementById('tco-operator').value)||6000000;
+  const fuelPrice=parseInt(document.getElementById('tco-fuel-price').value)||11000;
+  const fuelRate=parseFloat(document.getElementById('tco-fuel-rate').value)||18;
+
+  if(!model){alert('Pilih model unit terlebih dahulu!');return;}
+
+  const base=TCO_BASE[model];
+  if(!base){alert('Data TCO untuk model ini belum tersedia.');return;}
+
+  const hoursYear=hoursDay*daysMonth*12;
+  
+  // PM intervals per year
+  const pm250count=Math.floor(hoursYear/250);
+  const pm500count=Math.floor(hoursYear/500);
+  const pm1000count=Math.floor(hoursYear/1000);
+  const pm2000count=Math.floor(hoursYear/2000);
+  
+  // Annual PM cost (incremental)
+  const annualPMCost=(
+    (pm250count*base.pm250) +
+    (pm500count*base.pm500) +
+    (pm1000count*base.pm1000) +
+    (pm2000count>0?pm2000count*base.pm2000:0)
+  ) * condFactor;
+  
+  // Annual fuel cost
+  const annualFuelCost=fuelRate*hoursYear*fuelPrice;
+  
+  // Annual operator cost
+  const annualOperatorCost=operatorCost*12;
+  
+  // Total annual per unit
+  const annualPerUnit=annualPMCost+annualFuelCost+annualOperatorCost;
+  const annualTotal=annualPerUnit*units;
+  const periodTotal=annualTotal*years;
+  
+  // Cost per hour
+  const costPerHour=annualPerUnit/hoursYear;
+
+  const maxVal=Math.max(annualPMCost,annualFuelCost,annualOperatorCost);
+  function barWidth(v){return Math.round((v/maxVal)*100)}
+
+  // === DETAILED PM BREAKDOWN ===
+  // How many of each PM type per year (non-overlapping incremental logic)
+  // e.g. at 2000H: do 250+500+1000+2000 all together as major service
+  const pmTypes = [
+    {label:'PM 250H', interval:250, cost:base.pm250},
+    {label:'PM 500H', interval:500, cost:base.pm500},
+    {label:'PM 1000H', interval:1000, cost:base.pm1000},
+    {label:'PM 2000H', interval:2000, cost:base.pm2000},
+    {label:'PM 3000H', interval:3000, cost:base.pm3000},
+    {label:'PM 4000H (Major)', interval:4000, cost:base.pm4000},
+  ];
+
+  // Count occurrences of each PM per year
+  const pmCounts = pmTypes.map(pm => ({
+    ...pm,
+    countPerYear: Math.floor(hoursYear / pm.interval),
+    totalCostPerYear: Math.floor(hoursYear / pm.interval) * pm.cost * condFactor,
+  }));
+
+  // Parts replaced per PM type (representative items)
+  const pmPartsMap = {
+    250: [
+      {name:'Filter Oli Mesin',qty:'sesuai spek'},
+      {name:'Filter Solar Halus',qty:'sesuai spek'},
+      {name:'Water Separator',qty:'sesuai spek'},
+      {name:'Oli Mesin (Engine Oil)',qty:'sesuai kapasitas'},
+    ],
+    500: [
+      {name:'Filter Solar (500H)',qty:'sesuai spek'},
+      {name:'Filter Air Dryer',qty:'1 pcs'},
+      {name:'Grease / Gemuk Serba',qty:'sesuai titik pelumasan'},
+    ],
+    1000: [
+      {name:'Filter Udara Primer (Primary)',qty:'1 pcs'},
+      {name:'Filter Udara Safety',qty:'1 pcs'},
+      {name:'Filter Transmisi',qty:'1 pcs'},
+      {name:'Filter Hidrolik Return',qty:'1 pcs'},
+      {name:'Filter Kabin AC',qty:'1 pcs'},
+      {name:'Oli Transmisi',qty:'sesuai kapasitas'},
+      {name:'Oli Axle / Differential',qty:'sesuai kapasitas'},
+    ],
+    2000: [
+      {name:'Filter Hidrolik (2000H)',qty:'sesuai spek'},
+      {name:'Oli Hidrolik (Hydraulic Oil)',qty:'sesuai kapasitas'},
+      {name:'Coolant / Air Radiator',qty:'sesuai kapasitas'},
+      {name:'Breather Tangki Hidrolik',qty:'1 pcs'},
+    ],
+    3000: [
+      {name:'Selang Radiator (Hose Set)',qty:'1 set'},
+      {name:'V-Belt / Fan Belt',qty:'1 set'},
+      {name:'Thermostat',qty:'1 pcs'},
+    ],
+    4000: [
+      {name:'Filter Udara Outer + Inner (Major)',qty:'1 set'},
+      {name:'Seal Kit Pompa Hidrolik',qty:'1 set'},
+      {name:'Kampas Rem / Brake Lining',qty:'cek kondisi'},
+      {name:'Fan Belt / Alternator Belt',qty:'1 set'},
+      {name:'Oil Level Sensor',qty:'cek & kalibrasi'},
+      {name:'Seluruh Filter PM 250–2000H',qty:'lengkap'},
+    ],
+  };
+
+  // Total PM cost per type over analysis period
+  const pmYearRows = pmCounts.filter(pm=>pm.countPerYear>0).map(pm=>{
+    const totalPeriod = pm.totalCostPerYear * years * units;
+    const partsNames = (pmPartsMap[pm.interval]||[]).map(p=>`<span style="display:inline-block;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 8px;margin:2px;font-size:10px">${p.name} (${p.qty})</span>`).join('');
+    return `<tr>
+      <td style="font-weight:600;color:var(--orange)">${pm.label}</td>
+      <td style="text-align:center">${pm.countPerYear}× / tahun</td>
+      <td style="text-align:center">${pm.countPerYear * years}× / ${years} thn</td>
+      <td style="font-size:11px;color:var(--muted)">${partsNames}</td>
+      <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--green);text-align:right">${fmtShort(pm.totalCostPerYear * units)}/thn</td>
+      <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--text);text-align:right">${fmtShort(totalPeriod)}</td>
+    </tr>`;
+  }).join('');
+
+  // Critical/non-PM parts estimate (wear parts, consumables)
+  const criticalPartsRows = [
+    {name:'Injector / Nozzle', interval:'4000–6000H', costEst:Math.round(base.pm4000*0.8)},
+    {name:'Water Pump', interval:'6000–8000H', costEst:Math.round(base.pm2000*1.5)},
+    {name:'Alternator', interval:'8000–10000H', costEst:Math.round(base.pm2000*2)},
+    {name:'Motor Starter', interval:'8000–10000H', costEst:Math.round(base.pm2000*1.8)},
+    {name:'Turbocharger', interval:'8000–12000H', costEst:Math.round(base.pm4000*2)},
+    {name:'V-Belt / Fan Belt', interval:'2000–3000H', costEst:Math.round(base.pm1000*0.3)},
+    {name:'Kampas Rem (Brake Lining)', interval:'4000–8000H', costEst:Math.round(base.pm1000*0.5)},
+    {name:'Seal Kit Silinder Hidrolik', interval:'4000–6000H', costEst:Math.round(base.pm2000*0.8)},
+  ];
+
+  const critPartsHTML = criticalPartsRows.map(p=>`<tr>
+    <td>${p.name}</td>
+    <td style="color:var(--yellow)">${p.interval}</td>
+    <td style="color:var(--muted);font-size:11px">Estimasi kondisional</td>
+    <td style="font-family:'Rajdhani',sans-serif;color:var(--orange);text-align:right">~${fmtShort(p.costEst)} /unit</td>
+  </tr>`).join('');
+
+  // Additional cost components
+  const mechanicCost = Math.round(annualOperatorCost * 0.25); // ~25% of operator as mechanic estimate
+  const totalMechanicPeriod = mechanicCost * years * units;
+  const annualFuelTotal = annualFuelCost * units;
+
+  const resultHTML=`
+  <div class="fade-in">
+    <div class="grid-4" style="margin-bottom:20px">
+      <div class="metric-card">
+        <div class="metric-val" style="font-size:22px">${fmtShort(annualTotal)}</div>
+        <div class="metric-label">Biaya/Tahun (${units} unit)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="font-size:22px">${fmtShort(periodTotal)}</div>
+        <div class="metric-label">Total ${years} Tahun</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="font-size:20px">${fmtShort(Math.round(costPerHour))}</div>
+        <div class="metric-label">Biaya / Jam Operasi</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">${hoursYear.toLocaleString()}</div>
+        <div class="metric-label">Jam Operasi / Tahun</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="card">
+        <div class="card-title" style="margin-bottom:16px"><span class="card-title-icon">📊</span> Breakdown Biaya / Tahun (Per Unit)</div>
+        <div class="tco-bar-chart">
+          <div class="chart-row">
+            <div class="chart-label">Parts & PM</div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" style="width:${barWidth(annualPMCost)}%;background:linear-gradient(90deg,var(--orange),var(--orange2))">${fmtShort(annualPMCost)}</div>
+            </div>
+          </div>
+          <div class="chart-row">
+            <div class="chart-label">Bahan Bakar</div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" style="width:${barWidth(annualFuelCost)}%;background:linear-gradient(90deg,#3B82F6,#60A5FA)">${fmtShort(annualFuelCost)}</div>
+            </div>
+          </div>
+          <div class="chart-row">
+            <div class="chart-label">Operator</div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" style="width:${barWidth(annualOperatorCost)}%;background:linear-gradient(90deg,var(--green),#4ADE80)">${fmtShort(annualOperatorCost)}</div>
+            </div>
+          </div>
+          <div class="chart-row">
+            <div class="chart-label">Mekanik (~25%)</div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" style="width:${barWidth(mechanicCost)}%;background:linear-gradient(90deg,#A78BFA,#C4B5FD)">${fmtShort(mechanicCost)}</div>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--muted)">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>Parts & PM:</span><span style="color:var(--orange)">${Math.round(annualPMCost/annualPerUnit*100)}%</span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>Bahan Bakar:</span><span style="color:#60A5FA">${Math.round(annualFuelCost/annualPerUnit*100)}%</span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>Operator:</span><span style="color:var(--green)">${Math.round(annualOperatorCost/annualPerUnit*100)}%</span></div>
+          <div style="display:flex;justify-content:space-between"><span>Mekanik (est.):</span><span style="color:#A78BFA">${Math.round(mechanicCost/annualPerUnit*100)}%</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:16px"><span class="card-title-icon">💡</span> Ringkasan TCO</div>
+        <div class="summary-box" style="padding:16px">
+          <div class="summary-row"><span class="summary-key">Model Unit</span><span class="summary-val" style="font-size:14px">${model}</span></div>
+          <div class="summary-row"><span class="summary-key">Fleet Size</span><span class="summary-val" style="font-size:14px">${units} unit</span></div>
+          <div class="summary-row"><span class="summary-key">Jam Operasi/Tahun</span><span class="summary-val" style="font-size:14px">${hoursYear.toLocaleString()} H</span></div>
+          <div class="summary-row"><span class="summary-key">Faktor Kondisi</span><span class="summary-val" style="font-size:14px">${condFactor}×</span></div>
+          <div class="summary-row"><span class="summary-key">Biaya PM+Parts/Tahun</span><span class="summary-val" style="font-size:14px;color:var(--orange)">${fmt(Math.round(annualPMCost*units))}</span></div>
+          <div class="summary-row"><span class="summary-key">Biaya BBM/Tahun</span><span class="summary-val" style="font-size:14px;color:#60A5FA">${fmt(Math.round(annualFuelCost*units))}</span></div>
+          <div class="summary-row"><span class="summary-key">Biaya Operator/Tahun</span><span class="summary-val" style="font-size:14px;color:var(--green)">${fmt(Math.round(annualOperatorCost*units))}</span></div>
+          <div class="summary-row"><span class="summary-key">Biaya Mekanik Est./Tahun</span><span class="summary-val" style="font-size:14px;color:#A78BFA">${fmt(Math.round(mechanicCost*units))}</span></div>
+          <div class="summary-row summary-total">
+            <span class="summary-key" style="font-weight:700;color:var(--text)">Total TCO ${years} Tahun</span>
+            <span class="summary-val">${fmt(Math.round(periodTotal + totalMechanicPeriod))}</span>
+          </div>
+        </div>
+        <div style="margin-top:16px">
+          <div class="alert alert-info">💡 Biaya parts & PM menggunakan harga original SANY resmi. Dengan parts original, umur komponen optimal dan downtime minimal.</div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="contactForTCO('${model}')">📞 Konsultasi TCO</button>
+          <button class="btn btn-secondary btn-sm" onclick="window.print()">🖨️ Export PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL PM TABLE -->
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-title" style="margin-bottom:16px"><span class="card-title-icon">🔧</span> Detail Frekuensi & Item Parts PM — Periode ${years} Tahun</div>
+      <div class="alert alert-info" style="margin-bottom:12px">📌 Berdasarkan ${hoursYear.toLocaleString()} jam operasi/tahun (${hoursDay} jam/hari × ${daysMonth} hari/bulan × 12 bulan)</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tipe PM</th>
+              <th>Frekuensi/Tahun</th>
+              <th>Total ${years} Tahun</th>
+              <th>Item Parts Utama Diganti</th>
+              <th>Biaya/Tahun (${units} unit)</th>
+              <th>Total ${years} Tahun</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${pmYearRows}
+            <tr style="background:rgba(255,107,26,0.05)">
+              <td colspan="4" style="font-weight:700;color:var(--text)">TOTAL PM PARTS</td>
+              <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--orange);text-align:right">${fmtShort(annualPMCost*units)}/thn</td>
+              <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--orange);text-align:right">${fmtShort(annualPMCost*units*years)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CRITICAL PARTS NON-PM -->
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-title" style="margin-bottom:12px"><span class="card-title-icon">⚠️</span> Estimasi Parts Kritis Non-PM (Kondisional)</div>
+      <div class="alert alert-warning" style="margin-bottom:12px">⚠️ Biaya berikut adalah estimasi kondisional untuk komponen aus/consumable di luar jadwal PM rutin. Realisasi tergantung kondisi operasi dan hasil oil sampling.</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Komponen</th><th>Estimasi Lifetime</th><th>Keterangan</th><th>Est. Biaya/unit</th></tr>
+          </thead>
+          <tbody>${critPartsHTML}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SUMMARY ALL COSTS -->
+    <div class="card">
+      <div class="card-title" style="margin-bottom:16px"><span class="card-title-icon">💰</span> Ringkasan Total Semua Komponen Biaya — ${years} Tahun (${units} unit)</div>
+      <div class="summary-box">
+        <div class="summary-row"><span class="summary-key">Total PM & Parts Rutin</span><span class="summary-val" style="color:var(--orange)">${fmt(Math.round(annualPMCost*units*years))}</span></div>
+        <div class="summary-row"><span class="summary-key">Total Bahan Bakar</span><span class="summary-val" style="color:#60A5FA">${fmt(Math.round(annualFuelTotal*years))}</span></div>
+        <div class="summary-row"><span class="summary-key">Total Biaya Operator</span><span class="summary-val" style="color:var(--green)">${fmt(Math.round(annualOperatorCost*units*years))}</span></div>
+        <div class="summary-row"><span class="summary-key">Est. Biaya Mekanik</span><span class="summary-val" style="color:#A78BFA">${fmt(Math.round(totalMechanicPeriod))}</span></div>
+        <div class="summary-row summary-total">
+          <span class="summary-key" style="font-weight:700;font-size:16px">TOTAL TCO ${years} TAHUN</span>
+          <span class="summary-val" style="font-size:26px">${fmt(Math.round(periodTotal + totalMechanicPeriod))}</span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px">* Tidak termasuk depresiasi unit, biaya parts kritis kondisional, dan biaya tak terduga (unplanned downtime).</div>
+      </div>
+    </div>
+  </div>`;
+
+  document.getElementById('tco-result-panel').innerHTML=resultHTML;
+}
+
+function contactForTCO(model){
+  const msg=`Halo, saya ingin konsultasi TCO untuk unit SANY *${model}*.\n\nBisa bantu berikan estimasi budget maintenance tahunan untuk fleet saya? Terima kasih.`;
+  window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ==========================================
+// CRITICAL PARTS
+// ==========================================
+const CRITICAL_PARTS=[
+  // ===== SKT80S =====
+  {pn:"60327523",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SKT80S",system:"ENGINE",life:500,hpp:134000,hj:195000,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"160604020018",name:"Fuel Fine Filter",nameID:"Filter Solar Halus",model:"SKT80S",system:"ENGINE",life:500,hpp:667000,hj:865000,sign:"Ganti @500H",cat:"Filter",tier:"Tier 1"},
+  {pn:"160603020024A",name:"Water Separator Element",nameID:"Water Separator",model:"SKT80S",system:"ENGINE",life:500,hpp:305000,hj:440000,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"160602020020A",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SKT80S",system:"ENGINE",life:2000,hpp:611000,hj:795000,sign:"Warna hitam/tersumbat",cat:"Filter",tier:"Tier 1"},
+  {pn:"60060965",name:"Air Dryer Element",nameID:"Elemen Air Dryer",model:"SKT80S",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Rusak/lembab",cat:"Filter",tier:"Tier 1"},
+  {pn:"141502000017",name:"AC Fresh Air Filter",nameID:"Filter Kabin AC",model:"SKT80S",system:"ELECTRIC",life:500,hpp:147000,hj:215000,sign:"Kotor/tersumbat",cat:"Filter",tier:"Tier 1"},
+  {pn:"60345316",name:"Steering Hydraulic Filter",nameID:"Filter Hidrolik Steering",model:"SKT80S",system:"HYDRAULIC",life:1000,hpp:396000,hj:575000,sign:"Ganti @500H",cat:"Filter",tier:"Tier 1"},
+  {pn:"130202000093A023",name:"Transmission Filter",nameID:"Filter Transmisi",model:"SKT80S",system:"TRANSMISSION",life:2000,hpp:0,hj:0,sign:"Ganti @1000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"YNF01-00044",name:"Brake Lining",nameID:"Kampas Rem",model:"SKT80S",system:"BRAKE",life:8000,hpp:0,hj:0,sign:"Sisa < 3mm",cat:"Wear",tier:"Tier 2"},
+  {pn:"160399000008A",name:"Poly V Belt",nameID:"Poly V Belt / Fan Belt",model:"SKT80S",system:"ENGINE",life:2000,hpp:270000,hj:390000,sign:"Retak/aus/kendur",cat:"Belt",tier:"Tier 1"},
+  {pn:"160899000348A",name:"Alternator",nameID:"Alternator",model:"SKT80S",system:"ELECTRIC",life:8000,hpp:3094000,hj:4000000,sign:"Output tegangan drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"61000099",name:"Motor Starter",nameID:"Motor Starter",model:"SKT80S",system:"ELECTRIC",life:8000,hpp:7555000,hj:9200000,sign:"Susah start / bunyi kasar",cat:"Assembly",tier:"Tier 3"},
+  {pn:"160201000004A",name:"Water Pump",nameID:"Pompa Air Pendingin",model:"SKT80S",system:"ENGINE",life:6000,hpp:3607000,hj:4700000,sign:"Bocor / overheat",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor / Nozzle",model:"SKT80S",system:"ENGINE",life:5000,hpp:0,hj:0,sign:"Asap hitam / tenaga drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"SKT80S",system:"ENGINE",life:10000,hpp:0,hj:0,sign:"Asap biru / bunyi abnormal",cat:"Assembly",tier:"Tier 3"},
+  // ===== SYZ326C =====
+  {pn:"160605020019",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SYZ326C",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"160101120038A001",name:"Fuel Filter Element",nameID:"Elemen Filter Solar",model:"SYZ326C",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"1000424916",name:"Water Separator",nameID:"Water Separator",model:"SYZ326C",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"152599000172A001",name:"Air Dryer Filter",nameID:"Filter Air Dryer",model:"SYZ326C",system:"ENGINE",life:1000,hpp:197000,hj:285000,sign:"Udara basah",cat:"Filter",tier:"Tier 1"},
+  {pn:"160602020036A",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SYZ326C",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor/tersumbat",cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000393",name:"Steering Filter Element",nameID:"Filter Steering",model:"SYZ326C",system:"STEERING",life:2000,hpp:35000,hj:51000,sign:"Ganti @1000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"YNF01-00228",name:"Brake Lining",nameID:"Kampas Rem",model:"SYZ326C",system:"BRAKE",life:2000,hpp:95000,hj:140000,sign:"Tipis/habis",cat:"Wear",tier:"Tier 1"},
+  {pn:"141502000017",name:"AC Fresh Air Filter",nameID:"Filter Kabin AC",model:"SYZ326C",system:"ELECTRIC",life:1000,hpp:147000,hj:215000,sign:"Kotor",cat:"Filter",tier:"Tier 1"},
+  {pn:"-",name:"V-Belt / Fan Belt",nameID:"V-Belt / Fan Belt",model:"SYZ326C",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus/kendur",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Alternator Belt",nameID:"Belt Alternator",model:"SYZ326C",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor / Nozzle",model:"SYZ326C",system:"ENGINE",life:4000,hpp:0,hj:0,sign:"Asap hitam",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Water Pump",nameID:"Pompa Air Pendingin",model:"SYZ326C",system:"ENGINE",life:6000,hpp:0,hj:0,sign:"Bocor / overheat",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Alternator",nameID:"Alternator",model:"SYZ326C",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Output drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Motor Starter",nameID:"Motor Starter",model:"SYZ326C",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Susah start",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"SYZ326C",system:"ENGINE",life:10000,hpp:0,hj:0,sign:"Asap biru/bunyi abnormal",cat:"Assembly",tier:"Tier 3"},
+  // ===== SYZ440C =====
+  {pn:"60328867",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SYZ440C",system:"ENGINE",life:500,hpp:83000,hj:120000,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"61027331",name:"Fuel Fine Filter Core",nameID:"Filter Solar Halus",model:"SYZ440C",system:"ENGINE",life:1000,hpp:87000,hj:125000,sign:"Ganti @500H",cat:"Filter",tier:"Tier 1"},
+  {pn:"160603020013",name:"Water Separator",nameID:"Water Separator",model:"SYZ440C",system:"ENGINE",life:1000,hpp:201000,hj:290000,sign:"Ganti @500H",cat:"Filter",tier:"Tier 1"},
+  {pn:"152599000172A001",name:"Air Dryer Filter",nameID:"Filter Air Dryer",model:"SYZ440C",system:"ENGINE",life:1000,hpp:197000,hj:285000,sign:"Udara basah",cat:"Filter",tier:"Tier 1"},
+  {pn:"130201000051A032",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SYZ440C",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor/tersumbat",cat:"Filter",tier:"Tier 1"},
+  {pn:"60106714",name:"Hydraulic Filter",nameID:"Filter Hidrolik",model:"SYZ440C",system:"HYDRAULIC",life:2000,hpp:0,hj:0,sign:"Ganti @1000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"-",name:"V-Belt / Fan Belt",nameID:"V-Belt / Fan Belt",model:"SYZ440C",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor",model:"SYZ440C",system:"ENGINE",life:5000,hpp:0,hj:0,sign:"Asap hitam/tenaga drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Water Pump",nameID:"Water Pump",model:"SYZ440C",system:"ENGINE",life:6000,hpp:0,hj:0,sign:"Bocor",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Alternator",nameID:"Alternator",model:"SYZ440C",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Tegangan drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Motor Starter",nameID:"Motor Starter",model:"SYZ440C",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Susah start",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"SYZ440C",system:"ENGINE",life:10000,hpp:0,hj:0,sign:"Asap biru",cat:"Assembly",tier:"Tier 3"},
+  // ===== SRT95C =====
+  {pn:"B222100000595",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SRT95C",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000615",name:"Fuel Filter",nameID:"Filter Solar",model:"SRT95C",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"B229900005676",name:"Water Separator",nameID:"Water Separator",model:"SRT95C",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60133933",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SRT95C",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor/tersumbat",cat:"Filter",tier:"Tier 1"},
+  {pn:"10504472",name:"Transmission Filter (Allison)",nameID:"Filter Transmisi Allison",model:"SRT95C",system:"TRANSMISSION",life:4000,hpp:0,hj:0,sign:"Ganti @2000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60215480",name:"Hydraulic Filter",nameID:"Filter Hidrolik",model:"SRT95C",system:"HYDRAULIC",life:2000,hpp:0,hj:0,sign:"Ganti @1000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"-",name:"V-Belt / Fan Belt",nameID:"V-Belt / Fan Belt",model:"SRT95C",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor",model:"SRT95C",system:"ENGINE",life:5000,hpp:0,hj:0,sign:"Asap hitam",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Water Pump",nameID:"Water Pump",model:"SRT95C",system:"ENGINE",life:6000,hpp:0,hj:0,sign:"Bocor/overheat",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Alternator",nameID:"Alternator",model:"SRT95C",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Output drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Motor Starter",nameID:"Motor Starter",model:"SRT95C",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Susah start",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"SRT95C",system:"ENGINE",life:10000,hpp:0,hj:0,sign:"Asap biru",cat:"Assembly",tier:"Tier 3"},
+  // ===== SKT90S =====
+  {pn:"60327523",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SKT90S",system:"ENGINE",life:500,hpp:134000,hj:195000,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"160604020017",name:"Fuel Filter Coarse",nameID:"Filter Solar Kasar",model:"SKT90S",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"160603020024A",name:"Water Separator",nameID:"Water Separator",model:"SKT90S",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"152599000112A001",name:"Air Dryer",nameID:"Air Dryer",model:"SKT90S",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Udara basah",cat:"Filter",tier:"Tier 1"},
+  {pn:"60345316",name:"HYD Return Filter",nameID:"Filter Hidrolik Return",model:"SKT90S",system:"HYDRAULIC",life:2000,hpp:0,hj:575000,sign:"Ganti @1000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"-",name:"V-Belt / Fan Belt",nameID:"V-Belt / Fan Belt",model:"SKT90S",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor",model:"SKT90S",system:"ENGINE",life:5000,hpp:0,hj:0,sign:"Asap hitam",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Water Pump",nameID:"Water Pump",model:"SKT90S",system:"ENGINE",life:6000,hpp:0,hj:0,sign:"Bocor",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Alternator",nameID:"Alternator",model:"SKT90S",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Output drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Motor Starter",nameID:"Motor Starter",model:"SKT90S",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Susah start",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"SKT90S",system:"ENGINE",life:10000,hpp:0,hj:0,sign:"Asap biru",cat:"Assembly",tier:"Tier 3"},
+  // ===== SKT105S =====
+  {pn:"60327523",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SKT105S",system:"ENGINE",life:500,hpp:134000,hj:195000,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"152599000112A001",name:"Air Dryer",nameID:"Air Dryer",model:"SKT105S",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Udara basah",cat:"Filter",tier:"Tier 1"},
+  {pn:"60345316",name:"HYD Return Filter",nameID:"Filter Hidrolik Return",model:"SKT105S",system:"HYDRAULIC",life:2000,hpp:0,hj:575000,sign:"Ganti @1000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"-",name:"V-Belt / Fan Belt",nameID:"V-Belt / Fan Belt",model:"SKT105S",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor",model:"SKT105S",system:"ENGINE",life:5000,hpp:0,hj:0,sign:"Asap hitam",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Water Pump",nameID:"Water Pump",model:"SKT105S",system:"ENGINE",life:6000,hpp:0,hj:0,sign:"Bocor",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Alternator",nameID:"Alternator",model:"SKT105S",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Output drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Motor Starter",nameID:"Motor Starter",model:"SKT105S",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Susah start",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"SKT105S",system:"ENGINE",life:10000,hpp:0,hj:0,sign:"Asap biru",cat:"Assembly",tier:"Tier 3"},
+  // ===== SY215 (Excavator) =====
+  {pn:"60275370",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SY215",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60310822",name:"Fuel Pre-filter",nameID:"Filter Solar Pre",model:"SY215",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60307172",name:"Fuel Fine Filter",nameID:"Filter Solar Halus",model:"SY215",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Ganti @1000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60250669",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SY215",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor/tersumbat",cat:"Filter",tier:"Tier 1"},
+  {pn:"B222100000711",name:"Air Filter Safety",nameID:"Filter Udara Safety",model:"SY215",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor",cat:"Filter",tier:"Tier 1"},
+  {pn:"60200365",name:"Hydraulic Return Filter",nameID:"Filter Hidrolik Return",model:"SY215",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Ganti @2000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000119",name:"Hydraulic Pilot Filter",nameID:"Filter Pilot Hidrolik",model:"SY215",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Ganti @2000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60129702",name:"Hydraulic Tank Breather",nameID:"Breather Tangki Hidrolik",model:"SY215",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Ganti @2000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"13434714",name:"Fuel Water Separator",nameID:"Water Separator Solar",model:"SY215",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"-",name:"V-Belt / Fan Belt",nameID:"V-Belt / Fan Belt",model:"SY215",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus/kendur",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor",model:"SY215",system:"ENGINE",life:4000,hpp:0,hj:0,sign:"Asap hitam/tenaga drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Water Pump",nameID:"Water Pump",model:"SY215",system:"ENGINE",life:6000,hpp:0,hj:0,sign:"Bocor/overheat",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Alternator",nameID:"Alternator",model:"SY215",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Tegangan drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Motor Starter",nameID:"Motor Starter",model:"SY215",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Susah start",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"SY215",system:"ENGINE",life:8000,hpp:0,hj:0,sign:"Asap biru/bunyi abnormal",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Hydraulic Pump Seal Kit",nameID:"Seal Kit Pompa Hidrolik",model:"SY215",system:"HYDRAULIC",life:5000,hpp:0,hj:0,sign:"Kebocoran internal",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Swing Motor Seal Kit",nameID:"Seal Kit Motor Swing",model:"SY215",system:"HYDRAULIC",life:6000,hpp:0,hj:0,sign:"Kebocoran/getar",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Travel Motor Seal Kit",nameID:"Seal Kit Motor Travel",model:"SY215",system:"HYDRAULIC",life:6000,hpp:0,hj:0,sign:"Kebocoran",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Boom/Arm/Bucket Cylinder Seal",nameID:"Seal Silinder Boom/Arm/Bucket",model:"SY215",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Bocor/merembes",cat:"Wear",tier:"Tier 1"},
+  // ===== SY365H =====
+  {pn:"B222100000488",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SY365H",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60250941",name:"Fuel Filter Primary",nameID:"Filter Solar Primer",model:"SY365H",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"13443687",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SY365H",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor",cat:"Filter",tier:"Tier 1"},
+  {pn:"B222100000640",name:"Air Filter Safety",nameID:"Filter Udara Safety",model:"SY365H",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor",cat:"Filter",tier:"Tier 1"},
+  {pn:"60193541",name:"Hydraulic Return Filter",nameID:"Filter Hidrolik Return",model:"SY365H",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Ganti @2000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000119",name:"Hydraulic Pilot Filter",nameID:"Filter Pilot Hidrolik",model:"SY365H",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Ganti @2000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"-",name:"V-Belt / Fan Belt",nameID:"V-Belt / Fan Belt",model:"SY365H",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor",model:"SY365H",system:"ENGINE",life:5000,hpp:0,hj:0,sign:"Asap hitam",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Water Pump",nameID:"Water Pump",model:"SY365H",system:"ENGINE",life:6000,hpp:0,hj:0,sign:"Bocor",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Alternator",nameID:"Alternator",model:"SY365H",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Output drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Motor Starter",nameID:"Motor Starter",model:"SY365H",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Susah start",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"SY365H",system:"ENGINE",life:10000,hpp:0,hj:0,sign:"Asap biru",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Hydraulic Pump Seal Kit",nameID:"Seal Kit Pompa Hidrolik",model:"SY365H",system:"HYDRAULIC",life:5000,hpp:0,hj:0,sign:"Kebocoran internal",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Boom/Arm/Bucket Cylinder Seal",nameID:"Seal Silinder Boom/Arm/Bucket",model:"SY365H",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Bocor/merembes",cat:"Wear",tier:"Tier 1"},
+  // ===== SY500H =====
+  {pn:"B222100000488",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SY500H",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"13291554",name:"Fuel Filter Set",nameID:"Set Filter Solar",model:"SY500H",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60270815",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SY500H",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor",cat:"Filter",tier:"Tier 1"},
+  {pn:"60014122",name:"Hydraulic Return Filter",nameID:"Filter Hidrolik Return",model:"SY500H",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Ganti @2000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"-",name:"V-Belt / Fan Belt",nameID:"V-Belt / Fan Belt",model:"SY500H",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor",model:"SY500H",system:"ENGINE",life:5000,hpp:0,hj:0,sign:"Asap hitam",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Water Pump",nameID:"Water Pump",model:"SY500H",system:"ENGINE",life:6000,hpp:0,hj:0,sign:"Bocor",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Alternator",nameID:"Alternator",model:"SY500H",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Output drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Motor Starter",nameID:"Motor Starter",model:"SY500H",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Susah start",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"SY500H",system:"ENGINE",life:10000,hpp:0,hj:0,sign:"Asap biru",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Hydraulic Pump Seal Kit",nameID:"Seal Kit Pompa Hidrolik",model:"SY500H",system:"HYDRAULIC",life:5000,hpp:0,hj:0,sign:"Kebocoran internal",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Boom/Arm/Bucket Cylinder Seal",nameID:"Seal Silinder Work Device",model:"SY500H",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Bocor",cat:"Wear",tier:"Tier 1"},
+  // ===== SY750H =====
+  {pn:"B222100000488",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"SY750H",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60205949",name:"Fuel Filter Set",nameID:"Set Filter Solar",model:"SY750H",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60148482",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"SY750H",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor",cat:"Filter",tier:"Tier 1"},
+  {pn:"60186788",name:"Hydraulic Filter Set",nameID:"Set Filter Hidrolik",model:"SY750H",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Ganti @2000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"-",name:"V-Belt / Fan Belt",nameID:"V-Belt / Fan Belt",model:"SY750H",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor",model:"SY750H",system:"ENGINE",life:5000,hpp:0,hj:0,sign:"Asap hitam",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Water Pump",nameID:"Water Pump",model:"SY750H",system:"ENGINE",life:6000,hpp:0,hj:0,sign:"Bocor",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Alternator",nameID:"Alternator",model:"SY750H",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Output drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Motor Starter",nameID:"Motor Starter",model:"SY750H",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Susah start",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"SY750H",system:"ENGINE",life:10000,hpp:0,hj:0,sign:"Asap biru",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Hydraulic Pump Seal Kit",nameID:"Seal Kit Pompa Hidrolik",model:"SY750H",system:"HYDRAULIC",life:5000,hpp:0,hj:0,sign:"Kebocoran internal",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Boom/Arm/Bucket Cylinder Seal",nameID:"Seal Silinder Work Device",model:"SY750H",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Bocor",cat:"Wear",tier:"Tier 1"},
+  // ===== STG230C-8S (Motor Grader) =====
+  {pn:"B222100000595",name:"Engine Oil Filter",nameID:"Filter Oli Mesin",model:"STG230C-8S",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"14514316",name:"Fuel Filter Primary",nameID:"Filter Solar Primer",model:"STG230C-8S",system:"ENGINE",life:500,hpp:0,hj:0,sign:"Ganti @250H",cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000044",name:"Air Filter Primary",nameID:"Filter Udara Primer",model:"STG230C-8S",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor",cat:"Filter",tier:"Tier 1"},
+  {pn:"A222100000085",name:"Air Filter Safety",nameID:"Filter Udara Safety",model:"STG230C-8S",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Kotor",cat:"Filter",tier:"Tier 1"},
+  {pn:"60035175",name:"Transmission Filter",nameID:"Filter Transmisi",model:"STG230C-8S",system:"TRANSMISSION",life:2000,hpp:0,hj:0,sign:"Ganti @1000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"60129702",name:"Hydraulic Tank Breather",nameID:"Breather Hidrolik",model:"STG230C-8S",system:"HYDRAULIC",life:2000,hpp:0,hj:0,sign:"Ganti @1000H",cat:"Filter",tier:"Tier 1"},
+  {pn:"-",name:"V-Belt / Fan Belt",nameID:"V-Belt / Fan Belt",model:"STG230C-8S",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Alternator Belt",nameID:"Belt Alternator",model:"STG230C-8S",system:"ENGINE",life:2000,hpp:0,hj:0,sign:"Retak/aus",cat:"Belt",tier:"Tier 1"},
+  {pn:"-",name:"Injector / Nozzle",nameID:"Injektor",model:"STG230C-8S",system:"ENGINE",life:5000,hpp:0,hj:0,sign:"Asap hitam",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Water Pump",nameID:"Water Pump",model:"STG230C-8S",system:"ENGINE",life:6000,hpp:0,hj:0,sign:"Bocor",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Alternator",nameID:"Alternator",model:"STG230C-8S",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Output drop",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Motor Starter",nameID:"Motor Starter",model:"STG230C-8S",system:"ELECTRIC",life:8000,hpp:0,hj:0,sign:"Susah start",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Turbocharger",nameID:"Turbocharger",model:"STG230C-8S",system:"ENGINE",life:10000,hpp:0,hj:0,sign:"Asap biru",cat:"Assembly",tier:"Tier 3"},
+  {pn:"-",name:"Hydraulic Pump Seal Kit",nameID:"Seal Kit Pompa Hidrolik",model:"STG230C-8S",system:"HYDRAULIC",life:5000,hpp:0,hj:0,sign:"Kebocoran",cat:"Assembly",tier:"Tier 2"},
+  {pn:"-",name:"Blade Cutting Edge",nameID:"Pisau / Cutting Edge Blade",model:"STG230C-8S",system:"IMPLEMENT",life:1500,hpp:0,hj:0,sign:"Aus/menipis",cat:"Wear",tier:"Tier 1"},
+  {pn:"-",name:"Circle Drive Motor Seal",nameID:"Seal Motor Circle",model:"STG230C-8S",system:"HYDRAULIC",life:4000,hpp:0,hj:0,sign:"Bocor",cat:"Assembly",tier:"Tier 2"},
+];
+
+function getUrgency(life){
+  if(life<=500)return'critical';
+  if(life<=2000)return'medium';
+  return'ok';
+}
+
+function filterCriticalParts(){
+  // Update counters
+  document.getElementById('cp-total').textContent = CRITICAL_PARTS.length;
+  document.getElementById('cp-critical').textContent = CRITICAL_PARTS.filter(p=>p.life<=500).length;
+  document.getElementById('cp-medium').textContent = CRITICAL_PARTS.filter(p=>p.life>500&&p.life<=2000).length;
+  document.getElementById('cp-ok').textContent = CRITICAL_PARTS.filter(p=>p.life>2000).length;
+
+  const modelF=document.getElementById('cp-model-filter').value;
+  const catF=document.getElementById('cp-cat-filter').value;
+  const urgF=document.getElementById('cp-urgency-filter').value;
+  
+  let filtered=CRITICAL_PARTS;
+  if(modelF!=='all') filtered=filtered.filter(p=>p.model===modelF);
+  if(catF!=='all') filtered=filtered.filter(p=>p.cat&&p.cat.toLowerCase().includes(catF.toLowerCase()));
+  if(urgF!=='all') filtered=filtered.filter(p=>getUrgency(p.life)===urgF);
+  
+  renderCriticalParts(filtered);
+}
+
+function renderCriticalParts(parts){
+  const grid=document.getElementById('critical-parts-grid');
+  if(parts.length===0){
+    grid.innerHTML=`<div class="card" style="grid-column:1/-1;text-align:center;padding:32px;color:var(--muted)">Tidak ada parts yang sesuai filter</div>`;
+    return;
+  }
+  grid.innerHTML=parts.map(p=>{
+    const urg=getUrgency(p.life);
+    const urgColor=urg==='critical'?'var(--red)':urg==='medium'?'var(--yellow)':'var(--green)';
+    const urgLabel=urg==='critical'?'🔴 Kritis':urg==='medium'?'🟡 Perhatian':'🟢 Normal';
+    const lifePct=Math.min(100,Math.round(p.life/8000*100));
+    const fillClass=urg==='critical'?'fill-red':urg==='medium'?'fill-yellow':'fill-green';
+    return `
+    <div class="critical-card">
+      <div class="critical-header">
+        <div>
+          <div class="critical-name">${p.nameID||p.name}</div>
+          <div class="critical-pn">${p.pn}</div>
+        </div>
+        <span class="badge" style="background:rgba(${urg==='critical'?'239,68,68':urg==='medium'?'245,158,11':'34,197,94'},0.15);color:${urgColor};border:1px solid rgba(${urg==='critical'?'239,68,68':urg==='medium'?'245,158,11':'34,197,94'},0.3);white-space:nowrap">${urgLabel}</span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <span class="badge badge-blue">${p.model}</span>
+        <span class="badge badge-orange">${p.system}</span>
+        ${tierBadge(p.tier)}
+      </div>
+      <div class="critical-life">
+        <span style="font-size:11px;color:var(--muted);width:80px;flex-shrink:0">Est. Life:</span>
+        <div class="life-bar">
+          <div class="progress-bar"><div class="progress-fill ${fillClass}" style="width:${lifePct}%"></div></div>
+        </div>
+        <span style="font-size:12px;font-weight:600;color:${urgColor};white-space:nowrap;margin-left:6px">${p.life.toLocaleString()} H</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px">⚡ Tanda Ganti: <span style="color:var(--text)">${p.sign}</span></div>
+      <div class="critical-footer">
+        <div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Harga HJ</div>
+          <div class="critical-price" style="color:${p.hj>0?'var(--green)':'var(--muted)'}">${p.hj>0?fmt(p.hj):'Hubungi Kami'}</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="orderPart('${p.pn}','${p.nameID||p.name}')">📞 Order</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Initialize critical parts
+renderCriticalParts(CRITICAL_PARTS);
+
+// ==========================================
+// PARTS FINDER
+// ==========================================
+function searchParts(){
+  const q=document.getElementById('parts-search').value.toLowerCase().trim();
+  const modelF=document.getElementById('finder-model').value;
+  const sysF=document.getElementById('finder-system').value;
+  
+  if(q.length<2&&modelF==='all'&&sysF==='all'){
+    document.getElementById('finder-tbody').innerHTML=`<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">Masukkan kata kunci (min. 2 karakter) untuk mencari</td></tr>`;
+    document.getElementById('finder-count').textContent='Masukkan kata kunci untuk mencari';
+    return;
+  }
+  
+  let results=PARTS_DATA;
+  if(q.length>=2) results=results.filter(p=>
+    p.pn.toLowerCase().includes(q)||
+    p.name.toLowerCase().includes(q)||
+    (p.nameID&&p.nameID.toLowerCase().includes(q))
+  );
+  if(modelF!=='all') results=results.filter(p=>p.model===modelF);
+  if(sysF!=='all') results=results.filter(p=>p.system===sysF);
+  
+  document.getElementById('finder-count').textContent=`Ditemukan ${results.length} part`;
+  
+  if(results.length===0){
+    document.getElementById('finder-tbody').innerHTML=`<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">Tidak ditemukan. Hubungi kami untuk informasi part number spesifik.</td></tr>`;
+    return;
+  }
+  
+  document.getElementById('finder-tbody').innerHTML=results.map(p=>`
+    <tr>
+      <td><span class="part-number">${p.pn}</span></td>
+      <td><strong>${p.nameID||p.name}</strong><br><small style="color:var(--muted)">${p.name}</small></td>
+      <td><span class="badge badge-orange" style="font-size:10px">${p.system}</span></td>
+      <td><span class="badge badge-blue" style="font-size:10px">${p.model}</span></td>
+      <td style="color:var(--muted);font-size:12px">${p.interval||'—'}</td>
+      <td style="font-family:'Rajdhani',sans-serif;font-weight:700;color:${p.hj>0?'var(--green)':'var(--muted)'}">${p.hj>0?fmt(p.hj):'POA'}</td>
+      <td><button class="btn btn-primary btn-sm" onclick="orderPart('${p.pn}','${p.nameID||p.name}')">📞</button></td>
+    </tr>
+  `).join('');
+}
+
+// ==========================================
+// PM CHECKLIST
+// ==========================================
+const CHECKLISTS={
+  "SKT80S-250":[
+    {sys:"ENGINE",item:"Engine Oil & Filter Drain & Refill",type:"R",pn:"60327523"},
+    {sys:"ENGINE",item:"Fuel Pre-filter + Fine Filter",type:"R",pn:"160604020017"},
+    {sys:"ENGINE",item:"Water Separator Element",type:"R",pn:"160603020024A"},
+    {sys:"ENGINE",item:"Oil Bath Air Cleaner — Check level",type:"C"},
+    {sys:"ENGINE",item:"Fan Belt & Alternator Belt — Periksa ketegangan",type:"P"},
+    {sys:"HYDRAULIC",item:"Hoist System — Periksa kebocoran & fungsi",type:"P"},
+    {sys:"BRAKE",item:"Service & Parking Brake — Periksa kondisi & fungsi",type:"P"},
+    {sys:"LUBRICATION",item:"ALL Grease Points (pivot, pin, steering, brake cam)",type:"G"},
+    {sys:"TYRE",item:"Tyre Pressure & Condition (per spek stiker unit)",type:"P"},
+    {sys:"ELECTRIC",item:"Battery — Level elektrolit & kondisi terminal",type:"P"},
+  ],
+  "SKT80S-500":[
+    {sys:"ENGINE",item:"Engine Oil & Filter Drain & Refill",type:"R",pn:"60327523"},
+    {sys:"ENGINE",item:"Fuel Pre-filter + Fine Filter",type:"R",pn:"160604020017"},
+    {sys:"ENGINE",item:"Water Separator Element",type:"R",pn:"160603020024A"},
+    {sys:"ENGINE",item:"Air Filter Outer — BERSIHKAN saja @500H",type:"C"},
+    {sys:"ENGINE",item:"Fan Belt & Alternator Belt — Periksa",type:"P"},
+    {sys:"TRANSMISSION",item:"Drive Shaft Bolt Torque — Cek & kencangkan",type:"P"},
+    {sys:"BRAKE",item:"Service & Parking Brake — Periksa kondisi",type:"P"},
+    {sys:"LUBRICATION",item:"ALL Grease Points",type:"G"},
+    {sys:"TYRE",item:"Tyre Pressure & Condition",type:"P"},
+    {sys:"ELECTRIC",item:"Battery — Level & terminal",type:"P"},
+    {sys:"OIL SAMPLE",item:"Engine Oil Sample — Kirim untuk analisis",type:"S"},
+  ],
+  "SKT80S-1000":[
+    {sys:"ENGINE",item:"Engine Oil & Filter Drain & Refill",type:"R",pn:"60327523"},
+    {sys:"ENGINE",item:"Fuel Pre-filter + Fine Filter",type:"R",pn:"160604020017"},
+    {sys:"ENGINE",item:"Water Separator Element",type:"R",pn:"160603020024A"},
+    {sys:"ENGINE",item:"Air Filter Outer (Primary) — GANTI @1000H",type:"R",pn:"160602020020A"},
+    {sys:"ENGINE",item:"Air Filter Inner (Safety) — GANTI @1000H",type:"R",pn:"160602030016A"},
+    {sys:"ENGINE",item:"Air Dryer Element — GANTI @1000H",type:"R",pn:"60060965"},
+    {sys:"ENGINE",item:"Fan Belt & Alternator Belt — Periksa ketegangan",type:"P"},
+    {sys:"TRANSMISSION",item:"Transmission Oil (ATF) Drain & Refill",type:"R"},
+    {sys:"TRANSMISSION",item:"Transmission Filter — GANTI",type:"R",pn:"130202000093A023"},
+    {sys:"AXLE",item:"Middle Axle Main Reducer Oil — Drain & Refill",type:"R"},
+    {sys:"AXLE",item:"Middle Axle Hub Reducer Oil — Drain & Refill",type:"R"},
+    {sys:"AXLE",item:"Rear Axle Main Reducer Oil — Drain & Refill",type:"R"},
+    {sys:"AXLE",item:"Rear Axle Hub Reducer Oil — Drain & Refill",type:"R"},
+    {sys:"HYDRAULIC",item:"HYD Return Oil Filter — GANTI",type:"R",pn:"60167851"},
+    {sys:"HYDRAULIC",item:"Steering Hydraulic Filter — GANTI",type:"R",pn:"60345316"},
+    {sys:"HYDRAULIC",item:"Hydraulic Tank Air Filter — GANTI",type:"R",pn:"24001922"},
+    {sys:"ELECTRIC",item:"AC Fresh Air Filter — GANTI",type:"R",pn:"141502000017"},
+    {sys:"BRAKE",item:"Service & Parking Brake — Periksa kondisi",type:"P"},
+    {sys:"SUSPENSION",item:"Front & Rear Wheel Bearing — Periksa celah",type:"P"},
+    {sys:"LUBRICATION",item:"ALL Grease Points",type:"G"},
+    {sys:"TYRE",item:"Tyre Pressure & Condition",type:"P"},
+    {sys:"ELECTRIC",item:"Battery — Level & kondisi",type:"P"},
+    {sys:"OIL SAMPLE",item:"Transmission Oil Sample",type:"S"},
+    {sys:"OIL SAMPLE",item:"Differential Oil Sample",type:"S"},
+  ],
+  "SYZ326C-1000":[
+    {sys:"ENGINE",item:"Engine Oil & Oil Filter — Drain & Refill @1000H",type:"R",pn:"160605020019"},
+    {sys:"ENGINE",item:"Fuel Filter Element — GANTI",type:"R",pn:"160101120038A001"},
+    {sys:"ENGINE",item:"Water Separator — GANTI",type:"R",pn:"1000424916"},
+    {sys:"ENGINE",item:"Air Dryer Filter — GANTI",type:"R",pn:"152599000172A001"},
+    {sys:"ENGINE",item:"Air Filter Outer — GANTI @1000H",type:"R",pn:"160602020036A"},
+    {sys:"ENGINE",item:"Air Filter Inner — GANTI @1000H",type:"R",pn:"160602030026A"},
+    {sys:"ENGINE",item:"Rubber Hose Cooling — GANTI @1000H",type:"R"},
+    {sys:"ENGINE",item:"Crankcase Breather — Check & Clean",type:"C"},
+    {sys:"ENGINE",item:"Alternator Drive Belt — Cek ketegangan",type:"P"},
+    {sys:"TRANSMISSION",item:"Transmission Oil (Gear Oil 85W/90) — Drain & Refill",type:"R"},
+    {sys:"TRANSMISSION",item:"Clutch Fluid (DOT 3) — GANTI",type:"R"},
+    {sys:"STEERING",item:"Steering Hydraulic Oil — Drain & Refill",type:"R"},
+    {sys:"STEERING",item:"Steering Filter Element — GANTI",type:"R",pn:"A222100000393"},
+    {sys:"AXLE",item:"All Axle Reducer Oils — Drain & Refill",type:"R"},
+    {sys:"HYDRAULIC",item:"Filter Strainer — GANTI",type:"R",pn:"60022607"},
+    {sys:"HYDRAULIC",item:"Cabin Lift Hydraulic — Check & Refill",type:"C"},
+    {sys:"BRAKE",item:"Brake Lining Wear — Periksa keausan",type:"P"},
+    {sys:"BRAKE",item:"Air Dryer Filter Element — GANTI",type:"R"},
+    {sys:"SUSPENSION",item:"U-bolt Front & Rear — Check & Tighten",type:"P"},
+    {sys:"ELECTRIC",item:"AC Fresh Air Filter — GANTI",type:"R",pn:"141502000017"},
+    {sys:"ELECTRIC",item:"Battery — Check, clean, level",type:"P"},
+    {sys:"LUBRICATION",item:"All Suspension Greasing",type:"G"},
+    {sys:"OIL SAMPLE",item:"Transmission Oil Sample",type:"S"},
+    {sys:"OIL SAMPLE",item:"Differential Oil Sample",type:"S"},
+  ],
+
+  // ===== TOP OVERHAUL / OH / GOH LISTS =====
+  "SKT80S-OH":[
+    {sys:"ENGINE - TOP OVERHAUL",item:"Cylinder Head - Lepas, bersihkan, periksa keretakan",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Cylinder Head Gasket - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Intake/Exhaust Valve - Periksa, setel celah, lap dudukan",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Valve Stem Seal - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Valve Spring - Periksa elastisitas, GANTI jika lemah",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Piston Ring Set - GANTI (atas-tengah-oli)",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Piston - Periksa kondisi, ukur diameter",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Connecting Rod Bush & Bearing - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Turbocharger - Overhaul / recondition",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Injector / Nozzle - Kalibrasi ulang / GANTI",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"High Pressure Fuel Pump - Periksa & kalibrasi",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Water Pump - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Thermostat - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Alternator - Overhaul / periksa output",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Motor Starter - Overhaul / periksa",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Oil Seal Depan & Belakang Crankshaft - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"V-Belt / Fan Belt - GANTI set",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Alternator Belt - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Radiator Hose (Upper & Lower) - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Heater Hose - Periksa kondisi",type:"P",pn:""},
+    {sys:"HYDRAULIC - OH",item:"Hydraulic Oil - Drain & Refill",type:"R",pn:""},
+    {sys:"HYDRAULIC - OH",item:"Hydraulic Return Filter - GANTI",type:"R",pn:"60167851"},
+    {sys:"HYDRAULIC - OH",item:"Steering Hydraulic Filter - GANTI",type:"R",pn:"60345316"},
+    {sys:"HYDRAULIC - OH",item:"Hydraulic Hose Set (visual + pressure test) - Periksa",type:"P",pn:""},
+    {sys:"TRANSMISSION - OH",item:"Transmission Oil - Drain & Refill",type:"R",pn:""},
+    {sys:"TRANSMISSION - OH",item:"Transmission Filter - GANTI",type:"R",pn:"130202000093A023"},
+    {sys:"TRANSMISSION - OH",item:"Clutch (jika manual) - Periksa keausan kampas",type:"P",pn:""},
+    {sys:"AXLE - OH",item:"Semua Axle Reducer Oil - Drain & Refill",type:"R",pn:""},
+    {sys:"AXLE - OH",item:"Wheel Hub Reducer Oil - Drain & Refill semua roda",type:"R",pn:""},
+    {sys:"AXLE - OH",item:"Wheel Hub Bearing - Periksa/ganti jika aus",type:"OH",pn:""},
+    {sys:"BRAKE - OH",item:"Brake Lining - GANTI jika sisa <3mm",type:"R",pn:"YNF01-00044"},
+    {sys:"BRAKE - OH",item:"Brake Drum / Disc - Periksa keausan",type:"P",pn:""},
+    {sys:"BRAKE - OH",item:"Air Dryer Element - GANTI",type:"R",pn:"60060965"},
+    {sys:"ELECTRICAL - OH",item:"Battery - Cek kapasitas, ganti jika drop",type:"OH",pn:""},
+    {sys:"ELECTRICAL - OH",item:"Fuse Set - Periksa & siapkan cadangan",type:"P",pn:""},
+    {sys:"ELECTRICAL - OH",item:"Wiring Harness - Periksa kondisi & sambungan",type:"P",pn:""},
+    {sys:"LUBRICATION - OH",item:"Semua Grease Point - Grease ulang lengkap",type:"G",pn:""},
+    {sys:"TYRE - OH",item:"Semua Ban - Periksa kondisi, rotasi jika perlu",type:"P",pn:""},
+    {sys:"CABIN - OH",item:"AC Filter & Evaporator - Bersihkan/ganti",type:"R",pn:"141502000017"},
+    {sys:"CABIN - OH",item:"AC Compressor - Periksa & isi freon jika perlu",type:"OH",pn:""},
+  ],
+  "SY215-OH":[
+    {sys:"ENGINE - TOP OVERHAUL",item:"Cylinder Head - Lepas, bersihkan, periksa keretakan",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Cylinder Head Gasket - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Intake/Exhaust Valve - Setel celah, lap dudukan",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Valve Stem Seal - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Valve Spring - Periksa elastisitas",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Piston Ring Set - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Piston - Periksa kondisi, ukur diameter",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Connecting Rod Bearing - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Turbocharger - Overhaul / recondition",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Injector / Nozzle - Kalibrasi ulang / GANTI",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"High Pressure Pump - Periksa & kalibrasi",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Water Pump - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Thermostat - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Alternator - Overhaul",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Motor Starter - Overhaul",type:"OH",pn:""},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Oil Seal Front & Rear Crankshaft - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"V-Belt / Fan Belt set - GANTI",type:"R",pn:"-"},
+    {sys:"ENGINE - TOP OVERHAUL",item:"Radiator Hose Upper & Lower - GANTI",type:"R",pn:"-"},
+    {sys:"HYDRAULIC - OH",item:"Hydraulic Oil Full Change",type:"R",pn:""},
+    {sys:"HYDRAULIC - OH",item:"Hydraulic Return Filter - GANTI",type:"R",pn:"60200365"},
+    {sys:"HYDRAULIC - OH",item:"Hydraulic Pilot Filter - GANTI",type:"R",pn:"A222100000119"},
+    {sys:"HYDRAULIC - OH",item:"Hydraulic Tank Breather - GANTI",type:"R",pn:"60129702"},
+    {sys:"HYDRAULIC - OH",item:"Hydraulic Pump - Periksa tekanan & kebocoran",type:"OH",pn:""},
+    {sys:"HYDRAULIC - OH",item:"Hydraulic Pump Seal Kit - GANTI",type:"R",pn:"-"},
+    {sys:"HYDRAULIC - OH",item:"Main Control Valve - Periksa & test fungsi",type:"OH",pn:""},
+    {sys:"HYDRAULIC - OH",item:"Swing Motor Seal Kit - GANTI",type:"R",pn:"-"},
+    {sys:"HYDRAULIC - OH",item:"Travel Motor Seal Kit - GANTI",type:"R",pn:"-"},
+    {sys:"HYDRAULIC - OH",item:"Boom Cylinder Seal Kit - GANTI",type:"R",pn:"-"},
+    {sys:"HYDRAULIC - OH",item:"Arm Cylinder Seal Kit - GANTI",type:"R",pn:"-"},
+    {sys:"HYDRAULIC - OH",item:"Bucket Cylinder Seal Kit - GANTI",type:"R",pn:"-"},
+    {sys:"HYDRAULIC - OH",item:"Semua Selang Hidrolik - Periksa / ganti yang retak",type:"OH",pn:""},
+    {sys:"SWING - OH",item:"Swing Bearing / Slewing Ring - Periksa keausan & backlash",type:"OH",pn:""},
+    {sys:"SWING - OH",item:"Swing Reducer Oil - Drain & Refill",type:"R",pn:""},
+    {sys:"UNDERCARRIAGE - OH",item:"Track Shoe - Periksa keausan",type:"P",pn:""},
+    {sys:"UNDERCARRIAGE - OH",item:"Track Link & Pin - Periksa elongation",type:"P",pn:""},
+    {sys:"UNDERCARRIAGE - OH",item:"Track Roller (Bottom) - Periksa kebocoran seal",type:"OH",pn:""},
+    {sys:"UNDERCARRIAGE - OH",item:"Carrier Roller (Top) - Periksa kebocoran",type:"OH",pn:""},
+    {sys:"UNDERCARRIAGE - OH",item:"Sprocket - Periksa keausan",type:"P",pn:""},
+    {sys:"UNDERCARRIAGE - OH",item:"Idler - Periksa kondisi & seal",type:"OH",pn:""},
+    {sys:"UNDERCARRIAGE - OH",item:"Track Tension - Setting ulang",type:"P",pn:""},
+    {sys:"ELECTRICAL - OH",item:"Battery - Cek kapasitas / ganti",type:"OH",pn:""},
+    {sys:"ELECTRICAL - OH",item:"Wiring Harness - Periksa kondisi",type:"P",pn:""},
+    {sys:"LUBRICATION - OH",item:"Semua Grease Point Work Device - Grease ulang",type:"G",pn:""},
+    {sys:"CABIN - OH",item:"AC Filter & Evaporator - Bersihkan/ganti",type:"R",pn:""},
+    {sys:"CABIN - OH",item:"Cabin Mount Rubber - Periksa kondisi",type:"P",pn:""},
+  ],
+};
+
+let checklistState={};
+
+function loadChecklist(){
+  const model=document.getElementById('cl-model').value;
+  const interval=document.getElementById('cl-interval').value;
+  if(!model) return;
+  
+  const key=`${model}-${interval}`;
+  const items=CHECKLISTS[key];
+  
+  if(!items){
+    document.getElementById('checklist-container').innerHTML=`<div class="card" style="text-align:center;padding:32px;color:var(--muted)">
+      <div style="font-size:32px;margin-bottom:12px">📋</div>
+      <div style="font-weight:600;color:var(--text);margin-bottom:8px">Checklist PM ${interval}H — ${model}</div>
+      <div style="font-size:13px">Template checklist untuk kombinasi ini sedang disiapkan. Hubungi kami untuk checklist lengkap.</div>
+      <button class="btn btn-primary" style="margin-top:16px" onclick="orderPart('CHECKLIST','Checklist PM ${interval}H ${model}')">📞 Minta Checklist Lengkap</button>
+    </div>`;
+    return;
+  }
+  
+  checklistState={};
+  items.forEach((_,i)=>checklistState[i]=false);
+  
+  const typeIcon={R:'🔄',P:'👁️',G:'🟡',C:'🧹',S:'🧪',OH:'🔩'};
+  const typeName={R:'Ganti (Replace)',P:'Periksa',G:'Grease/Lumasi',C:'Bersihkan',S:'Oil Sample',OH:'Overhaul'};
+  
+  const sysList=[...new Set(items.map(i=>i.sys))];
+  let html='';
+  sysList.forEach(sys=>{
+    const sysItems=items.map((item,idx)=>({...item,idx})).filter(i=>i.sys===sys);
+    html+=`<div class="card" style="margin-bottom:16px">
+      <div class="card-title" style="margin-bottom:12px;font-size:14px">
+        <span class="card-title-icon">${typeIcon[sysItems[0].type]||'🔧'}</span> ${sys}
+      </div>`;
+    sysItems.forEach(item=>{
+      html+=`<div class="checklist-item" id="cl-item-${item.idx}" onclick="toggleCheck(${item.idx})">
+        <div class="check-box" id="cl-box-${item.idx}"></div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:500">${item.item}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px">
+            ${item.pn?`<span class="part-number" style="font-size:10px">${item.pn}</span> • `:''}
+            <span style="color:var(--orange)">${typeName[item.type]||item.type}</span>
+          </div>
+        </div>
+        <div id="cl-status-${item.idx}" style="font-size:18px"></div>
+      </div>`;
+    });
+    html+='</div>';
+  });
+  
+  document.getElementById('checklist-container').innerHTML=html;
+  document.getElementById('checklist-progress-bar').style.display='block';
+  document.getElementById('cl-print-btn').style.display='flex';
+  document.getElementById('cl-date').value=new Date().toISOString().split('T')[0];
+  updateProgress(items.length);
+}
+
+function toggleCheck(idx){
+  checklistState[idx]=!checklistState[idx];
+  const item=document.getElementById(`cl-item-${idx}`);
+  const box=document.getElementById(`cl-box-${idx}`);
+  const status=document.getElementById(`cl-status-${idx}`);
+  if(checklistState[idx]){
+    item.classList.add('checked');
+    box.innerHTML='<svg width="12" height="12" fill="white" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>';
+    status.textContent='✅';
+  } else {
+    item.classList.remove('checked');
+    box.innerHTML='';
+    status.textContent='';
+  }
+  const total=Object.keys(checklistState).length;
+  updateProgress(total);
+}
+
+function updateProgress(total){
+  const done=Object.values(checklistState).filter(Boolean).length;
+  const pct=total>0?Math.round(done/total*100):0;
+  document.getElementById('cl-progress-text').textContent=`${done} / ${total} selesai`;
+  document.getElementById('cl-progress-fill').style.width=pct+'%';
+}
+
+function resetChecklist(){
+  Object.keys(checklistState).forEach(k=>checklistState[k]=false);
+  const model=document.getElementById('cl-model').value;
+  if(model) loadChecklist();
+}
+
+function printChecklist(){
+  const tech=document.getElementById('cl-tech').value||'_______________';
+  const unitNo=document.getElementById('cl-unit-no').value||'_______________';
+  const hm=document.getElementById('cl-hm').value||'_______________';
+  const date=document.getElementById('cl-date').value||'_______________';
+  const model=document.getElementById('cl-model').value;
+  const interval=document.getElementById('cl-interval').value;
+  
+  const win=window.open('','_blank');
+  win.document.write(`<html><head><title>PM Checklist ${model} ${interval}H</title>
+  <style>body{font-family:Arial,sans-serif;font-size:12px;color:#000;margin:20px}
+  h2{color:#FF6B1A;border-bottom:2px solid #FF6B1A;padding-bottom:8px}
+  .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0;padding:10px;border:1px solid #ddd}
+  .meta-item label{font-size:10px;color:#666;font-weight:700;display:block}
+  table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccc;padding:6px 8px;text-align:left;font-size:11px}
+  th{background:#f5f5f5;font-weight:700}
+  .checked-cell{color:#16A34A;font-weight:700}
+  .footer{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:20px;font-size:11px}
+  .sign-box{border:1px solid #ccc;height:60px;padding:6px}
+  </style></head><body>
+  <h2>⚙️ PM CHECKLIST — SANY ${model} | Interval: ${interval}H</h2>
+  <div style="font-size:10px;color:#666;margin-bottom:8px">SPARTAAN PRO — SANY Original Parts Distributor | Data dari OMM Resmi SANY</div>
+  <div class="meta">
+    <div class="meta-item"><label>Model Unit</label>${model}</div>
+    <div class="meta-item"><label>No. Unit</label>${unitNo}</div>
+    <div class="meta-item"><label>HM Saat Ini</label>${hm}</div>
+    <div class="meta-item"><label>Tanggal</label>${date}</div>
+  </div>
+  <table>
+    <thead><tr><th>#</th><th>Sistem</th><th>Pekerjaan</th><th>Tipe</th><th>Part Number</th><th>Status (✓/✗)</th><th>Catatan</th></tr></thead>
+    <tbody>${(CHECKLISTS[`${model}-${interval}`]||[]).map((item,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td>${item.sys}</td>
+      <td>${item.item}</td>
+      <td>${item.type}</td>
+      <td style="font-family:monospace;font-size:10px;color:#c00">${item.pn||'—'}</td>
+      <td class="${checklistState[i]?'checked-cell':''}" style="text-align:center">${checklistState[i]?'✓':''}</td>
+      <td>&nbsp;</td>
+    </tr>`).join('')}
+    </tbody>
+  </table>
+  <div class="footer">
+    <div><div style="font-weight:700;margin-bottom:4px">Dikerjakan oleh:</div>
+    <div class="sign-box">Nama: ${tech}<br>TTD:</div></div>
+    <div><div style="font-weight:700;margin-bottom:4px">Diperiksa oleh (Supervisor):</div>
+    <div class="sign-box">Nama:<br>TTD:</div></div>
+  </div>
+  <div style="margin-top:12px;font-size:10px;color:#666">Dicetak melalui SPARTAAN PRO — Distributor Resmi Spareparts SANY Original. Harga & part number berdasarkan data principal SANY.</div>
+  </body></html>`);
+  win.print();
+}
+
+// ==========================================
+// LIVE CLOCK
+// ==========================================
+function updateClock(){
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const dateStr = now.toLocaleDateString('id-ID', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const dateShort = now.toLocaleDateString('id-ID', {weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+  // Module 1 clock
+  const el = document.getElementById('live-time');
+  const el2 = document.getElementById('live-date');
+  if(el) el.textContent = timeStr;
+  if(el2) el2.textContent = dateStr;
+  // Header clock
+  const ht = document.getElementById('header-time');
+  const hd = document.getElementById('header-date');
+  if(ht) ht.textContent = timeStr;
+  if(hd) hd.textContent = dateShort;
+}
+updateClock();
+setInterval(updateClock, 1000);
+// Show header clock
+const headerClockEl = document.getElementById('header-clock');
+if(headerClockEl) headerClockEl.style.display='block';
+
+// Update stats counter
+document.querySelectorAll('#cp-total').forEach(el => {
+  const count = CRITICAL_PARTS.length;
+  el.textContent = count;
+});
+document.querySelectorAll('#cp-critical').forEach(el => {
+  el.textContent = CRITICAL_PARTS.filter(p=>p.life<=500).length;
+});
+document.querySelectorAll('#cp-medium').forEach(el => {
+  el.textContent = CRITICAL_PARTS.filter(p=>p.life>500&&p.life<=2000).length;
+});
+document.querySelectorAll('#cp-ok').forEach(el => {
+  el.textContent = CRITICAL_PARTS.filter(p=>p.life>2000).length;
+});
+
+// Initialize date
+document.getElementById('cl-date').value=new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
